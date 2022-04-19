@@ -1,0 +1,15 @@
+<div data-payment-page-component-admin-dashboard-section="logo-container">
+  <img src="{{{ PaymentPage.getComponentAssetPath( 'admin-dashboard', 'img/logo.png' ) }}}"/>
+</div>
+
+<div data-payment-page-component-admin-dashboard-section="navigation">
+  {{{ PaymentPage.Template.get( 'admin-dashboard', 'template/_navigation.html', data ) }}}
+</div>
+
+<div data-payment-page-component-admin-dashboard-section="container">
+  <# if( data.current_page === 'payment-gateways' ) { #>
+    {{{ PaymentPage.Template.get( 'admin-dashboard', 'template/_payment-gateways.html', data ) }}}
+  <# } else { #>
+    {{{ PaymentPage.Template.get( 'admin-dashboard', 'template/_templates.html', data ) }}}
+  <# } #>
+</div>

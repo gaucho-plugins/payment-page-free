@@ -1,0 +1,77 @@
+@import '../../../mixins.scss';
+
+[data-payment-page-notification] {
+  --payment-page-text-default-color : var( --payment-page-status-neutral-color );
+
+  border         : none;
+  padding        : var( --payment-page-spacing-type-block-wide );
+  display        : block;
+  letter-spacing : 0;
+  margin         : 0;
+  position       : relative;
+  background     : var( --payment-page-status-neutral-background-color );
+  text-decoration: none;
+  @include payment-page-font-default();
+  @include box-shadow( none );
+  @include box-sizing( border-box );
+  @include border-radius( var( --payment-page-layout-border-radius ) );
+
+  > p {
+    margin  : 0;
+    padding : 0;
+  }
+
+  a {
+    margin: 0;
+    padding: 0;
+    border: none;
+    @include box-shadow( none );
+    cursor: pointer;
+    text-decoration: underline;
+    &:hover {
+      border: none;
+    }
+  }
+
+  &:after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+
+  &[data-payment-page-notification="danger"] {
+    color: var( --payment-page-status-danger-color );
+    background: var( --payment-page-status-danger-background-color );
+    a,
+    span {
+      color: var( --payment-page-status-danger-color );
+    }
+  }
+
+  &[data-payment-page-notification="warning"] {
+    color: var( --payment-page-status-warning-color );
+    background: var( --payment-page-status-warning-background-color );
+    a,
+    span {
+      color: var( --payment-page-status-warning-color );
+    }
+  }
+
+  &[data-payment-page-notification="info"] {
+    color: var( --payment-page-status-info-color );
+    background: var( --payment-page-status-info-background-color );
+    a,
+    span {
+      color: var( --payment-page-status-info-color );
+    }
+  }
+
+  &[data-payment-page-notification="success"] {
+    color: var( --payment-page-status-success-color );
+    background: var( --payment-page-status-success-background-color );
+    a,
+    span {
+      color: var( --payment-page-status-success-color );
+    }
+  }
+}

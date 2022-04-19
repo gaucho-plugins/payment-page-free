@@ -1,0 +1,124 @@
+@import 'mixins.scss';
+
+/**
+  * @author Robert Rusu
+  **/
+:root {
+  --payment-page-accent-color    : #ffffff;
+  --payment-page-primary-color   : #1168EF;
+  --payment-page-secondary-color : #76ACF7;
+
+  --payment-page-icon-primary-color   : rgb(68, 68, 68);
+
+  --payment-page-icon-secondary-background : #363636;
+  --payment-page-icon-secondary-stroke     : #ffffff;
+  --payment-page-icon-secondary-fill            : none;
+  --payment-page-icon-secondary-background-size : 30px;
+  --payment-page-icon-secondary-size            : 20px;
+  --payment-page-icon-secondary-margin          : 0 var( --payment-page-spacing-type-block-element ) 0 0;
+
+  --payment-page-text-color-primary    : #6C8CB8;
+
+  --payment-page-layout-primary-background-color    : #FFFFFF;
+  --payment-page-layout-secondary-background-color  : #D5DBE0;
+
+  --payment-page-layout-primary-border-color    : #E1E7ED;
+  --payment-page-layout-secondary-border-color  : #D5DBE0;
+  --payment-page-layout-tertiary-border-color   : #838C92;
+
+  --payment-page-status-neutral-background-color : rgba( 118, 118, 118, 0.05 );
+  --payment-page-status-neutral-color            : #767676;
+
+  --payment-page-status-warning-background-color : rgba( 249, 148, 92, 0.05 );
+  --payment-page-status-warning-color            : #F9945C;
+
+  --payment-page-status-info-background-color : rgba( 11, 124, 192, 0.05 );
+  --payment-page-status-info-color            : #0B7CC0;
+
+  --payment-page-status-success-background-color : rgba( 43, 191, 22, 0.05 );
+  --payment-page-status-success-color            : #2BBF16;
+
+  --payment-page-status-danger-background-color  : rgba( 244, 67, 54, 0.05 );
+  --payment-page-status-danger-color             : #F44336;
+
+  --payment-page-font-family : inherit;
+
+  --payment-page-spacing-type-primary    : 32px;
+  --payment-page-spacing-type-secondary  : 24px;
+  --payment-page-spacing-type-tertiary   : 16px;
+
+  --payment-page-spacing-type-separator-wide : 40px;
+  --payment-page-spacing-type-block-element  : 10px;
+  --payment-page-spacing-type-block-wide     : 18px;
+
+  --payment-page-layout-background    : var( --payment-page-layout-primary-background-color );
+  --payment-page-layout-border        : 1px solid var( --payment-page-layout-primary-border-color );
+  --payment-page-layout-box-shadow    : 0 0 20px rgba(40, 84, 115, 0.11);
+  --payment-page-layout-padding       : 32px;
+  --payment-page-layout-border-radius : 5px;
+
+  --payment-page-text-default-font-size   : 18px;
+  --payment-page-text-default-font-style  : normal;
+  --payment-page-text-default-font-weight : normal;
+  --payment-page-text-default-line-height : 28px;
+  --payment-page-text-default-color       : var( --payment-page-text-color-primary );
+
+  --payment-page-text-small-font-size   : 14px;
+  --payment-page-text-small-font-style  : normal;
+  --payment-page-text-small-font-weight : normal;
+  --payment-page-text-small-line-height : 20px;
+  --payment-page-text-small-color       : var( --payment-page-text-color-primary );
+
+  --payment-page-text-medium-font-size   : 16px;
+  --payment-page-text-medium-font-style  : normal;
+  --payment-page-text-medium-font-weight : normal;
+  --payment-page-text-medium-line-height : 24px;
+  --payment-page-text-medium-color       : var( --payment-page-text-color-primary );
+
+  --payment-page-text-standard-font-size   : 18px;
+  --payment-page-text-standard-font-style  : normal;
+  --payment-page-text-standard-font-weight : normal;
+  --payment-page-text-standard-line-height : 24px;
+  --payment-page-text-standard-color       : var( --payment-page-text-color-primary );
+
+  --payment-page-text-title-font-size   : 24px;
+  --payment-page-text-title-font-style  : normal;
+  --payment-page-text-title-font-weight : bold;
+  --payment-page-text-title-line-height : 32px;
+  --payment-page-text-title-color       : var( --payment-page-text-color-primary );
+
+  --payment-page-button-font-size   : 14px;
+  --payment-page-button-font-weight : bold;
+  --payment-page-button-line-height : 24px;
+  --payment-page-button-padding     : 4px 16px;
+
+  --payment-page-button-lg-padding     : 11px 16px 12px 16px;
+  --payment-page-button-lg-font-size   : 14px;
+  --payment-page-button-lg-line-height : 17px;
+}
+
+@mixin __payment_page_medium_width_variables() {
+  --payment-page-spacing-type-primary    : 20px;
+  --payment-page-spacing-type-secondary  : 20px;
+  --payment-page-spacing-type-tertiary   : 12px;
+
+  --payment-page-spacing-type-separator-wide : 50px;
+
+  --payment-page-layout-padding : 20px;
+
+  --payment-page-text-default-font-size   : 16px;
+  --payment-page-text-default-line-height : 27px;
+
+  --payment-page-text-title-font-size   : 24px;
+  --payment-page-text-title-line-height : 30px;
+
+  --payment-page-button-lg-padding     : 14px 16px;
+  --payment-page-button-lg-font-size   : 16px;
+  --payment-page-button-lg-line-height : 19px;
+}
+
+@media ( max-width: $break_point_large_width ) {
+  :root {
+    @include __payment_page_medium_width_variables;
+  }
+}

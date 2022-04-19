@@ -1,0 +1,15 @@
+@import '../../mixins.scss';
+
+[data-payment-page-component="popup-payment-form"] {
+  @include variables-payment-method-section-items();
+
+  > [data-payment-page-component-popup-payment-form-section="list"] {
+    display: grid;
+    grid-template-columns: repeat( var( --payment-page-element-form-payment-method-per-row ), 1fr);
+    gap: var( --payment-page-element-form-payment-method-spacing ) var( --payment-page-element-form-payment-method-spacing );
+
+    > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"] {
+      @include payment-method-section-items();
+    }
+  }
+}

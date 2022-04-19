@@ -1,0 +1,52 @@
+[data-payment-page-component="popup-payment-form"] {
+  --payment-page-element-form-payment-method-per-row: 3;
+  --payment-page-element-form-payment-method-spacing: 10px;
+  --payment-page-element-form-payment-method-option-border-radius: 0px 0px 0px 0px;
+  --payment-page-element-form-payment-method-option-border-top: 0;
+  --payment-page-element-form-payment-method-option-border-right: 0;
+  --payment-page-element-form-payment-method-option-border-bottom: 2px solid transparent;
+  --payment-page-element-form-payment-method-option-border-left: 0;
+  --payment-page-element-form-payment-method-option-padding: 5px;
+  --payment-page-element-form-payment-method-option-image-height: 40px;
+  --payment-page-element-form-payment-method-option-active-border-radius: 0px 0px 0px 0px;
+  --payment-page-element-form-payment-method-option-active-border-top: 0;
+  --payment-page-element-form-payment-method-option-active-border-right: 0;
+  --payment-page-element-form-payment-method-option-active-border-bottom: 2px solid #2676f1;
+  --payment-page-element-form-payment-method-option-active-border-left: 0;
+  --payment-page-element-form-payment-method-option-active-padding: 5px; }
+  [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] {
+    display: grid;
+    grid-template-columns: repeat(var(--payment-page-element-form-payment-method-per-row), 1fr);
+    gap: var(--payment-page-element-form-payment-method-spacing) var(--payment-page-element-form-payment-method-spacing); }
+    [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"] {
+      border-top: var(--payment-page-element-form-payment-method-option-border-top);
+      border-right: var(--payment-page-element-form-payment-method-option-border-right);
+      border-bottom: var(--payment-page-element-form-payment-method-option-border-bottom);
+      border-left: var(--payment-page-element-form-payment-method-option-border-left);
+      padding: var(--payment-page-element-form-payment-method-option-padding);
+      display: flex;
+      align-content: center;
+      -webkit-border-radius: var(--payment-page-element-form-payment-method-option-border-radius);
+      border-radius: var(--payment-page-element-form-payment-method-option-border-radius); }
+      [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"][data-payment-page-interaction-state="inactive"] {
+        cursor: pointer; }
+      [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"][data-payment-page-interaction-state="active"] {
+        border-top: var(--payment-page-element-form-payment-method-option-active-border-top);
+        border-right: var(--payment-page-element-form-payment-method-option-active-border-right);
+        border-bottom: var(--payment-page-element-form-payment-method-option-active-border-bottom);
+        border-left: var(--payment-page-element-form-payment-method-option-active-border-left);
+        padding: var(--payment-page-element-form-payment-method-option-active-padding);
+        -webkit-border-radius: var(--payment-page-element-form-payment-method-option-active-border-radius);
+        border-radius: var(--payment-page-element-form-payment-method-option-active-border-radius); }
+      [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"][data-payment-page-interaction-state="disabled"][data-payment-page-hint]::after {
+        background: var(--payment-page-element-form-payment-method-option-border-color);
+        color: #fff;
+        font-size: 14px;
+        padding: 10px; }
+      [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"][data-payment-page-interaction-state="disabled"] > img {
+        opacity: 0.7;
+        cursor: not-allowed; }
+      [data-payment-page-component="popup-payment-form"] > [data-payment-page-component-popup-payment-form-section="list"] > [data-payment-page-component-popup-payment-form-trigger^="start_payment_method_"] > img {
+        display: block;
+        margin: auto;
+        height: var(--payment-page-element-form-payment-method-option-image-height); }

@@ -1,0 +1,91 @@
+<form method="POST">
+  <# if( data.currency_selector || data.subscription_selector ) { #>
+    <div data-payment-page-component-payment-form-section="pricing-filters">
+      <# if( data.currency_selector ) { #>
+        <# if( Object.keys( data.currency_options_assoc ).length >= 3 ) { #>
+          <select data-payment-page-component-payment-form-section="pricing-filter-currency"
+                  style="background-image: url('data:image/svg+xml;charset=US-ASCII,{{{ encodeURIComponent( '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 6l5 5 5-5 2 1-7 7-7-7 2-1z" fill="' + data.style.filter_arrow_color + '"/></svg>' ) }}}')">
+            <# _.each( data.currency_options_assoc, function( label, value ) { #>
+            <option {{ data.selected_currency === value ? 'selected="selected"' : '' }}
+                    value="{{ value }}"
+                    data-payment-page-interaction-state="{{ data.selected_currency === value ? 'active' : 'inactive' }}">{{ label }}</option>
+            <# }) #>
+          </select>
+        <# } else { #>
+          <div data-payment-page-component-payment-form-section="pricing-filter-currency">
+            <# _.each( data.currency_options_assoc, function( label, value ) { #>
+              <span data-payment-page-component-payment-form-trigger="filter_currency_{{ value }}"
+                    data-payment-page-interaction-state="{{ data.selected_currency === value ? 'active' : 'inactive' }}">{{ label }}</span>
+            <# }) #>
+          </div>
+        <# } #>
+      <# } #>
+
+      <# if( data.subscription_selector ) { #>
+        <# if( Object.keys( data.frequency_options_assoc ).length >= 3 ) { #>
+          <select data-payment-page-component-payment-form-section="pricing-filter-frequency"
+                  style="background-image: url('data:image/svg+xml;charset=US-ASCII,{{{ encodeURIComponent( '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 6l5 5 5-5 2 1-7 7-7-7 2-1z" fill="' + data.style.filter_arrow_color + '"/></svg>' ) }}}')">
+            <# _.each( data.frequency_options_assoc, function( label, value ) { #>
+            <option {{ data.selected_frequency === value ? 'selected="selected"' : '' }}
+                    value="{{ value }}"
+                    data-payment-page-interaction-state="{{ data.selected_frequency === value ? 'active' : 'inactive' }}">{{ label }}</option>
+            <# }) #>
+          </select>
+        <# } else { #>
+          <div data-payment-page-component-payment-form-section="pricing-filter-frequency">
+            <# _.each( data.frequency_options_assoc, function( label, value ) { #>
+              <span data-payment-page-component-payment-form-trigger="filter_frequency_{{ value }}"
+                    data-payment-page-interaction-state="{{ data.selected_frequency === value ? 'active' : 'inactive' }}">{{ label }}</span>
+            <# }) #>
+          </div>
+        <# } #>
+      <# } #>
+    </div>
+  <# } #>
+
+  <div data-payment-page-component-payment-form-section="pricing-plans">
+    <span data-payment-page-component-payment-form-section="title">{{ data.lang.pricing_plan_title }}</span>
+    <select name="pp_pricing_options"
+            style="background-image: url('data:image/svg+xml;charset=US-ASCII,{{{ encodeURIComponent( '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M5 6l5 5 5-5 2 1-7 7-7-7 2-1z" fill="' + data.style.pricing_arrow_color + '"/></svg>' ) }}}')">{{{ data.pricing_options_html }}}</select>
+  </div>
+
+  <div data-payment-page-component-payment-form-section="payment-custom-amount" data-payment-page-display-state="hidden">
+    <div data-payment-page-component-payment-form-section="field_row">
+      <div data-payment-page-component-payment-form-section="field">
+        <label for="pp_custom_amount">{{ data.lang.pricing_custom_amount }}</label>
+        <div data-payment-page-component-payment-form-section="field_container">
+          <span>{{ data.selected_currency === null ? '?' : payment_page_get_currency_symbol( payment_page_get_user_locale(), data.selected_currency ) }}</span>
+          <input id="pp_custom_amount" type="text" name="pp_custom_amount" value="{{ typeof data.custom_amount_value !== 'undefined' ? data.custom_amount_value : 1 }}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <# if( data.payment_methods_counts > 1 ) { #>
+  <div data-payment-page-component-payment-form-section="payment-method">
+    <# if( data.lang.payment_information !== '' ) { #>
+      <span data-payment-page-component-payment-form-section="title">{{ data.lang.payment_method }}</span>
+    <# } #>
+
+    <div data-payment-page-component-payment-form-section="list">
+      <# _.each( data.payment_methods_map, function( payment_methods, payment_gateway ) { #>
+        <# _.each( payment_methods, function( payment_method ) { #>
+          <div data-payment-page-component-payment-form-trigger="switch_payment_method_{{ payment_method.id }}"
+               data-payment-page-payment-gateway="{{ payment_gateway }}"
+               data-payment-page-has-recurring-support="{{ payment_method.has_recurring_support ? 1 : 0 }}"
+               data-payment-page-interaction-state="{{ data.payment_gateway === payment_gateway && data.payment_method === payment_method.id ? 'active' : 'inactive' }}">
+            <img src="{{ payment_method.image }}" alt="{{ payment_method.name }}"/>
+          </div>
+        <# }) #>
+      <# }) #>
+    </div>
+  </div>
+  <# } #>
+
+  <div data-payment-page-component-payment-form-section="payment-information">
+    {{{ PaymentPage.Template.get( 'payment-form', 'template/payment-information.html', data ) }}}
+  </div>
+
+  <div id="payment-page-alternative-submit-{{ data.uniqid }}" data-payment-page-component-payment-form-container="alternative_submit" style="display:none;" disabled="disabled"></div>
+  <span data-payment-page-component-payment-form-trigger="submit" disabled="disabled" style="display:none;">...</span>
+</form>

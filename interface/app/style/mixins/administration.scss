@@ -1,0 +1,60 @@
+@mixin payment-page-administration-panel-tool-title() {
+  @include payment-page-font-title();
+
+  text-align     : left;
+  margin         : 0 0 var( --payment-page-spacing-type-block-element ) 0;
+  padding        : 0 0 var( --payment-page-spacing-type-block-element ) 0;
+  border-bottom  : 1px solid var( --payment-page-layout-secondary-border-color );
+}
+
+@mixin payment-page-administration-panel-tool-description() {
+  @include payment-page-font-default();
+
+  text-align     : center;
+  margin         : 0 0 var( --payment-page-spacing-type-secondary ) 0;
+  padding        : 0;
+}
+
+@mixin payment-page-administration-panel-tool-field-container( $container_attribute_prefix : '', $label_size : 150px ) {
+  padding        : 0 var( --payment-page-spacing-type-secondary ) 0 0;
+  margin         : 0 0 var( --payment-page-spacing-type-secondary ) 0;
+
+  --payment-page-layout-primary-background-color : var( --payment-page-layout-tertiary-background-color );
+
+  > label {
+    display       : block;
+    padding       : 0;
+    width         : 100%;
+    margin        : 0 0 var( --payment-page-spacing-type-block-element ) 0;
+
+    --payment-page-text-default-font-weight : bold;
+
+    @include payment-page-font-default();
+    @include box-sizing( border-box );
+  }
+
+  > input[type="text"],
+  > input[type="date"],
+  > select {
+    width       : 100%;
+    max-width   : 100%;
+    background  : var( --payment-page-layout-secondary-background-color );
+    border      : 1px solid var( --payment-page-layout-primary-border-color );
+    padding     : var( --payment-page-spacing-type-block-element );
+    margin      : 0;
+
+    @include payment-page-font-default();
+    @include box-sizing( border-box );
+  }
+
+  > select {
+    @include payment-page-element-select-arrow();
+  }
+
+  @if $container_attribute_prefix != '' {
+    [#{$container_attribute_prefix}-container="field_description"] {
+      margin  : var( --payment-page-spacing-type-block-element ) 0 0 0;
+      @include payment-page-font-medium();
+    }
+  }
+}

@@ -1,0 +1,531 @@
+@font-face {
+  font-family: Graphik;
+  src: url("../../fonts/graphik-regular.otf") format("opentype"); }
+
+@font-face {
+  font-family: Graphik;
+  font-weight: 200;
+  src: url("../../fonts/graphik-extra-light.otf") format("opentype"); }
+
+@font-face {
+  font-family: Graphik;
+  font-weight: 300;
+  src: url("../../fonts/graphik-light.otf") format("opentype"); }
+
+@font-face {
+  font-family: Graphik;
+  font-weight: 500;
+  src: url("../../fonts/graphik-medium.otf") format("opentype"); }
+
+@font-face {
+  font-family: Graphik;
+  font-weight: 600;
+  src: url("../../fonts/graphik-semi-bold.otf") format("opentype"); }
+
+[data-payment-page-component="admin-dashboard"] {
+  --payment-page-font-family: Graphik, serif;
+  font-family: Graphik, serif;
+  padding: 56px 20px 0 0;
+  max-width: 1300px;
+  margin: 0 auto; }
+  [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="logo-container"] {
+    display: flex; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="logo-container"] > img {
+      margin: 0 auto; }
+  [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] {
+    background: var(--payment-page-layout-primary-background-color);
+    box-shadow: 0 0 32px #C2C8CC54;
+    max-width: 547px;
+    padding: 42px 20px 30px 20px;
+    margin: 20px auto 0 auto;
+    animation: 0.5s ease-out 0s 1 payment-page-admin-dashboard-animation;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] > [data-payment-page-component-admin-dashboard-section="sub_title"] {
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--payment-page-secondary-color);
+      text-align: center;
+      line-height: 1.61em; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] > [data-payment-page-component-admin-dashboard-section="title"] {
+      font-size: 31px;
+      font-weight: 200;
+      color: var(--payment-page-primary-color);
+      text-align: center;
+      line-height: 1.58em; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] > [data-payment-page-component-admin-dashboard-section="operations"] {
+      margin: 25px 0 0 0;
+      text-align: center; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] > [data-payment-page-component-admin-dashboard-section="operations"] > a, [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] > [data-payment-page-component-admin-dashboard-section="operations"] span {
+        margin: 0 0 0 20px;
+        display: inline-block;
+        color: var(--payment-page-text-color-primary);
+        font-size: 16px;
+        line-height: 1.55em;
+        font-weight: 300;
+        text-decoration: unset;
+        cursor: pointer; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="quick-setup"] > [data-payment-page-component-admin-dashboard-section="operations"] > *:first-child {
+        margin-left: 0; }
+  [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] {
+    background: var(--payment-page-layout-primary-background-color);
+    margin: 40px auto 0 auto;
+    overflow: hidden;
+    padding: 20px 20px 0 20px;
+    border: 1px solid #DAE4F1;
+    display: flex;
+    flex-direction: row;
+    height: 58px;
+    align-items: center;
+    align-content: center;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 0 32px #C2C8CC54;
+    box-shadow: 0 0 32px #C2C8CC54; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger] {
+      color: #6C8DB9;
+      display: inline-block;
+      font-size: 18px;
+      text-decoration: unset;
+      padding-bottom: 15px;
+      cursor: pointer; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger="hashtag_navigation"] {
+      margin-right: 40px; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger="hashtag_navigation"]:last-child {
+        margin-right: 0; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger="hashtag_navigation"][data-payment-page-interaction-state="active"], [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger="hashtag_navigation"]:hover {
+        border-bottom: 3px solid var(--payment-page-primary-color);
+        color: var(--payment-page-primary-color); }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger="quick-setup"] {
+      margin: 0 0 0 auto; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="navigation"] > [data-payment-page-component-admin-dashboard-section="menu_container"] > [data-payment-page-component-admin-dashboard-trigger="quick-setup"]:hover {
+        color: var(--payment-page-primary-color); }
+  [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] {
+    animation: 0.7s ease-out 0s 1 payment-page-admin-dashboard-animation; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] {
+      display: flex;
+      flex-direction: column;
+      background: var(--payment-page-layout-primary-background-color);
+      border-radius: 10px;
+      margin-top: 40px;
+      overflow: hidden;
+      border-bottom: 1px solid #DAE4F1;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] {
+        width: 100%;
+        background: var(--payment-page-primary-color);
+        padding: 20px 26px;
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > h2 {
+          color: #fff;
+          font-size: 22px;
+          font-weight: 300;
+          margin: 0;
+          display: flex;
+          align-content: center;
+          align-items: center; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] {
+          margin: 0 0 0 auto;
+          display: flex;
+          flex-direction: row; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-section^="account_name_"] {
+            color: #EDF3F9;
+            margin: auto 25px auto 0;
+            line-height: 1em;
+            font-size: 16px; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_settings_"],
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_connect_"],
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_disconnect_"] {
+            background: #EDF3F9;
+            padding: 8px 10px;
+            border-radius: 3px;
+            line-height: 1.4em;
+            border: 1px solid #000;
+            cursor: pointer;
+            margin: 0 25px 0 0;
+            font-weight: 500; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_settings_"] {
+            display: flex;
+            flex-direction: row;
+            align-items: center; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_settings_"] > img {
+              display: block;
+              height: 10px;
+              margin: 0 0 0 4px; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_connect_"] > [data-payment-page-component-admin-dashboard-section] {
+            display: inline-block;
+            color: #63758C; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_connect_"] > [data-payment-page-component-admin-dashboard-section="letter"] {
+            font-weight: 500;
+            font-size: 18px;
+            border-right: 1px solid #c8d1db;
+            padding-right: 5px;
+            line-height: 1;
+            text-align: center; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_connect_"] > [data-payment-page-component-admin-dashboard-section="connect"] {
+            font-size: 14px;
+            margin-left: 5px;
+            font-weight: 600; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_connect_"]:hover > [data-payment-page-component-admin-dashboard-section] {
+            color: var(--payment-page-primary-color); }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger^="gateway_connect_"] .payment-page-application-loader-wrapper {
+            margin: 0 auto; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section^="gateway_mode_"] {
+              font-size: 15px;
+              color: #fff;
+              border: 1px solid #fff;
+              padding: 8px 15px;
+              text-align: center;
+              line-height: 1;
+              -webkit-border-radius: 4px;
+              border-radius: 4px;
+              -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_mode_test"][data-payment-page-interaction-state="active"] {
+              border-color: #FFD200; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_mode_live"][data-payment-page-interaction-state="active"] {
+              border-color: #6CD219; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] {
+              position: relative;
+              display: inline-block;
+              width: 74px;
+              height: 34px;
+              margin: 0 15px; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] > label input {
+                opacity: 0;
+                width: 0;
+                height: 0; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] > label > span {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #fff;
+                -webkit-transition: .4s;
+                transition: .4s;
+                width: 70px;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 34px; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] > label > span:before {
+                  position: absolute;
+                  content: "";
+                  height: 26px;
+                  width: 26px;
+                  right: 4px;
+                  bottom: 4px;
+                  background-color: var(--payment-page-primary-color);
+                  -webkit-transition: .4s;
+                  transition: .4s;
+                  border-radius: 34px; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] > label input:checked + span {
+                background-color: #fff; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] > label input:checked + span:before {
+                  -webkit-transform: translateX(-35px);
+                  -ms-transform: translateX(-35px);
+                  transform: translateX(-35px); }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="header"] > [data-payment-page-component-admin-dashboard-section="connection"] > [data-payment-page-component-admin-dashboard-trigger="gateway_mode"] > [data-payment-page-component-admin-dashboard-section="gateway_switcher"] > label input:focus + span {
+                box-shadow: 0 0 1px #2196F3; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        border-left: 1px solid #DAE4F1;
+        border-right: 1px solid #DAE4F1;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > img {
+          margin: auto 30px auto 0; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div {
+          color: var(--payment-page-text-color-primary);
+          font-size: 16px; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] {
+            margin: 15px 0 0 0;
+            display: flex;
+            flex-direction: row; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] [data-payment-page-mode] {
+              margin: 0 0 0 4px; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] [data-payment-page-mode][data-payment-page-mode="live"] {
+                color: #6CD219; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] [data-payment-page-mode][data-payment-page-mode="test"] {
+                color: #FFD200; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] {
+              display: flex;
+              flex-direction: row;
+              align-content: center;
+              align-items: center;
+              margin: 0 10px 0 0;
+              cursor: pointer;
+              color: var(--payment-page-primary-color); }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] > [data-payment-page-component-admin-dashboard-trigger]:last-child {
+                margin: 0 auto 0 0; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] > p {
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                align-items: center;
+                color: var(--payment-page-primary-color);
+                font-size: 16px;
+                margin: 0; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] > p > [data-payment-page-component-admin-dashboard-section="title"] {
+                  border-bottom: 1px solid var(--payment-page-primary-color); }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="description_container"] > div > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] > img {
+                display: block;
+                height: 10px;
+                margin: 0 0 0 4px; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] {
+        display: none;
+        border-left: 1px solid #DAE4F1;
+        border-right: 1px solid #DAE4F1; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] {
+          border-top: 2px solid var(--payment-page-secondary-color);
+          border-spacing: 0;
+          border-collapse: collapse;
+          width: 100%; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > thead > tr > th {
+            color: var(--payment-page-secondary-color);
+            font-size: 20px;
+            padding: 20px 20px 15px 20px;
+            text-align: center;
+            font-weight: 400; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > thead > tr > th:first-child {
+              text-align: left; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td {
+            border-top: 1px solid var(--payment-page-secondary-color);
+            padding: 5px 20px 20px 20px;
+            vertical-align: top; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td p {
+              color: var(--payment-page-text-default-color);
+              font-size: 16px;
+              margin: 0;
+              display: flex;
+              align-content: center;
+              align-items: center;
+              flex-wrap: wrap; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td p > img {
+                margin: auto 0 auto 20px;
+                max-width: 100px;
+                max-height: 40px; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td p > a {
+                font-size: 16px;
+                color: var(--payment-page-primary-color);
+                margin: 0 0 0 4px; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td p [data-payment-page-mode] {
+                margin: 0 0 0 4px; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td p [data-payment-page-mode][data-payment-page-mode="live"] {
+                  color: #6CD219; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td p [data-payment-page-mode][data-payment-page-mode="test"] {
+                  color: #FFD200; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td > p {
+              margin: 15px 0 0 0; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td > [data-payment-page-component-admin-dashboard-section="payment_method_settings_container"] {
+              margin: 15px 0 0 0;
+              display: flex;
+              flex-direction: row; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td > [data-payment-page-component-admin-dashboard-section="payment_method_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] {
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                align-items: center;
+                margin: 0 10px 0 0;
+                cursor: pointer;
+                color: var(--payment-page-primary-color); }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td > [data-payment-page-component-admin-dashboard-section="payment_method_settings_container"] > [data-payment-page-component-admin-dashboard-trigger]:last-child {
+                  margin: 0 auto 0 0; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td > [data-payment-page-component-admin-dashboard-section="payment_method_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] > p {
+                  display: flex;
+                  flex-direction: row;
+                  align-content: center;
+                  align-items: center;
+                  color: var(--payment-page-primary-color); }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td > [data-payment-page-component-admin-dashboard-section="payment_method_settings_container"] > [data-payment-page-component-admin-dashboard-trigger] > img {
+                  display: block;
+                  height: 10px;
+                  margin: 0 0 0 4px; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td .payment-page-application-loader-wrapper {
+              margin-top: 25px; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td label {
+              display: block;
+              position: relative;
+              cursor: pointer;
+              font-size: 22px;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              margin: 20px auto 0 auto;
+              width: 27px; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td label > input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0; }
+                [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td label > input:checked ~ span {
+                  background-color: var(--payment-page-primary-color); }
+                  [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td label > input:checked ~ span::after {
+                    width: 5px;
+                    height: 10px;
+                    border: solid white;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    display: block;
+                    content: '';
+                    margin: auto 0 8px 0; }
+              [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"] > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] > [data-payment-page-component-admin-dashboard-section="payment_methods"] > tbody > tr > td label > span {
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                height: 25px;
+                width: 25px;
+                background-color: #eee;
+                border-radius: 3px;
+                border: 1px solid var(--payment-page-primary-color); }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="test"] [data-payment-page-component-admin-dashboard-section="account_name_live"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="test"] [data-payment-page-component-admin-dashboard-trigger="gateway_settings_live"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="test"] [data-payment-page-component-admin-dashboard-trigger="gateway_connect_live"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="test"] [data-payment-page-component-admin-dashboard-trigger="gateway_disconnect_live"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="test"] [data-payment-page-component-admin-dashboard-trigger^="payment_method-settings_live_"] {
+        display: none !important; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="test"] [data-payment-page-component-admin-dashboard-section="gateway_mode_test"][data-payment-page-interaction-state="active"] {
+        background: #FFD200; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="live"] [data-payment-page-component-admin-dashboard-section="account_name_test"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="live"] [data-payment-page-component-admin-dashboard-trigger="gateway_settings_test"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="live"] [data-payment-page-component-admin-dashboard-trigger="gateway_connect_test"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="live"] [data-payment-page-component-admin-dashboard-trigger="gateway_disconnect_test"],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="live"] [data-payment-page-component-admin-dashboard-trigger^="payment_method-settings_test_"] {
+        display: none !important; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-gateway-mode="live"] [data-payment-page-component-admin-dashboard-section="gateway_mode_live"][data-payment-page-interaction-state="active"] {
+        background: #6CD219; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-has-payment-methods="1"] > [data-payment-page-component-admin-dashboard-section="header"] > h2 {
+        cursor: pointer; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-has-payment-methods="1"] > [data-payment-page-component-admin-dashboard-section="header"] > h2:before {
+          font-family: "Dashicons";
+          content: "\f345";
+          margin: 0 5px 0 0; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-has-payment-methods-visible="1"] > [data-payment-page-component-admin-dashboard-section="header"] > h2:before {
+        content: "\f347"; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section^="payment_gateway_"][data-payment-page-has-payment-methods-visible="1"] > [data-payment-page-component-admin-dashboard-section="description_container"] {
+        padding-bottom: 15px; }
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] {
+      background: var(--payment-page-layout-primary-background-color);
+      margin: 40px auto 0 auto;
+      overflow: hidden;
+      padding: 30px;
+      border: 1px solid #DAE4F1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 50px 30px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] {
+        display: flex;
+        flex-direction: column; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > img {
+          max-width: 100%; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="dependency_text"] {
+          padding: 10px;
+          color: #6798DB;
+          font-size: 16px;
+          font-weight: 400;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          align-content: center;
+          margin: 0 auto; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="dependency_text"] > span {
+            margin: 0 5px; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="dependency_text"] > img {
+            max-height: 16px; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px 10px; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-trigger],
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-section] {
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+            color: #fff;
+            display: block;
+            padding: 12px 0 10px 0;
+            text-decoration: unset;
+            line-height: 1;
+            cursor: pointer;
+            -webkit-border-radius: 10px;
+            border-radius: 10px; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-trigger] > .payment-page-application-loader-wrapper[data-payment-page-loader-type="mini"],
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-section] > .payment-page-application-loader-wrapper[data-payment-page-loader-type="mini"] {
+              margin: 0 auto; }
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-trigger][disabled="disabled"],
+            [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-section][disabled="disabled"] {
+              background: var(--payment-page-status-neutral-background-color);
+              color: var(--payment-page-text-color-primary);
+              cursor: not-allowed; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-trigger],
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-section="upgrade"] {
+            background: transparent linear-gradient(90deg, #1168EF 0%, #76ACF7 100%) 0 0 no-repeat padding-box; }
+          [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-section="preview"] {
+            background: transparent linear-gradient(90deg, #37BD90 0%, #6CDCB2 100%) 0 0 no-repeat padding-box; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-notification] {
+          margin: 20px 0 0 0; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] [data-payment-page-component-admin-dashboard-section="placeholder"] {
+        text-align: center;
+        color: var(--payment-page-primary-color);
+        font-weight: 400;
+        font-size: 27px;
+        line-height: 33px;
+        display: flex;
+        align-content: center;
+        align-items: center; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] [data-payment-page-component-admin-dashboard-section="placeholder"] > span {
+          display: block;
+          width: 100%; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"][data-payment-page-template-count-odd="0"] [data-payment-page-component-admin-dashboard-section="placeholder"] {
+        grid-column: 1 / -1; }
+  @media (max-width: 1100px) {
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px 20px; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="dependency_text"] {
+        font-size: 18px; }
+        [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="dependency_text"] > img {
+          max-height: 21px; }
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-trigger],
+      [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] > [data-payment-page-component-admin-dashboard-section="template_information"] > [data-payment-page-component-admin-dashboard-section="template_operations"] > [data-payment-page-component-admin-dashboard-section] {
+        font-size: 22px;
+        padding: 15px 0 13px 0; } }
+  @media (max-width: 767px) {
+    [data-payment-page-component="admin-dashboard"] > [data-payment-page-component-admin-dashboard-section="container"] > [data-payment-page-component-admin-dashboard-section="template_list"] {
+      grid-template-columns: 100%;
+      gap: 20px 20px;
+      padding: 20px; } }
+
+@keyframes payment-page-admin-dashboard-animation {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }

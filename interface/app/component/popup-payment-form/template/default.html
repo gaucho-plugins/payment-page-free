@@ -1,0 +1,11 @@
+<div data-payment-page-component-popup-payment-form-section="list">
+  <# _.each( data.payment_method_gateways, function( payment_gateway_information, payment_gateway ) { #>
+    <# _.each( payment_gateway_information.payment_methods, function( payment_method ) { #>
+      <div data-payment-page-component-popup-payment-form-trigger="start_payment_method_{{ payment_method.id }}"
+           data-payment-page-payment-gateway="{{ payment_gateway }}"
+           data-payment-page-interaction-state="inactive">
+        <img src="{{ payment_method.image }}" alt="{{ payment_method.name }}"/>
+      </div>
+    <# }) #>
+  <# }) #>
+</div>

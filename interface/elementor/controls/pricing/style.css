@@ -1,0 +1,40 @@
+.pricing-plan-repeater{
+
+}
+
+.pricing-plan-repeater .elementor-control-input-wrapper .field-group{
+  display: flex;
+  flex-flow: row wrap;
+  border: 1px solid #64666a;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.pricing-plan-repeater .elementor-control-input-wrapper  .field-group .remove-price-row{
+  display: inline-flex;
+  align-items: center;
+  padding-top: 1em;
+}
+
+
+.pricing-plan-repeater .elementor-control-input-wrapper  .field-group .field.price-input{
+  width: 90%;
+}
+
+.pricing-plan-repeater .elementor-control-input-wrapper  .field-group .field.frequency-selector{
+  width: 90%;
+
+}
+
+.pricing-plan-repeater .elementor-control-input-wrapper .field-group .field.currency-selector{
+  width: 90%;
+}
+
+.error-message{
+  margin: 1em 0;
+  color: red;
+}
+
+.elementor-control-prices .elementor-control-field-description {
+  color: #fff !important;
+}

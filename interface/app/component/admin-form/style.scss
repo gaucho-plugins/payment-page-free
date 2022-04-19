@@ -1,0 +1,136 @@
+@import '../../mixins.scss';
+
+@font-face {
+  font-family: Graphik;
+  src: url("../../fonts/graphik-regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Graphik;
+  font-weight : 200;
+  src: url("../../fonts/graphik-extra-light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Graphik;
+  font-weight : 300;
+  src: url("../../fonts/graphik-light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Graphik;
+  font-weight : 500;
+  src: url("../../fonts/graphik-medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Graphik;
+  font-weight : 600;
+  src: url("../../fonts/graphik-semi-bold.otf") format("opentype");
+}
+
+[data-payment-page-component="admin-form"] {
+  --payment-page-font-family : Graphik, serif;
+
+  font-family : Graphik, serif;
+  display : flex;
+  flex-direction : column;
+  
+  > h2 {
+    @include payment-page-font-title();
+
+    margin : 0 0 var( --payment-page-spacing-type-secondary ) 0;
+
+    > span {
+      &[data-payment-page-mode="test"] {
+        color: #f1c40f;
+      }
+
+      &[data-payment-page-mode="live"] {
+        color: #2ecc71;
+      }
+    }
+  }
+
+  > [data-payment-page-component-admin-form-section="description"] {
+    @include payment-page-font-medium();
+
+    margin : 0 0 var( --payment-page-spacing-type-secondary ) 0;
+  }
+
+  > form {
+    display : flex;
+    flex-direction : column;
+
+    > [data-payment-page-component-admin-form-section="field_row"] {
+      margin : 0 0 var( --payment-page-spacing-type-tertiary ) 0;
+
+      > label {
+        --payment-page-text-standard-font-weight : bold;
+
+        padding     : 0;
+        display     : block;
+        margin      : 0 0 var( --payment-page-spacing-type-block-element ) 0;
+        @include box-sizing( border-box );
+        @include payment-page-font-standard();
+
+        > [data-payment-page-component-admin-form-section="field_required"] {
+          color : var( --payment-page-status-danger-color );
+        }
+      }
+
+      > input[type="text"],
+      >  select {
+        max-width   : 100%;
+        width       : 100%;
+        border      : 1px solid var( --payment-page-layout-secondary-border-color );
+        color       : var( --payment-page-text-color-primary );
+        padding     : var( --payment-page-spacing-type-block-element );
+        background  : transparent;
+        margin      : 0;
+
+        @include payment-page-font-standard();
+        @include box-sizing( border-box );
+        @include box-shadow( none );
+        @include border-radius( var( --payment-page-layout-border-radius ) );
+
+        &:focus,
+        &:hover {
+          outline: none;
+          border-color: var( --payment-page-text-color-primary );
+        }
+
+        &[disabled="disabled"] {
+          cursor     : not-allowed;
+          background : var( --payment-page-layout-secondary-background-color );
+        }
+      }
+
+      > [data-payment-page-component-admin-form-section="description"] {
+        @include payment-page-font-standard();
+
+        > p {
+          @include payment-page-font-standard();
+          margin : var( --payment-page-spacing-type-block-element ) 0 0 0;
+        }
+      }
+
+      select {
+        @include payment-page-element-select-arrow();
+      }
+    }
+
+    > [data-payment-page-component-admin-form-section="operations_row"] {
+      display: flex;
+      flex-direction: row;
+
+      > [data-payment-page-button] {
+        padding : 10px 20px;
+        font-size : 16px;
+        margin : 0 auto;
+
+        @include border-radius( var( --payment-page-layout-border-radius ) );
+      }
+    }
+  }
+}

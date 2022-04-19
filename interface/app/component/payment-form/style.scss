@@ -1,0 +1,677 @@
+@import '../../mixins.scss';
+
+@mixin form_field_container() {
+  width    : 100%;
+  border   : var( --payment-page-element-form-input-container-border );
+  position : relative;
+  background : var( --payment-page-element-form-input-container-background );
+
+  @include border-radius( var( --payment-page-element-form-input-container-border-radius ) );
+}
+
+@mixin form_field_label() {
+  width: var( --payment-page-element-form-label-width );
+  text-align: var( --payment-page-element-form-label-text-align );
+  line-height: var( --payment-page-element-form-label-line-height );
+  overflow: var( --payment-page-element-form-label-overflow );
+  text-overflow: var( --payment-page-element-form-label-text-overflow );
+  white-space: var( --payment-page-element-form-label-white-space );
+  cursor: var( --payment-page-element-form-label-cursor );
+  pointer-events: var( --payment-page-element-form-label-pointer-events );
+  transform-origin: 0 50% 0;
+  transition-property: color, transform;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  color: var( --payment-page-element-form-label-color );
+  text-transform: var( --payment-page-element-form-label-text-transform );
+  font-size: var( --payment-page-element-form-label-font-size );
+  font-weight: var( --payment-page-element-form-label-font-weight );
+  font-family: var( --payment-page-element-form-label-font-family );
+
+  &[data-payment-page-interaction-state="error"] {
+    color : var( --payment-page-element-form-label-state-error-color );
+  }
+}
+
+@mixin form_field_label_active() {
+  color: var( --payment-page-element-form-label-active-color );
+  text-transform: var( --payment-page-element-form-label-active-text-transform );
+  font-size: var( --payment-page-element-form-label-active-font-size );
+  font-weight: var( --payment-page-element-form-label-active-font-weight );
+  font-family: var( --payment-page-element-form-label-active-font-family );
+}
+
+@mixin form_field_input() {
+  background : transparent;
+  padding: 5px 10px 5px 15px;
+  color : var( --payment-page-element-form-input-color );
+  font-size : var( --payment-page-element-form-input-font-size );
+  font-weight : var( --payment-page-element-form-input-font-weight );
+  font-family : var( --payment-page-element-form-input-font-family );
+  text-transform : var( --payment-page-element-form-input-text-transform );
+  appearance: none;
+  outline: none;
+  border : none;
+
+  @include box-sizing( border-box );
+}
+
+@mixin form_field_input_placeholder() {
+  color : var( --payment-page-element-form-input-placeholder-color );
+  font-size : var( --payment-page-element-form-input-placeholder-font-size );
+  font-weight : var( --payment-page-element-form-input-placeholder-font-weight );
+  font-family : var( --payment-page-element-form-input-placeholder-font-family );
+  text-transform : var( --payment-page-element-form-input-placeholder-text-transform );
+}
+
+[data-payment-page-component="payment-form"] {
+  --payment-page-element-form-pricing-plans-title-color : rgb(50, 50, 93);
+  --payment-page-element-form-pricing-plans-title-font-family : Tahoma;
+  --payment-page-element-form-pricing-plans-title-font-size   : 16px;
+  --payment-page-element-form-pricing-plans-title-font-weight : 700;
+  --payment-page-element-form-pricing-plans-title-text-transform : none;
+  --payment-page-element-form-pricing-plans-title-margin : 1em 0;
+
+  --payment-page-element-form-custom-amount-title-color : rgb(50, 50, 93);
+  --payment-page-element-form-custom-amount-title-font-family : Tahoma;
+  --payment-page-element-form-custom-amount-title-font-size   : 16px;
+  --payment-page-element-form-custom-amount-title-font-weight : 700;
+  --payment-page-element-form-custom-amount-title-text-transform : none;
+  --payment-page-element-form-custom-amount-title-margin : 1em 0;
+
+  --payment-page-element-form-payment-information-title-color : rgb(50, 50, 93);
+  --payment-page-element-form-payment-information-title-font-family : Tahoma;
+  --payment-page-element-form-payment-information-title-font-size   : 16px;
+  --payment-page-element-form-payment-information-title-font-weight : 700;
+  --payment-page-element-form-payment-information-title-text-transform : none;
+  --payment-page-element-form-payment-information-title-margin : 1em 0;
+
+  --payment-page-element-form-payment-method-title-color : rgb(50, 50, 93);
+  --payment-page-element-form-payment-method-title-font-family : Tahoma;
+  --payment-page-element-form-payment-method-title-font-size   : 16px;
+  --payment-page-element-form-payment-method-title-font-weight : 700;
+  --payment-page-element-form-payment-method-title-text-transform : none;
+  --payment-page-element-form-payment-method-title-margin : 1em 0;
+
+  @include variables-payment-method-section-items();
+
+  --payment-page-element-pricing-filter-container-background : transparent none repeat scroll 0 0;
+  --payment-page-element-pricing-filter-container-padding : 0;
+  --payment-page-element-pricing-filter-container-border : 0;
+  --payment-page-element-pricing-filter-container-border-radius : 0;
+
+  --payment-page-element-pricing-filter-trigger-font-family : "Open Sans", sans-serif;
+  --payment-page-element-pricing-filter-trigger-margin : 0;
+  --payment-page-element-pricing-filter-trigger-background : transparent none repeat scroll 0 0;
+  --payment-page-element-pricing-filter-trigger-color : rgb(50, 50, 93);
+  --payment-page-element-pricing-filter-trigger-text-align : center;
+  --payment-page-element-pricing-filter-trigger-text-transform : uppercase;
+  --payment-page-element-pricing-filter-trigger-font-weight : 400;
+  --payment-page-element-pricing-filter-trigger-line-height : 28px;
+  --payment-page-element-pricing-filter-trigger-font-size : 12px;
+  --payment-page-element-pricing-filter-trigger-padding : 0;
+  --payment-page-element-pricing-filter-trigger-cursor : pointer;
+  --payment-page-element-pricing-filter-trigger-border-radius : 0;
+  --payment-page-element-pricing-filter-trigger-border : 0 solid rgb(50, 50, 93);
+
+  --payment-page-element-pricing-filter-trigger-active-background : rgb(50, 50, 93) none repeat scroll 0% 0%;
+  --payment-page-element-pricing-filter-trigger-active-color : white;
+  --payment-page-element-pricing-filter-trigger-active-border-radius : 0;
+  --payment-page-element-pricing-filter-trigger-active-border : 0 solid rgb(206, 195, 230);
+  --payment-page-element-pricing-filter-trigger-active-cursor : default;
+
+  --payment-page-element-pricing-filter-select-background : rgb(255, 255, 255);
+  --payment-page-element-pricing-filter-select-padding : 5px 35px 5px 5px;
+  --payment-page-element-pricing-filter-select-color : rgb(50, 50, 93);
+  --payment-page-element-pricing-filter-select-font-family : "inherit";
+  --payment-page-element-pricing-filter-select-text-align : left;
+  --payment-page-element-pricing-filter-select-text-transform : none;
+  --payment-page-element-pricing-filter-select-font-weight : 400;
+  --payment-page-element-pricing-filter-select-font-size : 16px;
+  --payment-page-element-pricing-filter-select-cursor : pointer;
+  --payment-page-element-pricing-filter-select-border : 1px solid rgb(50, 50, 93);
+  --payment-page-element-pricing-filter-select-border-radius : 10px;
+  --payment-page-element-pricing-filter-select-arrow-color : rgb(50, 50, 93);
+
+  --payment-page-element-form-select-background : rgb(255, 255, 255);
+  --payment-page-element-form-select-border-radius : 10px;
+  --payment-page-element-form-select-border : 1px solid rgb(50, 50, 93);
+  --payment-page-element-form-select-padding : 10px;
+  --payment-page-element-form-select-color : rgb(50, 50, 93);
+  --payment-page-element-form-select-text-align : left;
+  --payment-page-element-form-select-text-transform : none;
+  --payment-page-element-form-select-font-weight : 400;
+  --payment-page-element-form-select-font-size : 16px;
+  --payment-page-element-form-select-font-family : inherit;
+  --payment-page-element-form-select-arrow-color : rgb(50, 50, 93);
+  --payment-page-element-form-select-option-background : transparent;
+  --payment-page-element-form-select-option-active-background : transparent;
+
+  --payment-page-element-form-input-container-background : rgb(255, 255, 255);
+  --payment-page-element-form-input-container-border-radius : 10px;
+  --payment-page-element-form-input-container-border : 1px solid rgb(50, 50, 93);
+  --payment-page-element-form-input-container-border-size : 1px;
+  --payment-page-element-form-input-container-padding : 10px;
+
+  --payment-page-element-form-input-container-state-error-border : 1px solid var( --payment-page-status-danger-color );
+
+  --payment-page-element-form-label-color : rgb(134, 118, 170);
+  --payment-page-element-form-label-text-transform : none;
+  --payment-page-element-form-label-font-size : 15px;
+  --payment-page-element-form-label-font-weight : normal;
+  --payment-page-element-form-label-font-family : "Open Sans", sans-serif;
+  --payment-page-element-form-label-width : 100%;
+  --payment-page-element-form-label-text-align : left;
+  --payment-page-element-form-label-line-height : 50px;
+  --payment-page-element-form-label-overflow : hidden;
+  --payment-page-element-form-label-text-overflow : ellipsis;
+  --payment-page-element-form-label-white-space : nowrap;
+  --payment-page-element-form-label-cursor : text;
+  --payment-page-element-form-label-pointer-events : none;
+  --payment-page-element-form-label-state-error-color : var( --payment-page-status-danger-color );
+
+  --payment-page-element-form-label-active-color : rgb(134, 118, 170);
+  --payment-page-element-form-label-active-text-transform : none;
+  --payment-page-element-form-label-active-font-size : 15px;
+  --payment-page-element-form-label-active-font-weight : normal;
+  --payment-page-element-form-label-active-font-family : "Open Sans", sans-serif;
+
+  --payment-page-element-form-input-color          : rgb(50, 50, 93);
+  --payment-page-element-form-input-font-size      : 13px;
+  --payment-page-element-form-input-font-weight    : normal;
+  --payment-page-element-form-input-font-family    : "Open Sans", sans-serif;
+  --payment-page-element-form-input-text-transform : none;
+
+  --payment-page-element-form-input-placeholder-color          : rgb(50, 50, 93);
+  --payment-page-element-form-input-placeholder-font-size      : 13px;
+  --payment-page-element-form-input-placeholder-font-weight    : normal;
+  --payment-page-element-form-input-placeholder-font-family    : "Open Sans", sans-serif;
+  --payment-page-element-form-input-placeholder-text-transform : none;
+
+  --payment-page-element-form-submit-color : rgb(255, 255, 255);
+  --payment-page-element-form-submit-background : rgb(50, 50, 93);
+  --payment-page-element-form-submit-font-weight : normal;
+  --payment-page-element-form-submit-text-transform : uppercase;
+  --payment-page-element-form-submit-font-family : "Open Sans", sans-serif;
+  --payment-page-element-form-submit-font-size : 16px;
+  --payment-page-element-form-submit-padding : 12px;
+  --payment-page-element-form-submit-border-radius : 4px;
+  --payment-page-element-form-submit-border : 1px transparent solid;
+  --payment-page-element-form-submit-spacing-top : 25px;
+  --payment-page-element-form-submit-box-shadow : none;
+
+  --payment-page-success-title-color          : rgb(50, 50, 93);
+  --payment-page-success-title-font-size      : 18px;
+  --payment-page-success-title-font-weight    : normal;
+  --payment-page-success-title-font-family    : "Open Sans", sans-serif;
+  --payment-page-success-title-text-transform : none;
+
+  --payment-page-success-message-color          : rgb(50, 50, 93);
+  --payment-page-success-message-font-size      : 14px;
+  --payment-page-success-message-font-weight    : normal;
+  --payment-page-success-message-font-family    : "Open Sans", sans-serif;
+  --payment-page-success-message-text-transform : none;
+
+  --payment-page-success-payment-detail-color          : rgb(50, 50, 93);
+  --payment-page-success-payment-detail-font-size      : 12px;
+  --payment-page-success-payment-detail-font-weight    : normal;
+  --payment-page-success-payment-detail-font-family    : "Open Sans", sans-serif;
+  --payment-page-success-payment-detail-text-transform : none;
+
+  --payment-page-success-payment-detail-label-color          : rgb(50, 50, 93);
+  --payment-page-success-payment-detail-label-font-size      : 14px;
+  --payment-page-success-payment-detail-label-font-weight    : normal;
+  --payment-page-success-payment-detail-label-font-family    : "Open Sans", sans-serif;
+  --payment-page-success-payment-detail-label-text-transform : none;
+
+  > form {
+    display : flex;
+    flex-direction: column;
+
+    > [data-payment-page-component-payment-form-section] {
+      width : 100%;
+    }
+
+    > [data-payment-page-component-payment-form-section="pricing-filters"] {
+      display: flex;
+      justify-content: center;
+
+      > [data-payment-page-component-payment-form-section^="pricing-filter-"]:nth-child(2) {
+        margin-left : 1em;
+      }
+
+      > div[data-payment-page-component-payment-form-section^="pricing-filter-"] {
+        list-style-type: none;
+        margin: 0;
+        box-sizing: border-box;
+        min-width: 210px;
+        max-width: 100%;
+        min-height: 38px;
+        display: flex;
+        -moz-box-align: center;
+        align-items: center;
+        -moz-box-pack: center;
+        justify-content: center;
+        font-weight: normal;
+
+        background : var( --payment-page-element-pricing-filter-container-background );
+        border: var( --payment-page-element-pricing-filter-container-border );
+        padding: var( --payment-page-element-pricing-filter-container-padding );
+        border-radius: var( --payment-page-element-pricing-filter-container-border-radius );
+
+        > [data-payment-page-component-payment-form-trigger^="filter_"] {
+          width : 100%;
+          display: flex;
+          -moz-box-pack: center;
+          justify-content: center;
+          -moz-box-align: center;
+          align-items: center;
+
+          font-family: var( --payment-page-element-pricing-filter-trigger-font-family );
+          margin: var( --payment-page-element-pricing-filter-trigger-margin ) !important;
+          background: var( --payment-page-element-pricing-filter-trigger-background );
+          color: var( --payment-page-element-pricing-filter-trigger-color );
+          text-align: var( --payment-page-element-pricing-filter-trigger-text-align );
+          text-transform: var( --payment-page-element-pricing-filter-trigger-text-transform );
+          font-weight: var( --payment-page-element-pricing-filter-trigger-font-weight );
+          line-height: var( --payment-page-element-pricing-filter-trigger-line-height );
+          font-size: var( --payment-page-element-pricing-filter-trigger-font-size );
+          padding: var( --payment-page-element-pricing-filter-trigger-padding );
+          cursor: var( --payment-page-element-pricing-filter-trigger-cursor );
+          border: var( --payment-page-element-pricing-filter-trigger-border );
+
+          @include border-radius( var( --payment-page-element-pricing-filter-trigger-border-radius ) );
+
+          &[data-payment-page-interaction-state="active"] {
+            background: var( --payment-page-element-pricing-filter-trigger-active-background );
+            color: var( --payment-page-element-pricing-filter-trigger-active-color );
+            border: var( --payment-page-element-pricing-filter-trigger-active-border );
+            cursor: var( --payment-page-element-pricing-filter-trigger-active-cursor );
+
+            @include border-radius( var( --payment-page-element-pricing-filter-trigger-active-border-radius ) );
+          }
+
+          &[data-payment-page-interaction-state="disabled"] {
+            opacity : 0.6;
+            cursor : not-allowed;
+          }
+        }
+      }
+
+      > select[data-payment-page-component-payment-form-section^="pricing-filter-"] {
+        --payment-page-layout-primary-background-color : var( --payment-page-element-pricing-filter-select-background );
+
+        margin-top : auto;
+        margin-bottom : auto;
+
+        width : auto;
+        display: flex;
+        -moz-box-pack: center;
+        justify-content: center;
+        -moz-box-align: center;
+        align-items: center;
+
+        padding: var( --payment-page-element-pricing-filter-select-padding );
+        color: var( --payment-page-element-pricing-filter-select-color );
+        font-family: var( --payment-page-element-pricing-filter-select-font-family );
+        text-align: var( --payment-page-element-pricing-filter-select-text-align );
+        text-transform: var( --payment-page-element-pricing-filter-select-text-transform );
+        font-weight: var( --payment-page-element-pricing-filter-select-font-weight );
+        font-size: var( --payment-page-element-pricing-filter-select-font-size );
+        cursor: var( --payment-page-element-pricing-filter-select-cursor );
+        border: var( --payment-page-element-pricing-filter-select-border );
+
+        @include border-radius( var( --payment-page-element-pricing-filter-select-border-radius ) );
+        @include payment-page-element-select-arrow( 10px );
+      }
+    }
+
+    > [data-payment-page-component-payment-form-section="pricing-plans"] {
+      > [data-payment-page-component-payment-form-section="title"] {
+        color: var( --payment-page-element-form-pricing-plans-title-color );
+        font-family: var( --payment-page-element-form-pricing-plans-title-font-family );
+        font-size: var( --payment-page-element-form-pricing-plans-title-font-size );
+        font-weight: var( --payment-page-element-form-pricing-plans-title-font-weight );
+        text-transform: var( --payment-page-element-form-pricing-plans-title-text-transform );
+        margin: var( --payment-page-element-form-pricing-plans-title-margin );
+        padding : 0;
+        display: block;
+      }
+      
+      > select {
+        --payment-page-layout-primary-background-color : var( --payment-page-element-form-select-background );
+
+        padding    : var( --payment-page-element-form-select-padding );
+        min-height : 38px;
+        width      : 100%;
+        border     : var( --payment-page-element-form-select-border );
+        color      : var( --payment-page-element-form-select-color );
+        text-align : var( --payment-page-element-form-select-text-align );
+        text-transform : var( --payment-page-element-form-select-text-transform );
+        font-weight : var( --payment-page-element-form-select-font-weight );
+        font-size : var( --payment-page-element-form-select-font-size );
+        font-family : var( --payment-page-element-form-select-font-family );
+        padding-right : 40px !important;
+
+        @include border-radius( var( --payment-page-element-form-select-border-radius ) );
+        @include payment-page-element-select-arrow();
+
+        > option {
+          background : var( --payment-page-element-form-select-option-background ) !important;
+
+          &:checked {
+            background : var( --payment-page-element-form-select-option-active-background ) !important;
+          }
+        }
+      }
+    }
+
+    > [data-payment-page-component-payment-form-section="payment-custom-amount"] {
+      > [data-payment-page-component-payment-form-section="field_row"] {
+        > [data-payment-page-component-payment-form-section="field"] {
+          > label {
+            --payment-page-element-form-label-line-height : 26px;
+            --payment-page-element-form-label-color : var( --payment-page-element-form-custom-amount-title-color );
+            --payment-page-element-form-label-font-family : var( --payment-page-element-form-custom-amount-title-font-family );
+            --payment-page-element-form-label-font-size : var( --payment-page-element-form-custom-amount-title-font-size );
+            --payment-page-element-form-label-font-weight : var( --payment-page-element-form-custom-amount-title-font-weight );
+            --payment-page-element-form-label-text-transform : var( --payment-page-element-form-custom-amount-title-text-transform );
+
+            @include form_field_label();
+
+            margin  : var( --payment-page-element-form-custom-amount-title-margin );
+            display : block;
+          }
+
+          > [data-payment-page-component-payment-form-section="field_container"] {
+            @include form_field_container();
+            height : auto;
+            display: flex;
+            padding: 10px 20px;
+            align-items: center;
+
+            > span {
+              color : var( --payment-page-element-form-label-color );
+              font-size: var(--payment-page-element-form-label-font-size);
+              font-weight : var( --payment-page-element-form-label-font-weight );
+              font-family : var( --payment-page-element-form-label-font-family );
+              text-transform : var( --payment-page-element-form-label-text-transform );
+            }
+
+            > input {
+              @include form_field_input();
+
+              margin : 0;
+              text-align: left !important;
+            }
+          }
+        }
+      }
+    }
+
+    > [data-payment-page-component-payment-form-section="payment-method"] {
+      display: flex;
+      flex-direction: column;
+
+      > [data-payment-page-component-payment-form-section="title"] {
+        color: var( --payment-page-element-form-payment-method-title-color );
+        font-family: var( --payment-page-element-form-payment-method-title-font-family );
+        font-size: var( --payment-page-element-form-payment-method-title-font-size );
+        font-weight: var( --payment-page-element-form-payment-method-title-font-weight );
+        text-transform: var( --payment-page-element-form-payment-method-title-text-transform );
+        margin: var( --payment-page-element-form-payment-method-title-margin );
+        padding : 0;
+        display: block;
+      }
+
+      > [data-payment-page-component-payment-form-section="list"] {
+        display: grid;
+        grid-template-columns: repeat( var( --payment-page-element-form-payment-method-per-row ), 1fr);
+        gap: var( --payment-page-element-form-payment-method-spacing ) var( --payment-page-element-form-payment-method-spacing );
+
+        > [data-payment-page-component-payment-form-trigger^="switch_payment_method_"] {
+          @include payment-method-section-items();
+        }
+      }
+    }
+
+    > [data-payment-page-component-payment-form-section="payment-information"] {
+      display: flex;
+      flex-direction: column;
+
+      > [data-payment-page-component-payment-form-section="title"] {
+        color: var( --payment-page-element-form-payment-information-title-color );
+        font-family: var( --payment-page-element-form-payment-information-title-font-family );
+        font-size: var( --payment-page-element-form-payment-information-title-font-size );
+        font-weight: var( --payment-page-element-form-payment-information-title-font-weight );
+        text-transform: var( --payment-page-element-form-payment-information-title-text-transform );
+        margin: var( --payment-page-element-form-payment-information-title-margin );
+        padding : 0;
+        display: block;
+        grid-column: span 6;
+      }
+
+      > [data-payment-page-component-payment-form-section="field_wrapper"] {
+        display: grid;
+        gap: 10px 10px;
+        grid-template-columns: repeat(6,1fr);
+        grid-auto-flow : row;
+
+        [data-payment-page-component-payment-form-section="field"] {
+          @include form_field_container();
+
+          height : calc( 50px + var( --payment-page-element-form-input-container-border-size ) * 2 );
+
+          > label {
+            position: absolute;
+            left: 15px;
+            @include form_field_label();
+
+            width: calc( var(--payment-page-element-form-label-width) - 15px );
+          }
+
+          > input,
+          > .StripeElement {
+            opacity : 0;
+            position : absolute;
+            height: 30px;
+            margin: 20px 0 0 0;
+            width : 100%;
+            cursor: text;
+
+            @include form_field_input();
+          }
+
+          > input::placeholder {
+            @include form_field_input_placeholder();
+          }
+
+          &[data-payment-page-interaction-state="focus"],
+          &[data-payment-page-interaction-state="error"],
+          &[data-payment-page-interaction-state="not-empty"] {
+            > label {
+              transform: scale(0.85) translateY(-15px);
+              cursor: default;
+
+              @include form_field_label_active();
+
+              width: var(--payment-page-element-form-label-width);
+            }
+
+            > input,
+            > .StripeElement {
+              opacity : 1;
+            }
+          }
+
+          &[data-payment-page-interaction-state="error"] {
+            border   : var( --payment-page-element-form-input-container-state-error-border );
+          }
+
+          &[data-payment-page-field-size="6"] {
+            grid-column: span 6;
+          }
+          &[data-payment-page-field-size="5"] {
+            grid-column: span 5;
+          }
+          &[data-payment-page-field-size="4"] {
+            grid-column: span 4;
+          }
+          &[data-payment-page-field-size="3"] {
+            grid-column: span 3;
+          }
+          &[data-payment-page-field-size="2"] {
+            grid-column: span 2;
+          }
+          &[data-payment-page-field-size="1"] {
+            grid-column: span 1;
+          }
+        }
+
+        > [data-payment-page-component-payment-form-section="field_row"] {
+          margin : 0;
+        }
+
+        #mandate-acceptance {
+          grid-column: span 6;
+          margin : 10px 0 0 0;
+        }
+      }
+    }
+
+    > [data-payment-page-component-payment-form-container="alternative_submit"] {
+      min-width : 200px;
+      margin    : var( --payment-page-element-form-submit-spacing-top ) auto 0 auto;
+      position  : relative;
+
+      &[disabled="disabled"] {
+        opacity   : 0.8;
+
+        &:after {
+          content: "";
+          width: 100%;
+          height: 100%;
+          display: block;
+          position: absolute;
+          top: 0;
+          z-index : 999;
+          cursor  : not-allowed;
+        }
+      }
+
+      &[data-payment-page-size="wide"] {
+        width     : 100%;
+        max-width : 100%;
+      }
+    }
+
+    > [data-payment-page-component-payment-form-trigger="submit"] {
+      color: var( --payment-page-element-form-submit-color ) !important;
+      background: var( --payment-page-element-form-submit-background ) !important;
+      font-weight: var( --payment-page-element-form-submit-font-weight ) !important;
+      text-transform: var( --payment-page-element-form-submit-text-transform ) !important;
+      font-family: var( --payment-page-element-form-submit-font-family ) !important;
+      font-size: var( --payment-page-element-form-submit-font-size ) !important;
+      padding: var( --payment-page-element-form-submit-padding ) !important;
+      border-radius: var( --payment-page-element-form-submit-border-radius ) !important;
+      border: var( --payment-page-element-form-submit-border ) !important;
+      appearance: none !important;
+      outline: none !important;
+      cursor: pointer;
+
+      margin : var( --payment-page-element-form-submit-spacing-top ) auto 0 auto;
+      display: block;
+      min-width: calc(50% - 2000px);
+
+      @include box-sizing( border-box );
+      @include box-shadow( var( --payment-page-element-form-submit-box-shadow ) );
+
+      &[disabled] {
+        opacity : 0.6;
+        cursor : not-allowed;
+      }
+
+      > .payment-page-application-loader-wrapper {
+        margin : 0 auto;
+      }
+    }
+
+    > [data-payment-page-notification] {
+      margin : 1em 0 0 0;
+    }
+  }
+
+  > [data-payment-page-component-payment-form-section="success"] {
+    > h2 {
+      color : var( --payment-page-success-title-color );
+      font-size : var( --payment-page-success-title-font-size );
+      font-weight : var( --payment-page-success-title-font-weight );
+      font-family : var( --payment-page-success-title-font-family );
+      text-transform : var( --payment-page-success-title-text-transform );
+      padding : 0;
+      margin  : 0 0 20px 0;
+    }
+
+    > h3 {
+      color : var( --payment-page-success-message-color );
+      font-size : var( --payment-page-success-message-font-size );
+      font-weight : var( --payment-page-success-message-font-weight );
+      font-family : var( --payment-page-success-message-font-family );
+      text-transform : var( --payment-page-success-message-text-transform );
+      padding : 0;
+      margin  : 0 0 20px 0;
+    }
+
+    > ul {
+      margin  : 20px 0 20px 30px;
+      padding : 0;
+      list-style-type: none;
+
+      > li {
+        padding : 0;
+        margin  : 0 0 10px 0;
+
+        color : var( --payment-page-success-payment-detail-color );
+        font-size : var( --payment-page-success-payment-detail-font-size );
+        font-weight : var( --payment-page-success-payment-detail-font-weight );
+        font-family : var( --payment-page-success-payment-detail-font-family );
+        text-transform : var( --payment-page-success-payment-detail-text-transform );
+
+        > span {
+          color : var( --payment-page-success-payment-detail-label-color );
+          font-size : var( --payment-page-success-payment-detail-label-font-size );
+          font-weight : var( --payment-page-success-payment-detail-label-font-weight );
+          font-family : var( --payment-page-success-payment-detail-label-font-family );
+          text-transform : var( --payment-page-success-payment-detail-label-text-transform );
+        }
+      }
+    }
+  }
+
+  @media (max-width: $break_point_medium_width) {
+    > form {
+      > [data-payment-page-component-payment-form-section="payment-information"] {
+        [data-payment-page-component-payment-form-section="field"] {
+          &[data-payment-page-field-size-mobile="6"] {
+            grid-column: span 6;
+          }
+          &[data-payment-page-field-size-mobile="5"] {
+            grid-column: span 5;
+          }
+          &[data-payment-page-field-size-mobile="4"] {
+            grid-column: span 4;
+          }
+          &[data-payment-page-field-size-mobile="3"] {
+            grid-column: span 3;
+          }
+          &[data-payment-page-field-size-mobile="2"] {
+            grid-column: span 2;
+          }
+          &[data-payment-page-field-size-mobile="1"] {
+            grid-column: span 1;
+          }
+        }
+      }
+    }
+  }
+}

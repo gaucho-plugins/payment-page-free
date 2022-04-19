@@ -1,0 +1,18 @@
+<div data-payment-page-component-payment-form-section="success">
+  <h3>{{ data.message }}</h3>
+
+  <h2>{{ data.title }}</h2>
+  <# if( data.has_payment_details ) { #>
+  <ul>
+    <li><span>{{ data.lang.confirmation_page_item }}: </span>{{ data.item }}</li>
+    <li><span>{{ data.lang.confirmation_page_customer_name }}: </span>{{ data.customer_name }}</li>
+    <li><span>{{ data.lang.confirmation_page_email }}: </span>{{ data.email_address }}</li>
+    <li><span>{{ data.lang.confirmation_page_payment_date }}: </span>{{ data.payment_date }}</li>
+    <li><span>{{ data.lang.confirmation_page_payment_amount }}: </span>{{ data.payment_amount + ' ' + data.currency.toUpperCase() }}</li>
+
+    <# if( typeof data.payment_method_handler !== "undefined" && data.payment_method_handler === "sepa" ) { #>
+    <li>Please note it may take between 2-5 days for the funds to be debited from your account.</li>
+    <# } #>
+  </ul>
+  <# } #>
+</div>

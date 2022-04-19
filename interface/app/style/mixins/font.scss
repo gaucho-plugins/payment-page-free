@@ -1,0 +1,47 @@
+@mixin payment-page-font-default() {
+  font-family : var( --payment-page-font-family );
+  font-size   : var( --payment-page-text-default-font-size );
+  font-style  : var( --payment-page-text-default-font-style );
+  font-weight : var( --payment-page-text-default-font-weight );
+  line-height : var( --payment-page-text-default-line-height );
+  color       : var( --payment-page-text-default-color );
+}
+
+@mixin payment-page-font-small() {
+  font-family : var( --payment-page-font-family );
+  font-size   : var( --payment-page-text-small-font-size );
+  font-style  : var( --payment-page-text-small-font-style );
+  font-weight : var( --payment-page-text-small-font-weight );
+  line-height : var( --payment-page-text-small-line-height );
+  color       : var( --payment-page-text-small-color );
+}
+
+@mixin payment-page-font-medium() {
+  font-family : var( --payment-page-font-family );
+  font-size   : var( --payment-page-text-medium-font-size );
+  font-style  : var( --payment-page-text-medium-font-style );
+  font-weight : var( --payment-page-text-medium-font-weight );
+  line-height : var( --payment-page-text-medium-line-height );
+  color       : var( --payment-page-text-medium-color );
+}
+
+@mixin payment-page-font-standard() {
+  font-family : var( --payment-page-font-family );
+  font-size   : var( --payment-page-text-standard-font-size );
+  font-style  : var( --payment-page-text-standard-font-style );
+  font-weight : var( --payment-page-text-standard-font-weight );
+  line-height : var( --payment-page-text-standard-line-height );
+  color       : var( --payment-page-text-standard-color );
+}
+
+@mixin payment-page-font-title() {
+  font-family : var( --payment-page-font-family );
+  font-size   : var( --payment-page-text-title-font-size );
+  font-style  : var( --payment-page-text-title-font-style );
+  font-weight : var( --payment-page-text-title-font-weight );
+  line-height : var( --payment-page-text-title-line-height );
+  color       : var( --payment-page-text-title-color );
+
+  text-transform  : none;
+  text-decoration : none;
+}

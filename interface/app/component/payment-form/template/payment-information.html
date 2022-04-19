@@ -1,0 +1,41 @@
+<# if( data.lang.payment_information !== '' ) { #>
+  <span data-payment-page-component-payment-form-section="title">{{ data.lang.payment_information }}</span>
+<# } #>
+
+<div data-payment-page-component-payment-form-section="field_wrapper">
+  <# _.each( data.fields_list, function( field_information ) { #>
+    <#
+      if( field_information.type === "payment_method_card" && data.payment_method_handler !== 'ccard' )
+        return true;
+
+      if( field_information.type === "payment_method_iban" && data.payment_method_handler !== 'sepa' )
+        return true;
+    #>
+
+    <# let field_value = typeof data.field_value_assoc !== 'undefined' && typeof data.field_value_assoc[ field_information.name ] !== 'undefined' ? data.field_value_assoc[ field_information.name ] : ''; #>
+
+    <div data-payment-page-component-payment-form-section="field"
+         data-payment-page-field-size="{{ field_information.size }}"
+         data-payment-page-field-size-mobile="{{ parseInt( field_information.size_mobile ) === 0 ? field_information.size : field_information.size_mobile }}"
+         data-payment-page-interaction-state="{{ field_value !== '' ? 'not-empty' : 'blur' }}">
+      <# if( ( field_information.type === "payment_method_card"
+                || field_information.type === "payment_method_iban" ) && field_information.name !== "card_zip_code" ) { #>
+        <div id="payment-page-{{ field_information.name }}-{{ data.uniqid }}"></div>
+      <# } else { #>
+        <input id="payment-page-{{ field_information.name }}-{{ data.uniqid }}"
+               type="text"
+               name="{{ field_information.name }}"
+               placeholder="{{ typeof field_information.placeholder !== 'undefined' ? field_information.placeholder : '' }}"
+               <# if( typeof field_information.is_required !== 'undefined' && parseInt( field_information.is_required ) ) { #>
+               required="required"
+               <# } #>
+               value="{{ field_value }}"/>
+      <# } #>
+      <label for="payment-page-{{ field_information.name }}-{{ data.uniqid }}">{{ field_information.label }}</label>
+    </div>
+  <# }) #>
+
+  <# if( typeof data.payment_method_disclaimer !== 'undefined' && data.payment_method_disclaimer !== '' ) { #>
+    <div id="mandate-acceptance">{{ data.payment_method_disclaimer }}</div>
+  <# } #>
+</div>

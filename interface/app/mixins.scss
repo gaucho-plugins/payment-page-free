@@ -1,0 +1,203 @@
+$break_point_xx_large_width  : 1632px;
+$break_point_x_large_width  : 1100px;
+$break_point_large_width   : 992px;
+$break_point_medium_width  : 767px;
+$break_point_small_width   : 480px;
+$break_point_x_small_width : 320px;
+
+@import "style/mixins/font.scss";
+@import "style/mixins/element.scss";
+@import "style/mixins/administration.scss";
+
+@mixin variables-payment-method-section-items() {
+  --payment-page-element-form-payment-method-per-row  : 3;
+  --payment-page-element-form-payment-method-spacing  : 10px;
+
+  --payment-page-element-form-payment-method-option-border-radius : 0px 0px 0px 0px;
+  --payment-page-element-form-payment-method-option-border-top : 0;
+  --payment-page-element-form-payment-method-option-border-right : 0;
+  --payment-page-element-form-payment-method-option-border-bottom : 2px solid transparent;
+  --payment-page-element-form-payment-method-option-border-left : 0;
+  --payment-page-element-form-payment-method-option-padding     : 5px;
+  --payment-page-element-form-payment-method-option-image-height: 40px;
+
+  --payment-page-element-form-payment-method-option-active-border-radius : 0px 0px 0px 0px;
+  --payment-page-element-form-payment-method-option-active-border-top : 0;
+  --payment-page-element-form-payment-method-option-active-border-right : 0;
+  --payment-page-element-form-payment-method-option-active-border-bottom : 2px solid #2676f1;
+  --payment-page-element-form-payment-method-option-active-border-left : 0;
+  --payment-page-element-form-payment-method-option-active-padding     : 5px;
+}
+
+@mixin payment-method-section-items() {
+  border-top    : var( --payment-page-element-form-payment-method-option-border-top );
+  border-right  : var( --payment-page-element-form-payment-method-option-border-right );
+  border-bottom : var( --payment-page-element-form-payment-method-option-border-bottom );
+  border-left   : var( --payment-page-element-form-payment-method-option-border-left );
+  padding       : var( --payment-page-element-form-payment-method-option-padding );
+  display       : flex;
+  align-content : center;
+
+  @include border-radius( var( --payment-page-element-form-payment-method-option-border-radius ) );
+
+  &[data-payment-page-interaction-state="inactive"] {
+    cursor : pointer;
+  }
+
+  &[data-payment-page-interaction-state="active"] {
+    border-top    : var( --payment-page-element-form-payment-method-option-active-border-top );
+    border-right  : var( --payment-page-element-form-payment-method-option-active-border-right );
+    border-bottom : var( --payment-page-element-form-payment-method-option-active-border-bottom );
+    border-left   : var( --payment-page-element-form-payment-method-option-active-border-left );
+    padding       : var( --payment-page-element-form-payment-method-option-active-padding );
+
+    @include border-radius( var( --payment-page-element-form-payment-method-option-active-border-radius ) );
+  }
+
+  &[data-payment-page-interaction-state="disabled"] {
+    &[data-payment-page-hint]::after {
+      background : var( --payment-page-element-form-payment-method-option-border-color );
+      color: #fff;
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    > img {
+      opacity : 0.7;
+      cursor : not-allowed;
+    }
+  }
+
+  > img {
+    display : block;
+    margin  : auto;
+    height  : var( --payment-page-element-form-payment-method-option-image-height );
+  }
+}
+
+@mixin layout-block-box() {
+  background  : var( --payment-page-layout-background );
+  border      : var( --payment-page-layout-border );
+  padding     : var( --payment-page-layout-padding );
+
+  @include box-shadow( var( --payment-page-layout-box-shadow ) );
+  @include border-radius( var( --payment-page-layout-border-radius ) );
+}
+
+@mixin layout-content-grid() {
+  display               : grid;
+  grid-template-columns : 100%;
+  gap                   : var( --payment-page-spacing-type-primary ) var( --payment-page-spacing-type-primary );
+
+  &[data-payment-page-media-query-breakpoints~="medium"] {
+    &[data-payment-page-media-query-breakpoints~="large"][data-payment-page-per-row="4"] {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &:not( [data-payment-page-media-query-breakpoints~="large"] ) {
+      &[data-payment-page-per-row="4"] {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    &[data-payment-page-per-row="3"] {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &[data-payment-page-per-row="2"] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &:not( [data-payment-page-media-query-breakpoints~="medium"] ) {
+    &[data-payment-page-per-row="4"],
+    &[data-payment-page-per-row="3"],
+    &[data-payment-page-per-row="2"] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &:not( [data-payment-page-media-query-breakpoints~="med_small"] ) {
+    &[data-payment-page-per-row="4"],
+    &[data-payment-page-per-row="3"],
+    &[data-payment-page-per-row="2"] {
+      grid-template-columns : 100%;
+    }
+  }
+
+  &[data-payment-page-per-row="1"] {
+    grid-template-columns : 100% !important;
+  }
+}
+
+@mixin payment-page-icon-primary() {
+  &[data-payment-page-type="fill"] {
+    fill   : var( --payment-page-icon-primary-color );
+  }
+
+  &[data-payment-page-type="stroke"] {
+    stroke : var( --payment-page-icon-primary-color );
+  }
+}
+
+@mixin payment-page-icon-secondary-container() {
+  background    : var( --payment-page-icon-secondary-background );
+  margin        : var( --payment-page-icon-secondary-margin );
+  display       : flex;
+  align-items   : center;
+  width         : var( --payment-page-icon-secondary-background-size );
+  height        : var( --payment-page-icon-secondary-background-size );
+
+  @include border-radius( 50% );
+
+  > svg {
+    width        : var( --payment-page-icon-secondary-size );
+    height       : var( --payment-page-icon-secondary-size );
+    flex-shrink  : 0;
+    margin       : 0 auto;
+    stroke       : var( --payment-page-icon-secondary-stroke );
+    fill         : var( --payment-page-icon-secondary-fill );
+  }
+}
+
+@mixin box-sizing ( $v: border-box ) {
+  -webkit-box-sizing : $v;
+  box-sizing         : $v;
+}
+
+@mixin box-shadow ($v ) {
+  -webkit-box-shadow : $v;
+  box-shadow         : $v;
+}
+
+@mixin border-radius ($v ) {
+  -webkit-border-radius : $v;
+  border-radius         : $v;
+}
+
+@mixin transform ($v ) {
+  -ms-transform     : $v;
+  -webkit-transform : $v;
+  transform         : $v;
+}
+
+@mixin transition ($v ) {
+  -webkit-transition : $v;
+  -o-transition      : $v;
+  transition         : $v;
+}
+
+@mixin animation ($v ) {
+  -webkit-animation : $v;
+  -moz-animation    : $v;
+  -o-animation      : $v;
+  animation         : $v;
+}
+
+@mixin user-select( $v ) {
+  -webkit-touch-callout : $v;
+  -webkit-user-select   : $v;
+  -moz-user-select      : $v;
+  -ms-user-select       : $v;
+  user-select           : $v;
+}

@@ -1,0 +1,50 @@
+.payment-page-elementor-icon {
+  background : url("../../../img/icon.svg" ) no-repeat center;
+  width      : 28px;
+  height     : 28px;
+  display    : block;
+  margin     : 0 auto;
+}
+
+#plan-fields-sorted-container {
+  border: 1px solid #7d7e82;
+  outline: 0;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+  background-color: #34383c;
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  min-height: 32px;
+  width: 90.6%;
+  display: inline-block;
+  padding-bottom: 0.5em;
+}
+#plan-fields-sorted-container > div {
+  float: left;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 0 5px;
+  background-color: #4c4f56;
+  line-height: 1.5;
+  font-size: 0.9em;
+  border: none;
+  color: #e0e1e3;
+}
+
+#pricing-selector-control {
+  display: block;
+}
+
+#pricing-selector-control .fields-enabled {
+  display: block;
+}
+
+#pricing-selector-control .fields-enabled ul.fields-list {
+  margin-bottom: 1em;
+}
+
+#pricing-selector-control .fields-enabled ul.fields-list li label {
+  margin-left: 0.3em;
+}

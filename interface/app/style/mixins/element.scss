@@ -1,0 +1,267 @@
+@mixin payment-page-pagination() {
+  display         : flex;
+  justify-content : center;
+  font-size       : 18px;
+  font-family     : var( --payment-page-font-family );
+  margin          : var( --payment-page-spacing-type-primary ) 0;
+  @include box-sizing( border-box );
+
+  > ul {
+    padding     : 0;
+    margin      : 0;
+    display     : flex;
+    align-items : center;
+
+    @include box-sizing( border-box );
+
+    > li[data-payment-page-pagination-style] {
+      list-style : none;
+      padding    : 8px 12px;
+      margin     : 0 var( --payment-page-spacing-type-block-element ) 0 0;
+      border     : 1px solid var( --payment-page-layout-primary-border-color );
+      background : var( --payment-page-layout-primary-background-color );
+      display    : flex;
+      justify-content : center;
+      align-items     : center;
+
+      @include payment-page-font-small();
+      @include border-radius( var( --payment-page-layout-border-radius ) );
+
+      &:hover:not([data-payment-page-pagination-style="dots"]) {
+        color      : var( --payment-page-accent-color );
+        background : var( --payment-page-primary-color );
+        cursor     : pointer;
+
+        > svg {
+          stroke : var( --payment-page-accent-color );
+        }
+      }
+
+      &[data-payment-page-pagination-style="dots"] {
+        background     : transparent;
+        border         : none;
+        padding-bottom : 0;
+      }
+
+      &[data-payment-page-pagination-style="current"] {
+        color      : var( --payment-page-accent-color );
+        background : var( --payment-page-primary-color );
+        cursor     : default;
+      }
+
+      &:last-child {
+        margin-right : 0;
+      }
+
+      > svg {
+        width  : 14px;
+        height : 20px;
+        stroke : var( --payment-page-text-small-color );
+      }
+    }
+  }
+}
+
+@mixin payment-page-element-select-arrow( $space_right : 15px ) {
+  appearance         : none;
+  -webkit-appearance : none;
+  background : var( --payment-page-layout-primary-background-color ) url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E') no-repeat right $space_right top 55%;
+}
+
+@mixin payment-page-element-arrow( $size, $color ) {
+
+  > i {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    vertical-align: middle;
+    border-style: solid;
+    font-size : 16px;
+  }
+
+  &[data-payment-page-element-direction="up" ] > i {
+    border-width: 0 $size $size $size;
+    border-color: transparent transparent $color transparent;
+  }
+
+  &[data-payment-page-element-direction="right" ] > i {
+    border-width: $size 0 $size $size;
+    border-color: transparent transparent transparent $color;
+  }
+
+  &[data-payment-page-element-direction="down" ] > i {
+    border-width: $size $size 0 $size;
+    border-color: $color transparent transparent transparent;
+  }
+
+  &[data-payment-page-element-direction="left" ] > i {
+    border-width: $size $size $size 0;
+    border-color: transparent $color transparent transparent;
+  }
+}
+
+@mixin payment-page-element-small-settings-box( $target, $size : 250px ) {
+  > #{$target} {
+    @include box-sizing( border-box );
+    @include border-radius( var( --payment-page-layout-border-radius ) 2px var( --payment-page-layout-border-radius ) var( --payment-page-layout-border-radius ) );
+
+    background : var( --payment-page-layout-primary-background-color );
+    position   : absolute;
+    display    : block;
+    padding    : 10px;
+    width      : $size;
+    border     : 1px solid var( --payment-page-layout-secondary-border-color );
+    left       : ( -1 * ( $size - 25px ) );
+    cursor     : default;
+    z-index    : var( --payment-page-popup-overlay-z-index );
+
+    &:before {
+      top              : -3px;
+      left             : ( $size - 35px );
+      width            : 16px;
+      right            : inherit;
+      bottom           : inherit;
+      z-index          : -1;
+      content          : '';
+      height           : 16px;
+      display          : block;
+      position         : absolute;
+      background       : var( --payment-page-layout-primary-background-color );
+      border-top       : 1px solid var( --payment-page-layout-secondary-border-color );
+      border-left      : 1px solid var( --payment-page-layout-secondary-border-color );
+      transform-origin : 50% 50%;
+      @include transform( ( rotate(45deg) translateY(-50%) translateZ(-1px) ) );
+    }
+  }
+
+  &:not( :hover ) > #{$target} {
+    display : none;
+  }
+}
+
+@mixin payment-page-element-icon-link() {
+  text-decoration : none;
+  cursor          : pointer;
+  margin          : 0 0 0 var(--payment-page-spacing-type-block-element);
+  display         : flex;
+  align-content   : center;
+  align-items     : center;
+
+  > svg {
+    width  : 16px;
+    height : 16px;
+    fill   : var( --payment-page-icon-primary-color );
+  }
+
+  &:hover {
+    --payment-page-icon-primary-color : var( --payment-page-primary-color );
+  }
+}
+
+@mixin payment-page-element-search-box() {
+  > input {
+    margin        : 0;
+    padding       : 0 16px;
+    float         : left;
+    height        : 52px;
+    color         : var( --payment-page-text-color-secondary );
+    text-align    : left;
+    position      : relative;
+    background    : var( --payment-page-accent-color );
+    width         : calc( 100% - 48px );
+    max-width     : calc( 100% - 48px );
+    border-color  : var( --payment-page-layout-secondary-border-color );
+    border-style  : solid;
+    border-width  : 1px 0 1px 1px;
+    font-size     : 16px;
+    line-height   : 30px;
+    filter        : drop-shadow(0px 4px 13px rgba(9, 16, 39, 0.03));
+
+    @include border-radius( var( --payment-page-layout-border-radius ) 0 0 var( --payment-page-layout-border-radius ) );
+    @include box-shadow( none );
+    @include box-sizing( border-box );
+  }
+
+  > button {
+    float         : left;
+    width         : 48px;
+    height        : 52px;
+    outline       : none;
+    cursor        : pointer;
+    padding       : 5px 16px;
+    position      : relative;
+    text-align    : center;
+    background    : var( --payment-page-accent-color );
+    border-color  : var( --payment-page-layout-secondary-border-color );
+    border-style  : solid;
+    border-width  : 1px 1px 1px 0;
+
+    @include border-radius( 0 var( --payment-page-layout-border-radius ) var( --payment-page-layout-border-radius ) 0 );
+    @include box-shadow( none );
+    @include box-sizing( border-box );
+
+    > svg {
+      width  : 100%;
+      height : 100%;
+      fill   : var( --payment-page-text-color-secondary );
+    }
+  }
+}
+
+@mixin payment-page-element-checkbox() {
+  cursor      : pointer;
+  position    : relative;
+  font-size   : 18px;
+  line-height : 20px;
+  margin      : 0;
+  display     : flex;
+  align-items : center;
+  align-content : center;
+
+  @include user-select( none );
+  @include box-sizing( border-box );
+
+  > input[type="checkbox"] {
+    position : absolute;
+    opacity  : 0;
+
+    &:hover:not( :checked ) ~ span:first-of-type {
+      opacity : 0.3;
+    }
+
+    &:checked ~ span:first-of-type,
+    &:hover ~ span:first-of-type {
+      background-color : var( --payment-page-primary-color );
+      border           : 2px solid var( --payment-page-primary-color );
+
+      &:after {
+        position     : absolute;
+        left         : 7px;
+        top          : 0;
+        content      : "";
+        width        : 7px;
+        height       : 16px;
+        border       : solid var( --payment-page-accent-color );
+        display      : block;
+        border-width : 0 2px 2px 0;
+
+        @include box-sizing( border-box );
+        @include transform( rotate( 45deg ) );
+      }
+    }
+
+    & ~ span:first-of-type {
+      position         : relative;
+      height           : 24px;
+      width            : 24px;
+
+      background-color : var( --payment-page-accent-color );
+      border           : 2px solid var( --payment-page-layout-secondary-border-color );
+      border-radius    : 5px;
+      margin           : 0 var( --payment-page-spacing-type-block-element ) 0 0;
+      flex-shrink      : 0;
+
+      @include box-sizing( border-box );
+    }
+  }
+}

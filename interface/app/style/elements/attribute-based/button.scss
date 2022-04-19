@@ -1,0 +1,156 @@
+@import '../../../mixins.scss';
+
+[data-payment-page-button] {
+  border: none;
+  height: inherit;
+  cursor: pointer;
+  color: var( --payment-page-accent-color );
+  padding: var( --payment-page-button-padding );
+  font-size: var( --payment-page-button-font-size );
+  font-weight: var( --payment-page-button-font-weight );
+  line-height: var( --payment-page-button-line-height );
+  box-shadow: none;
+  text-shadow: none;
+  margin: 0 3px 0 0;
+  display: inline-block;
+  vertical-align: bottom;
+  text-decoration: none !important;
+  -webkit-appearance: none;
+  text-align : center;
+  @include box-sizing( border-box );
+  @include border-radius( var( --payment-page-layout-border-radius ) );
+
+  .payment-page-application-loader-wrapper {
+    --payment-page-primary-color   : var( --payment-page-accent-color );
+    --payment-page-secondary-color : var( --payment-page-text-color-secondary );
+  }
+
+  &:hover {
+    opacity : 0.9;
+  }
+
+  &[data-payment-page-button-state="active"] {
+    cursor: default;
+    opacity : 0.9;
+  }
+
+  &[data-payment-page-button-state="highlight"] {
+    opacity : 0.5;
+  }
+
+  &[data-payment-page-button="primary"] {
+    color: var( --payment-page-accent-color ) !important;
+    background: var( --payment-page-primary-color) !important;
+
+    &:hover {
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button="primary_glass"] {
+    border : 1px solid var( --payment-page-primary-color );
+    color  : var( --payment-page-primary-color );
+
+    &:hover {
+      color      : var( --payment-page-accent-color );
+      background : var( --payment-page-primary-color);
+    }
+  }
+
+  &[data-payment-page-button="icon"] {
+    --payment-page-button-font-weight : normal;
+
+    color  : var( --payment-page-text-color-primary );
+    border : 1px solid var( --payment-page-icon-primary-color );
+
+    > svg {
+      margin : 0 var( --payment-page-spacing-type-block-element ) 0 0;
+    }
+  }
+
+  &[data-payment-page-button="icon"],
+  &[data-payment-page-button="download_file"] {
+    display     : flex;
+    align-items : center;
+
+    > svg {
+      fill : var( --payment-page-icon-primary-color );
+    }
+
+    &:hover {
+      --payment-page-icon-primary-color : var( --payment-page-primary-color );
+    }
+  }
+
+  &[data-payment-page-button="secondary"] {
+    color: var( --payment-page-accent-color ) !important;
+    background: var( --payment-page-secondary-color ) !important;
+
+    &:hover {
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button="success"] {
+    color: var( --payment-page-accent-color ) !important;
+    background: var( --payment-page-status-success-color ) !important;
+
+    &:hover {
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button="danger"] {
+    color: var( --payment-page-accent-color ) !important;
+    background: var( --payment-page-status-danger-color ) !important;
+
+    &:hover {
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button="warning"] {
+    color: var( --payment-page-accent-color ) !important;
+    background: var( --payment-page-status-warning-color ) !important;
+
+    &:hover {
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button="danger-plain"] {
+    color: var( --payment-page-status-danger-color ) !important;
+
+    &:hover {
+      background: var( --payment-page-status-danger-color ) !important;
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button="plain"] {
+    background: transparent !important;
+    color: var( --payment-page-text-color-secondary ) !important;
+    font-weight : bold;
+
+    &:hover, &[data-payment-page-button-state="active"] {
+      background: var( --payment-page-primary-color ) !important;
+      color: var( --payment-page-accent-color ) !important;
+    }
+  }
+
+  &[data-payment-page-button-size="large"] {
+    padding     : var( --payment-page-button-lg-padding );
+    font-size   : var( --payment-page-button-lg-font-size );
+    line-height : var( --payment-page-button-lg-line-height );
+  }
+
+  &[disabled="disabled"], &[disabled="disabled"]:hover {
+    background : var( --payment-page-layout-secondary-background-color ) !important;
+    color      : var( --payment-page-layout-primary-border-color ) !important;
+  }
+
+  &[disabled="disabled"] .payment-page-application-loader-wrapper {
+    --payment-page-primary-color   : var( --payment-page-layout-primary-border-color );
+    --payment-page-secondary-color : var( --payment-page-layout-primary-border-color );
+  }
+}

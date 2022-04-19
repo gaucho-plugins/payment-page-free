@@ -1,0 +1,57 @@
+<div data-payment-page-component-admin-dashboard-section="template_list"
+     data-payment-page-template-count-odd="{{ data.template_list.length % 2 === 1 ? 1 : 0 }}">
+
+  <# _.each( data.template_list, function( template_information ) { #>
+    <# var missing_dependency = false; #>
+    <div data-payment-page-component-admin-dashboard-section="template_information">
+      <img src="{{ template_information.cover }}" alt="{{ template_information.name }}"/>
+
+      <# _.each( template_information.dependencies, function( dependency ) { #>
+        <# if( dependency.name === "elementor" ) { #>
+          <p data-payment-page-component-admin-dashboard-section="dependency_text">
+            <img src="{{{ PaymentPage.getComponentAssetPath( 'admin-dashboard', 'img/logo-elementor.png' ) }}}" alt="elementor"/>
+            <span>{{ data.lang.template_requires_elementor }}</span>
+            <# if( dependency.activated ) { #>
+              <img src="{{{ PaymentPage.getComponentAssetPath( 'admin-dashboard', 'img/checkmark-dependency-active.png' ) }}}" alt="checkmark"/>
+            <# } #>
+          </p>
+
+          <# if( !dependency.activated ) { #>
+            <div data-payment-page-component-admin-dashboard-section="template_operations">
+              <a data-payment-page-component-admin-dashboard-section="preview" href="{{ template_information.preview_url }}" target="_blank">{{ data.lang.template_preview }}</a>
+
+              <# if( template_information.user_can_install ) { #>
+                <# if( dependency.installed ) { #>
+                  <span data-payment-page-component-admin-dashboard-trigger="activate_plugin_elementor">{{ data.lang.template_activate_elementor }}</span>
+                <# } else { #>
+                  <span data-payment-page-component-admin-dashboard-trigger="install_plugin_elementor">{{ data.lang.template_install_elementor }}</span>
+                <# } #>
+              <# } else { #>
+                <a href="{{ data.upgrade_link }}" target="_blank" data-payment-page-component-admin-dashboard-section="upgrade">{{ data.lang.upgrade }}</a>
+              <# } #>
+            </div>
+          <# } #>
+        <# } #>
+
+        <# if( dependency.activated ) { #>
+          <div data-payment-page-component-admin-dashboard-section="template_operations">
+            <a data-payment-page-component-admin-dashboard-section="preview" href="{{ template_information.preview_url }}" target="_blank">{{ data.lang.template_preview }}</a>
+
+            <# if( template_information.user_can_install ) { #>
+              <span data-payment-page-component-admin-dashboard-trigger="select_template_{{ template_information.id }}">{{ data.lang.template_select }}</span>
+            <# } else { #>
+              <a href="{{ data.upgrade_link }}" target="_blank" data-payment-page-component-admin-dashboard-section="upgrade">{{ data.lang.upgrade }}</a>
+            <# } #>
+          </div>
+        <# } #>
+      <# }) #>
+    </div>
+  <# }) #>
+
+  <div data-payment-page-component-admin-dashboard-section="placeholder">
+    <span>{{ data.lang.template_notification_soon }}</span>
+  </div>
+</div>
+
+<div data-payment-page-component="admin-marketing-notifications"
+     data-payment-page-component-args="{{{ _.escape( JSON.stringify( { area_slug : 'templates' } ) ) }}}"></div>
