@@ -45,16 +45,16 @@ Payment Page is the easiest way to accept online payments. Connect your payment 
 * Get red-carpet support from the [Gaucho Plugins](https://gauchoplugins.com/) team for both free and paid versions - you can even book a call with us. Don't hesitate to [get in touch](https://payment.page/support/).
 
 ## 🌐 MULTI-CURRENCY & SUBSCRIPTION FILTERS
-> Offer any currency or subscription frequency with filters that allow your customers to choose the perfect plan for their needs. (Personal Plan)
+* Offer any currency or subscription frequency with filters that allow your customers to choose the perfect plan for their needs. (Personal Plan)
 
 ## ✏️ CUSTOM INVOICE & DONATION AMOUNTS
-> Let your customers choose how much to pay based on their invoice amount or self-selecting for donations. Customers can even choose recurring payment options. (Personal Plan)
+* Let your customers choose how much to pay based on their invoice amount or self-selecting for donations. Customers can even choose recurring payment options. (Personal Plan)
 
 ## ✍️ PREFILL FORM FIELDS
-> Automatically prefill form fields when visitors land on your payment page by adding simple query string parameters. (PRO Plan)
+* Automatically prefill form fields when visitors land on your payment page by adding simple query string parameters. (PRO Plan)
 
 ## 🔗 SEND DATA TO EXTERNAL URL
-> Using simple POST requests, you can send form data to any external URL to automate your payment flow with a SaaS, mobile app, and more. (PRO Plan)
+* Using simple POST requests, you can send form data to any external URL to automate your payment flow with a SaaS, mobile app, and more. (PRO Plan)
 
 Find out more:
 
