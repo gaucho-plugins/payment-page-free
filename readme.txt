@@ -85,29 +85,34 @@ Here's a few examples of how Payment Page can be used:
 
 ## 🔀 STRIPE SUPPORTED PAYMENT METHODS
 Stripe payments are fully enabled, including all the payment methods below:
-* Credit & Debit Cards (Free Plan)  
-* SEPA Direct Debit (Personal Plan)
-* Google Pay (Personal Plan)
-* Apple Pay (Personal Plan)
-* Microsoft Pay (Personal Plan)
-* Alipay (Personal Plan)
-* WeChat Pay (Personal Plan)
+Free Plan: 
+* Credit & Debit Cards
+Personal Plan:  
+* ACH via Plaid
+* SEPA Direct Debit
+* Google Pay
+* Apple Pay
+* Microsoft Pay
+* Alipay
+* WeChat Pay
 
 ## 🔀 PAYPAL SUPPORTED PAYMENT METHODS
 PayPal one-time payments are fully enabled, including all the payment methods below depending on your buyer’s country:
-* PayPal Standard Checkout (FREE) 
-* Credit & Debit Cards (Personal Plan)
-* Pay Later (Personal Plan)
-* Venmo (Personal Plan)
-* Bancontact (Personal Plan)
-* BLIK (Personal Plan)
-* eps (Personal Plan)
-* giropay (Personal Plan)
-* iDEAL (Personal Plan)
-* Mercado Pago (Personal Plan)
-* MyBank (Personal Plan)
-* PRzelewy24 (Personal Plan)
-* SOFORT (Personal Plan)
+Free plan: 
+* PayPal Standard Checkout
+Personal Plan: 
+* Credit & Debit Cards
+* Pay Later
+* Venmo
+* Bancontact
+* BLIK
+* eps
+* giropay
+* iDEAL
+* Mercado Pago
+* MyBank
+* PRzelewy24 
+* SOFORT
 
 === 📝 FEATURES OVERVIEW ===
 
@@ -132,7 +137,11 @@ PayPal one-time payments are fully enabled, including all the payment methods be
 * **Prefill Form Fields Automatically** - Prefill form fields with [query strings in the URL](https://docs.payment.page/features/prefill-form-fields-query-strings). 
 * **Automation via HTTP Requests** - Automate your payments by [sending payment data to any webhook URL](https://docs.payment.page/features/how-can-i-sign-up-for-beta-versions/http-requests), like Zapier Webhooks or any custom webhook you build.  
 
-=== 🤝 GET INVOLVED ===
+=== 💙 About the Payment Page Team ===
+
+Payment Page is part of [Gaucho Plugins](https://gauchoplugins.com), a leading plugin development brand. Our payment plugin uses the latest best practices in the payment ecosystem, with security and ease of use at the forefront of our approach. The Gaucho Plugins team includes developers, designers, support reps, and marketing professionals dedicated to serving people in the WordPress space since 2011. Use Payment Page knowing you can trust the plugin and the team behind the plugin. 
+
+=== 🤝 Get Involved ===
 
 * **[Join the Payment Page Facebook Community](https://www.facebook.com/groups/235880000975827)**
 * **[Vote on our Roadmap](https://roadmap.payment.page/)**
@@ -150,26 +159,32 @@ Here’s a few ways you can contribute to Payment Page:
 * Translate Payment Page into your native language. The best place to do that is by [creating an account](https://login.wordpress.org/register?locale=en_US) on wordpress.org and [choosing any of our translation projects](https://translate.wordpress.org/locale/sq/default/wp-plugins/payment-page/). When you've submitted at least 95% of Payment Page’s strings, the language moderators will review and approve your translations, and then they will be available to all WordPress users in your native language. If you are interested in translating for our paid plugin, [contact us](https://payment.page/contact), and we’d be happy to consider chatting about that. 
 
 == Installation ==
-Starting with Payment Page consists of just two steps: installing and setting up the plugin. The Quick Setup Process can be found in our [Documentation](https://docs.payment.page/getting-started/setting-up-payment-page).
 
-### INSTALL PAYMENT PAGE FROM WITHIN WORDPRESS
+= Minimum Requirements =
 
-1. Visit the plugins page within your dashboard and select ‘Add New’;
-1. Search for ‘Payment Page’;
-1. Activate Payment Page from your Plugins page;
-1. Go to ‘after activation’ below.
+* WordPress 4.9 or greater
+* PHP version 7.0 or greater
+* MySQL version 5.6 or greater
+* MariaDB version 10 or later
+* Some payment gateways require fsockopen support (for IPN access)
+* cURL version 5.40 or higher
+* An SSL certificate -- required. 
 
-### INSTALL PAYMENT PAGE MANUALLY
+= Automatic installation =
 
-1. Upload the ‘payment-page’ folder to the /wp-content/plugins/ directory;
-1. Activate the Payment Page plugin through the ‘Plugins’ menu in WordPress;
-1. Go to ‘after activation’ below.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Payment Page, log in to your WordPress dashboard, navigate to the Plugins menu and click "Add New".
 
-### AFTER ACTIVATION
+In the search field type "Payment Page" and click Search Plugins. Once you have found the plugin, you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking "Install Now".
 
-1. You should be redirected to the Quick Setup process;
-1. Go through the process to configure your first Payment Page;
-1. You’re done!
+Then, you’ll be redirected to the Quick Setup Process to begin connecting your payment gateway and importing templates. 
+
+= Manual installation =
+
+The manual installation method involves downloading the plugin and uploading it to your server via your favorite FTP application. The WordPress codex contains [instructions on how to do this here](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+
+= Updating =
+
+Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
 == Frequently Asked Questions ==
 
