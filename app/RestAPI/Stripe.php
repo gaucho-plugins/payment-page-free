@@ -2,9 +2,11 @@
 
 namespace PaymentPage\RestAPI;
 
+use  PaymentPage\ThirdPartyIntegration\Freemius as PP_Freemius ;
 use  WP_Error ;
 use  WP_REST_Server ;
 use  WP_REST_Request ;
+use  PaymentPage\API\PaymentPage as API_PaymentPage ;
 use  PaymentPage\PaymentGateway ;
 use  PaymentPage\Model\StripeCustomers as Stripe_Customer ;
 use  PaymentPage\Model\StripeProducts as Stripe_Products ;
@@ -52,67 +54,24 @@ class Stripe
         if ( is_wp_error( $stripePrice ) ) {
             return $stripePrice;
         }
-        
-        if ( $stripePrice->recurring === null ) {
-            $paymentIntentInformation = [
-                'amount'   => $stripePrice->unit_amount,
-                'currency' => strtoupper( $stripePrice->currency ),
-                'customer' => $stripe_customer_id,
-                'metadata' => self::_getGeneralMetaData( $request ),
-            ];
-            if ( $request->get_param( 'payment_method' ) === 'alipay' ) {
-                $paymentIntentInformation['payment_method_types'] = [ 'alipay' ];
-            }
-            if ( $request->get_param( 'payment_method' ) === 'wechat' ) {
-                $paymentIntentInformation['payment_method_types'] = [ 'wechat_pay' ];
-            }
-            
-            if ( $request->has_param( 'stripe_payment_method_id' ) && !empty($request->get_param( 'stripe_payment_method_id' )) ) {
-                $paymentIntentInformation['setup_future_usage'] = 'off_session';
-                $paymentIntentInformation['confirm'] = true;
-                $paymentIntentInformation['payment_method'] = $request->get_param( 'stripe_payment_method_id' );
-                if ( !isset( $paymentIntentInformation['capture_method'] ) ) {
-                    $paymentIntentInformation['capture_method'] = 'manual';
-                }
-            }
-            
-            try {
-                $paymentIntent = PaymentGateway::get_integration_from_settings( 'stripe' )->stripeClient()->paymentIntents->create( $paymentIntentInformation );
-            } catch ( \Exception $e ) {
-                return new WP_Error( 'rest_error', esc_html( $e->getMessage() ), [
-                    'status' => 400,
-                ] );
-            }
-            return rest_ensure_response( [
-                'payment_intent_id'              => $paymentIntent->id,
-                'payment_intent_secret'          => $paymentIntent->client_secret,
-                'payment_intent_requires_action' => $paymentIntent->status == 'requires_action' && $paymentIntent->next_action->type == 'use_stripe_sdk',
-            ] );
-        }
-        
-        foreach ( [ 'stripe_payment_method_id' ] as $required_param ) {
-            if ( !$request->has_param( $required_param ) ) {
-                return new WP_Error( 'rest_error', esc_html( sprintf( __( "Missing request param %s", "payment-page" ), $required_param ) ), [
-                    'status' => 400,
-                ] );
-            }
-        }
-        try {
-            $setupIntentInformation = [
-                'customer'       => $stripe_customer_id,
-                'payment_method' => $request->get_param( 'stripe_payment_method_id' ),
-                'metadata'       => self::_getGeneralMetaData( $request ),
-            ];
-            $setupIntent = PaymentGateway::get_integration_from_settings( 'stripe' )->stripeClient()->setupIntents->create( $setupIntentInformation );
-        } catch ( \Exception $e ) {
-            return new WP_Error( 'rest_error', esc_html( $e->getMessage() ), [
-                'status' => 400,
-            ] );
-        }
-        return rest_ensure_response( [
-            'setup_intent_id'     => $setupIntent->id,
-            'setup_intent_secret' => $setupIntent->client_secret,
-        ] );
+        return rest_ensure_response( API_PaymentPage::instance()->request( 'stripe/payment-intent-or-setup', [
+            'account_id'                  => PaymentGateway::get_integration_from_settings( 'stripe' )->get_account_id(),
+            'customer_id'                 => $stripe_customer_id,
+            'payment_method'              => $request->get_param( 'payment_method' ),
+            'payment_method_id'           => ( $request->has_param( 'stripe_payment_method_id' ) ? $request->get_param( 'stripe_payment_method_id' ) : '' ),
+            'price_information'           => [
+            'is_recurring' => ( $stripePrice->recurring === null ? 0 : 1 ),
+            'amount'       => $stripePrice->unit_amount,
+            'currency'     => $stripePrice->currency,
+        ],
+            'is_live'                     => intval( PaymentGateway::get_integration_from_settings( 'stripe' )->is_live() ),
+            'meta_data'                   => self::_getGeneralMetaData( $request ),
+            'mandate_customer_acceptance' => [
+            'ip_address' => payment_page_http_ip_address(),
+            'user_agent' => payment_page_http_user_agent(),
+        ],
+            'secret_key'                  => payment_page_encrypt( PaymentGateway::get_integration_from_settings( 'stripe' )->get_secret_key(), PP_Freemius::instance()->get_anonymous_id(), md5( get_site_url() ) ),
+        ], 'POST' ) );
     }
     
     public static function checkout( WP_REST_Request $request )
@@ -198,10 +157,11 @@ class Stripe
     
     /**
      * @param WP_REST_Request $request
+     * @param string $type
      * @return \Stripe\Price|WP_Error
      * @throws \Stripe\Exception\ApiErrorException
      */
-    private static function _getStripePrice( WP_REST_Request $request )
+    private static function _getStripePrice( WP_REST_Request $request, $type = 'default' )
     {
         foreach ( [
             'product_title',
@@ -239,7 +199,7 @@ class Stripe
         
         $stripePrice = Stripe_Prices::findOrCreate( [
             'product_id'        => $stripeProduct->id,
-            'price'             => intval( floatval( $request->get_param( 'price_amount' ) ) * 100 ),
+            'price'             => intval( floatval( ( $type === 'setup' ? $request->get_param( 'setup_price_amount' ) : $request->get_param( 'price_amount' ) ) ) * 100 ),
             'currency'          => strtoupper( $request->get_param( 'price_currency' ) ),
             'frequency'         => ( $request->has_param( 'price_frequency' ) ? $request->get_param( 'price_frequency' ) : 'one-time' ),
             'is_live'           => ( PaymentGateway::get_integration_from_settings( 'stripe' )->is_live() ? 1 : 0 ),
@@ -286,6 +246,7 @@ class Stripe
         $response['payment_page_url'] = get_the_permalink( $request->get_param( 'post_id' ) );
         $response['payment_page_id'] = intval( $request->get_param( 'post_id' ) );
         $response['domain_name'] = payment_page_domain_name();
+        $response['user_id'] = intval( get_current_user_id() );
         return $response;
     }
     
@@ -315,15 +276,19 @@ class Stripe
             'default_payment_method' => $payment_method->id,
         ],
         ] );
-        $subscription = $stripeClient->subscriptions->create( [
+        return self::_subscriptionCreateHelper(
+            [
             'default_payment_method' => $payment_method->id,
             'customer'               => $stripe_customer_id,
             'items'                  => [ [
             'price' => $price->id,
         ] ],
             'metadata'               => self::_getGeneralMetaData( $request ),
-        ] );
-        return $subscription;
+        ],
+            $price,
+            $request,
+            $stripeClient
+        );
     }
     
     private static function _chargeStripeOneTime( WP_REST_Request $request, $stripe_customer_id, \Stripe\Price $price )
@@ -420,14 +385,20 @@ class Stripe
             }
             
             if ( $stripePrice->recurring ) {
-                $subscription = $paymentGatewayStripe->stripeClient()->subscriptions->create( [
+                $subscription_create_args = [
                     'default_source' => $payment_source_id,
                     'customer'       => $stripeCustomer->id,
                     'items'          => [ [
                     'price' => $stripePrice->id,
                 ] ],
                     'metadata'       => self::_getGeneralMetaData( $request ),
-                ] );
+                ];
+                $subscription = self::_subscriptionCreateHelper(
+                    $subscription_create_args,
+                    $stripePrice,
+                    $request,
+                    $paymentGatewayStripe->stripeClient()
+                );
             } else {
                 $paymentGatewayStripe->stripeClient()->charges->create( [
                     'amount'   => $stripePrice->unit_amount,
@@ -486,6 +457,43 @@ class Stripe
             return $response;
         }
         return json_decode( wp_remote_retrieve_body( $response ), true );
+    }
+    
+    private static function _subscriptionCreateHelper(
+        $subscription_create_args,
+        $price,
+        $request,
+        $stripeClient
+    )
+    {
+        $has_setup_price = $request->has_param( 'setup_price_amount' ) && !empty($request->get_param( 'setup_price_amount' )) && isset( $price->recurring ) && !empty($price->recurring);
+        
+        if ( $has_setup_price ) {
+            $setupPrice = self::_getStripePrice( $request, 'setup' );
+            if ( is_wp_error( $setupPrice ) ) {
+                return $setupPrice;
+            }
+            $subscription_create_args['items'] = [ [
+                'price' => $setupPrice->id,
+            ] ];
+        }
+        
+        $subscription = $stripeClient->subscriptions->create( $subscription_create_args );
+        
+        if ( $has_setup_price ) {
+            sleep( 1 );
+            $subscription = $stripeClient->subscriptions->update( $subscription->id, [
+                'proration_behavior' => 'none',
+                'items'              => [ [
+                'id'      => $subscription->items->data[0]->id,
+                'deleted' => true,
+            ], [
+                'price' => $price->id,
+            ] ],
+            ] );
+        }
+        
+        return $subscription;
     }
 
 }

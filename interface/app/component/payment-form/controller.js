@@ -1,4 +1,5 @@
 // @codekit-append "controller/paymentGateway/paypal.js"
+// @codekit-append "controller/paymentGateway/skeleton.js"
 // @codekit-append "controller/paymentGateway/stripe.js"
 
 PaymentPage.Component[ 'payment-form' ] = {
@@ -206,6 +207,13 @@ PaymentPage.Component[ 'payment-form' ] = {
                           ? payment_page_get_currency_symbol( payment_page_get_user_locale(), price.currency )
                           : price.currency.toUpperCase()
             );
+          } else if( label_token === "select_field_setup_price" ) {
+            if( typeof price.setup_price !== "undefined"
+                && typeof price.has_setup_price !== "undefined"
+                && parseInt( price.has_setup_price ) )
+              label += price.setup_price;
+            else
+              label += '';
           } else if( typeof objectInstance.configuration.pricing_plan_option_label.token_map[ label_token ] !== 'undefined' ) {
             label += objectInstance.configuration.pricing_plan_option_label.token_map[ label_token ];
           }
@@ -240,13 +248,20 @@ PaymentPage.Component[ 'payment-form' ] = {
               : price.currency.toUpperCase()
           );
 
-        objectInstance.pricingOptions.push( {
+        let current_option = {
           'label'     : label,
           'title'     : pricing_plan.plan_title,
           'currency'  : price.currency,
           'frequency' : price.frequency.value,
           'price'     : price.price
-        } );
+        };
+
+        if( typeof price.setup_price !== "undefined"
+            && typeof price.has_setup_price !== "undefined"
+            && parseInt( price.has_setup_price ) )
+          current_option.setup_price = price.setup_price;
+
+        objectInstance.pricingOptions.push( current_option );
       });
     });
 
@@ -374,6 +389,7 @@ PaymentPage.Component[ 'payment-form' ] = {
       filter_arrow_color : getComputedStyle( this.container[0] ).getPropertyValue('--payment-page-element-pricing-filter-select-arrow-color' )
     };
 
+    template_args.payment_gateway_warning = this.getCurrentPaymentGatewayWarning();
     template_args.payment_method_disclaimer = this.getCurrentPaymentMethodDisclaimer();
 
     PaymentPage.Template.load( this.container, 'payment-form', 'template/default.html', template_args, function() {
@@ -411,12 +427,19 @@ PaymentPage.Component[ 'payment-form' ] = {
       if( frequency !== null && pricing_option.frequency !== frequency )
         return true;
 
-      let value = _.escape( pricing_option.frequency + "__" + pricing_option.currency + "__" + pricing_option.price );
+      let value = _.escape(
+        pricing_option.frequency + "__" + pricing_option.currency + "__" + pricing_option.price +
+        ( typeof pricing_option.setup_price !== 'undefined' ? '__' + pricing_option.setup_price : '' )
+      );
 
       response += '<option data-payment-page-pricing-frequency="' + _.escape( pricing_option.frequency ) + '"' +
                          ' data-payment-page-pricing-currency="' + _.escape( pricing_option.currency ) + '"' +
-                         ' data-payment-page-pricing-price="' + _.escape( pricing_option.price ) + '"' +
-                         ' data-payment-page-pricing-title="' + _.escape( pricing_option.title ) + '"' +
+                         ' data-payment-page-pricing-price="' + _.escape( pricing_option.price ) + '"';
+
+      if( typeof pricing_option.setup_price !== 'undefined' )
+        response += ' data-payment-page-pricing-setup-price="' + _.escape( pricing_option.setup_price ) + '"';
+
+      response +=        ' data-payment-page-pricing-title="' + _.escape( pricing_option.title ) + '"' +
                          ' value="' + value + '"' +
                          ( _selected === value ? ' selected="selected"' : '' ) +
                          '>' + _.escape( pricing_option.label ) + '</option>'
@@ -426,20 +449,24 @@ PaymentPage.Component[ 'payment-form' ] = {
   },
 
   getCheckoutInformation : function() {
-    let optionObject = this.container.find( '[name="pp_pricing_options"] option[value="' + this.container.find( '[name="pp_pricing_options"]' ).val() + '"]' );
+    let optionObject = this.container.find( '[name="pp_pricing_options"] option[value="' + this.container.find( '[name="pp_pricing_options"]' ).val() + '"]' ),
+        response = {
+          title     : optionObject.attr( "data-payment-page-pricing-title" ),
+          frequency : optionObject.attr( "data-payment-page-pricing-frequency" ),
+          frequency_formatted : (
+            typeof this.frequencyOptionsAssoc[ optionObject.attr( "data-payment-page-pricing-frequency" ) ] !== 'undefined'
+              ? this.frequencyOptionsAssoc[ optionObject.attr( "data-payment-page-pricing-frequency" ) ]
+              : ''
+          ),
+          currency  : optionObject.attr( "data-payment-page-pricing-currency" ),
+          price     : ( this._isCustomPricing ? this.container.find( '[name="pp_custom_amount"]' ).inputmask( 'unmaskedvalue' ) : optionObject.attr( "data-payment-page-pricing-price" ) ),
+          price_formatted : ( this._isCustomPricing ? this.container.find( '[name="pp_custom_amount"]' ).val() : optionObject.attr( "data-payment-page-pricing-price" ) )
+        };
 
-    return {
-      title     : optionObject.attr( "data-payment-page-pricing-title" ),
-      frequency : optionObject.attr( "data-payment-page-pricing-frequency" ),
-      frequency_formatted : (
-        typeof this.frequencyOptionsAssoc[ optionObject.attr( "data-payment-page-pricing-frequency" ) ] !== 'undefined'
-          ? this.frequencyOptionsAssoc[ optionObject.attr( "data-payment-page-pricing-frequency" ) ]
-          : ''
-      ),
-      currency  : optionObject.attr( "data-payment-page-pricing-currency" ),
-      price     : ( this._isCustomPricing ? this.container.find( '[name="pp_custom_amount"]' ).inputmask( 'unmaskedvalue' ) : optionObject.attr( "data-payment-page-pricing-price" ) ),
-      price_formatted : ( this._isCustomPricing ? this.container.find( '[name="pp_custom_amount"]' ).val() : optionObject.attr( "data-payment-page-pricing-price" ) )
-    };
+    if( typeof optionObject.attr( "data-payment-page-pricing-setup-price" ) !== 'undefined' )
+      response.price_setup = optionObject.attr( "data-payment-page-pricing-setup-price" );
+
+    return response;
   },
 
   __getFilterSelectedCurrency : function() {
@@ -758,6 +785,7 @@ PaymentPage.Component[ 'payment-form' ] = {
     let template_args = payment_page_clone_object( this.configuration );
 
     template_args.payment_gateway = this.currentPaymentGateway;
+    template_args.payment_gateway_warning = this.getCurrentPaymentGatewayWarning();
     template_args.payment_method  = this.currentPaymentMethod;
     template_args.payment_method_handler = this.paymentMethodsMap[ this.currentPaymentGateway ][ this.currentPaymentMethod ].payment_method;
     template_args.payment_method_disclaimer = this.getCurrentPaymentMethodDisclaimer();
@@ -859,7 +887,7 @@ PaymentPage.Component[ 'payment-form' ] = {
     if( payment_page_in_array( "dynamic_message", this.configuration.submit_actions ) ) {
       this.__paymentSuccessMessageDynamic(
         productInformation.title,
-        productInformation.price,
+        ( typeof productInformation.price_setup !== 'undefined' ? productInformation.price_setup : productInformation.price ),
         productInformation.currency,
         this.container.find( '[name="first_name"]' ).val() + ' ' + this.container.find( '[name="last_name"]' ).val(),
         this.container.find( '[name="email_address"]' ).val(),
@@ -945,6 +973,14 @@ PaymentPage.Component[ 'payment-form' ] = {
 
   getCurrentPaymentMethodDisclaimer : function() {
     return ( typeof this.paymentMethodsMap[ this.currentPaymentGateway ][ this.currentPaymentMethod ].disclaimer !== 'undefined' ? this.paymentMethodsMap[ this.currentPaymentGateway ][ this.currentPaymentMethod ].disclaimer : '' );
+  },
+
+  getCurrentPaymentGatewayWarning : function() {
+    return (
+      typeof this.configuration.payment_gateways[ this.currentPaymentGateway ].warning !== 'undefined'
+        ? this.configuration.payment_gateways[ this.currentPaymentGateway ].warning
+        : ''
+    );
   },
 
   getCustomFieldsData : function() {

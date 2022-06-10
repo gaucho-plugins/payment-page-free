@@ -24,6 +24,8 @@ let PaymentPageElementor_FormFields = {
       ordered_fields.push( v );
     });
 
+    console.log( control_value );
+
     ordered_fields = _.sortBy( ordered_fields, 'order' );
 
     jQuery.each( ordered_fields, function( _k, field_data ) {
@@ -75,6 +77,15 @@ let PaymentPageElementor_FormFields = {
       } else {
         fieldRowContainer.find( '.remove-field-container' ).hide();
         fieldRowContainer.find( '[data-setting-container="is_required"]' ).remove();
+      }
+    }
+
+    // Possible browser cache issue, need to prevent it.
+    if( typeof row_data.is_hidden === "undefined" && ( typeof row_data.name === 'undefined' || row_data.name !== 'card_zip_code' ) ) {
+      fieldRowContainer.find( '[data-setting-container="is_hidden"]' ).remove();
+    } else {
+      if( typeof row_data.is_hidden !== 'undefined' && parseInt( row_data.is_hidden ) ) {
+        fieldRowContainer.find( '[data-setting="is_hidden"]' ).prop("checked",1 );
       }
     }
 
@@ -135,6 +146,7 @@ let PaymentPageElementor_FormFields = {
           label = jQuery(this).find( '[data-setting="label"]' ).val(),
           size = jQuery(this).find( '[data-setting="size"]' ).val(),
           size_mobile = jQuery(this).find( '[data-setting="size_mobile"]' ).val(),
+          isHiddenInput = jQuery(this).find( '[data-setting="is_hidden"]' ),
           isRequiredInput = jQuery(this).find( '[data-setting="is_required"]' ),
           placeholderInput = jQuery(this).find( '[data-setting="placeholder"]' );
 
@@ -148,6 +160,10 @@ let PaymentPageElementor_FormFields = {
         size_mobile : size_mobile,
         order       : order
       };
+
+      if( isHiddenInput.length > 0 )
+        value[ key ][ 'is_hidden' ] = ( isHiddenInput.is( ':checked' ) ? 1 : 0 );
+
     });
 
     this.elementorInstance.setValue( value );

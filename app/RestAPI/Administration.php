@@ -79,7 +79,8 @@ class Administration {
       'invalid_url_characters'  => [ '~' ],
       'lang'                    => [
         'upgrade'                      => __( "Upgrade >", "payment-page" ),
-        'upgrade_payment_gateway'      => __( "To accept payments with %s, please %s", "payment-page" ),
+        'upgrade_payment_gateway'      => __( "To accept %s, please %s", "payment-page" ),
+        'upgrade_payment_gateway_recurring' => __( "To accept recurring payments with %s, please %s", "payment-page" ),
 
         'menu_name_payment_gateways'   => __( "Payment Gateways", "payment-page" ),
         'menu_name_templates'          => __( "Templates", "payment-page" ),
@@ -98,6 +99,8 @@ class Administration {
         'payment_method_requires_https' => __( "This payment method requires a HTTPS connection for both live & testing", "payment-page" ),
         'payment_method_settings_save'  => __( "Save Settings", "payment-page" ),
 
+        'payment_gateway_methods_expand'         => __( "Expand", "payment-page" ),
+        'payment_gateway_methods_hide'           => __( "Hide", "payment-page" ),
         'payment_gateway_webhook_settings_save'  => __( "Save Settings", "payment-page" ),
 
         'template_notification_soon'   => __( "More Coming Soon!", "payment-page" ),
@@ -111,7 +114,7 @@ class Administration {
         'quick_setup_next'     => __( "Next, %s >", 'payment-page' ),
         'quick_setup_skip_to'  => __( "Skip to %s >", 'payment-page' ),
         'quick_setup_exit'     => __( "Exit Quick Setup >", "payment-page" ),
-        'quick_setup_resume'   => __( "Return to Quick Setup >", "payment-page" ),
+        'quick_setup_resume'   => __( "Start Quick Setup >", "payment-page" ),
 
         'notification_url_invalid_characters' => __( "Your website URL contains invalid character(s) : %s which will cause problems with the %s connection.", "payment-page" ),
         'notification_url_mismatch_ssl'       => __( "Your SSL security certificate is not properly configured on your site. Please configure SSL in order to connect %s. Your hosting provider can help with this.", 'payment-page' )
@@ -151,7 +154,7 @@ class Administration {
           'nav_title'      => __( "Select a Template", "payment-page" ),
           'is_completed'   => 0, //( intval( Settings::instance()->get( 'primary_template_page_id' ) ) != 0 ),
           'template'       => 'templates'
-        ]
+        ],
       ]
     ] );
   }

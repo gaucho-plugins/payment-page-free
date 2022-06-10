@@ -51,7 +51,7 @@ PaymentPage.Component[ 'admin-dashboard' ] = {
 
     if( response.current_page !== 'payment-gateways'
         && response.current_page !== 'templates' )
-      response.current_page = 'payment-gateways';
+      response.current_page = 'templates';
 
     response.quick_setup_index = false;
     response.quick_setup_return_index = false;
@@ -131,12 +131,15 @@ PaymentPage.Component[ 'admin-dashboard' ] = {
 
       let _cookie = payment_page_get_cookie( 'payment_page_dashboard_open_gateway' );
 
-      if( _cookie === null || typeof _cookie === 'undefined' )
-        _cookie = 'stripe';
+      if( objectInstance.configuration.payment_gateway.stripe.mode_live_configured
+          || objectInstance.configuration.payment_gateway.stripe.mode_test_configured ) {
+        if( _cookie === null || typeof _cookie === 'undefined' )
+          _cookie = 'stripe';
+      }
 
       if( _cookie !== 'none' )
         objectInstance.container
-                      .find( '[data-payment-page-has-payment-methods="1"][data-payment-page-gateway-alias="' + _cookie + '"] > [data-payment-page-component-admin-dashboard-section="header"] > h2' )
+                      .find( '[data-payment-page-gateway-alias="' + _cookie + '"] > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_expand"]' )
                       .trigger( "click" );
     });
   },
@@ -265,8 +268,11 @@ PaymentPage.Component[ 'admin-dashboard' ] = {
   _bindPaymentEvents : function() {
     let objectInstance = this;
 
-    this.container.find( '[data-payment-page-has-payment-methods="1"] > [data-payment-page-component-admin-dashboard-section="header"] > h2' ).on( "click", function() {
-      let payment_gateway_container = jQuery(this).parents( '[data-payment-page-has-payment-methods]' ),
+    this.container.find(
+      '[data-payment-page-gateway-alias] > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_hide"],' +
+      '[data-payment-page-gateway-alias] > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_expand"]'
+    ).on( "click", function() {
+      let payment_gateway_container = jQuery(this).parents( '[data-payment-page-gateway-alias]' ),
           payment_method_container = payment_gateway_container.find( '[data-payment-page-component-admin-dashboard-section="payment_methods_container"]' );
 
       if( parseInt( payment_gateway_container.attr( 'data-payment-page-has-payment-methods-visible' ) ) ) {

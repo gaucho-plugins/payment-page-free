@@ -3,7 +3,7 @@
  * Plugin Name: Payment Page
  * Plugin URI:      https://payment.page
  * Description:     Payment Page is the most powerful way to accept online payments. Connect your payment gateway, choose a template, and get paid!
- * Version:         1.1.3
+ * Version:         1.2.3
  * Author:          Gaucho Plugins
  * Author URI:      https://gauchoplugins.com/
  * License:         GPLv3
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( "PAYMENT_PAGE_VERSION", '1.1.3' );
+define( "PAYMENT_PAGE_VERSION", '1.2.3' );
 define( "PAYMENT_PAGE_BASE_FILE_PATH", __FILE__ );
 define( "PAYMENT_PAGE_BASE_PATH", dirname( PAYMENT_PAGE_BASE_FILE_PATH ) );
 define( "PAYMENT_PAGE_PLUGIN_IDENTIFIER", ltrim( str_ireplace( dirname( PAYMENT_PAGE_BASE_PATH ), '', PAYMENT_PAGE_BASE_FILE_PATH ), '/' ) );

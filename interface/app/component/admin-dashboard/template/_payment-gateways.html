@@ -3,7 +3,6 @@
        data-payment-page-gateway-alias="{{ payment_gateway.alias }}"
        data-payment-page-gateway-mode="{{ payment_gateway.mode }}"
        data-payment-page-connection-type="{{ payment_gateway.connection_layout }}"
-       data-payment-page-has-payment-methods="{{ payment_gateway.mode_live_configured || payment_gateway.mode_test_configured ? 1 : 0 }}"
        data-payment-page-has-payment-methods-visible="0"
   >
     <div data-payment-page-component-admin-dashboard-section="header">
@@ -84,7 +83,7 @@
     <div data-payment-page-component-admin-dashboard-section="description_container">
       <img src="{{ payment_gateway.logo }}" alt="{{ payment_gateway.name }}"/>
       <div>
-        {{ payment_gateway.description }}
+        {{{ payment_gateway.description }}}
 
         <# if( typeof payment_gateway.webhook_settings !== "undefined"
         && ( payment_gateway.webhook_settings.test_available || payment_gateway.webhook_settings.live_available ) ) { #>
@@ -133,7 +132,6 @@
       </div>
     </div>
 
-    <# if( payment_gateway.mode_live_configured || payment_gateway.mode_test_configured ) { #>
     <div data-payment-page-component-admin-dashboard-section="payment_methods_container">
       <table data-payment-page-component-admin-dashboard-section="payment_methods">
         <thead>
@@ -148,7 +146,9 @@
               <td>
                 {{{ payment_method.description }}}
                 <# if( !payment_method.is_available ) { #>
-                  <p>{{{ data.lang.upgrade_payment_gateway.replace( "%s", payment_method.name ).replace( "%s", '<a href="' + data.upgrade_link + '" target="_blank">' + data.lang.upgrade + '</a>' ) }}}</p>
+                  <p>{{{ data.lang.upgrade_payment_gateway.replace( "%s", typeof payment_method.upgrade_name !== 'undefined' ? payment_method.upgrade_name : payment_method.name ).replace( "%s", '<a href="' + data.upgrade_link + '" target="_blank" data-payment-page-component-admin-dashboard-trigger="upgrade">' + data.lang.upgrade + '</a>' ) }}}</p>
+                <# } else if( payment_method.is_upgradeable_recurring ) { #>
+                  <p>{{{ data.lang.upgrade_payment_gateway_recurring.replace( "%s", payment_method.name ).replace( "%s", '<a href="' + data.upgrade_link + '" target="_blank" data-payment-page-component-admin-dashboard-trigger="upgrade">' + data.lang.upgrade + '</a>' ) }}}</p>
                 <# } else { #>
                   <# if( typeof payment_method.settings !== "undefined" ) { #>
                     <div data-payment-page-component-admin-dashboard-section="payment_method_settings_container">
@@ -212,7 +212,13 @@
         </tbody>
       </table>
     </div>
-    <# } #>
+
+    <div data-payment-page-component-admin-dashboard-trigger="payment_gateway_expand">
+      <span>{{{ data.lang.payment_gateway_methods_expand }}}</span>
+    </div>
+    <div data-payment-page-component-admin-dashboard-trigger="payment_gateway_hide">
+      <span>{{{ data.lang.payment_gateway_methods_hide }}}</span>
+    </div>
   </div>
 <# }) #>
 

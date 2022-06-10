@@ -21,8 +21,10 @@ let PaymentPageElementor_Pricing = {
 
     if( !( control_value instanceof Array ) )
       control_value = [ {
-        currency  : 'usd',
-        price     : 99,
+        currency        : 'usd',
+        price           : 99,
+        has_setup_price : 0,
+        setup_price     : '',
         frequency : {
           value: "one-time",
           label: "One-time"
@@ -51,19 +53,54 @@ let PaymentPageElementor_Pricing = {
     if( typeof pricing_data.price !== 'undefined' )
       fieldRowContainer.find( '[data-setting="price"]' ).val( pricing_data.price );
 
+    if( typeof pricing_data.setup_price !== 'undefined' && fieldRowContainer.find( '[data-setting="setup_price"]' ).length > 0 )
+      fieldRowContainer.find( '[data-setting="setup_price"]' ).val( pricing_data.setup_price );
+
+    if( typeof pricing_data.has_setup_price !== 'undefined'
+        && fieldRowContainer.find( '[data-setting="has_setup_price"]' ).length > 0
+        && parseInt( pricing_data.has_setup_price ) )
+      fieldRowContainer.find( '[data-setting="has_setup_price"]' ).prop('checked', true);
+
     if( typeof pricing_data.currency !== 'undefined' )
       fieldRowContainer.find( '[data-setting="currency"]' ).val( pricing_data.currency );
 
     if( typeof pricing_data.frequency !== 'undefined' && typeof pricing_data.frequency.value !== 'undefined' )
       fieldRowContainer.find( '[data-setting="frequency"]' ).val( pricing_data.frequency.value );
 
+    fieldRowContainer.find( '[data-setting="frequency"]' ).on( "change", function() {
+      if( fieldRowContainer.find( '[data-setting="has_setup_price"]' ).length === 0 )
+        return;
+
+      let target = fieldRowContainer.find( '[data-setting="has_setup_price"]' ),
+          targetContainer = target.parents( "div:first" );
+
+      if( jQuery(this).val() === 'one-time' ) {
+        if( fieldRowContainer.find( '[data-setting="has_setup_price"]' ).is( ":checked" ) )
+          fieldRowContainer.find( '[data-setting="has_setup_price"]' ).prop('checked', false ).trigger("change");
+
+        targetContainer.hide();
+      } else {
+        targetContainer.show();
+      }
+    }).trigger( "change" );
+
     if( this.repeaterContainer.find( '.field-group' ).length >= 3 )
       fieldRowContainer.find( '.remove-price-row' ).parent().css( 'display', 'flex' );
 
-    fieldRowContainer.find( '[data-setting="price"], [data-setting="currency"], [data-setting="frequency"]' ).on( "keyup change", function( event ) {
+    fieldRowContainer.find( '[data-setting="price"], [data-setting="currency"], [data-setting="frequency"], [data-setting="has_setup_price"], [data-setting="setup_price"]' )
+                     .on( "keyup change", function( event ) {
       objectInstance._updateFieldRowIdentifierHash( jQuery(this).parents( '.field-group:first' ) );
       objectInstance.syncToElementor();
     });
+
+    fieldRowContainer.find( '[data-setting="has_setup_price"]' ).on( "change", function() {
+      let container = fieldRowContainer.find( '[data-setting="setup_price"]' ).parents( "div:first" );
+
+      if( jQuery(this).is( ":checked" ) )
+        container.show();
+      else
+        container.hide();
+    }).trigger( "change" );
 
     fieldRowContainer.find( '.remove-price-row' ).off( "click" ).on( "click", function() {
       let _fieldRow = jQuery(this).parents( '.field-group:first' );
@@ -116,11 +153,13 @@ let PaymentPageElementor_Pricing = {
     let value = [];
 
     this.repeaterContainer.find( '[data-field-value-hash]' ).each( function() {
-      let frequencyObject = jQuery(this).find( '[data-setting="frequency"]' );
+      let frequencyObject = jQuery(this).find( '[data-setting="frequency"]' ),
+          hasSetupPriceObject = jQuery(this).find( '[data-setting="has_setup_price"]' ),
+          setupPriceObject = jQuery(this).find( '[data-setting="setup_price"]' );
 
-      value.push( {
+      let data = {
         currency  : jQuery(this).find( '[data-setting="currency"]' ).val(),
-        price     : jQuery(this).find( '[data-setting="price"]' ).val(),
+        price        : jQuery(this).find( '[data-setting="price"]' ).val(),
         frequency : (
           frequencyObject.length >= 1
             ? {
@@ -131,8 +170,16 @@ let PaymentPageElementor_Pricing = {
               value: "one-time",
               label: "One-time"
             }
-          )
-      } );
+        )
+      };
+
+      if( hasSetupPriceObject.length > 0 )
+        data.has_setup_price = hasSetupPriceObject.is( ":checked" ) ? 1 : 0;
+
+      if( setupPriceObject.length > 0 )
+        data.setup_price = setupPriceObject.val();
+
+      value.push( data );
     });
 
     this.elementorInstance.setValue( value );
@@ -155,6 +202,7 @@ let PaymentPageElementor_Pricing = {
       ui: function ui() {
         return {
           inputPrice: 'input[data-setting="price"]',
+          setupPrice: 'input[data-setting="setup_price"]',
           selectCurrency: 'select[data-setting="currency"]',
           selectFrequency: 'select[data-setting="frequency"]',
           btnRemoveRow: ".remove-price-row",

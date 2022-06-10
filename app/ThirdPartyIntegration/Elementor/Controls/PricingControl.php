@@ -94,6 +94,11 @@ class PricingControl extends Elementor_Control_Base_Multiple
         echo  $control_uid_price ;
         ?>" data-setting="price" class="field price-input" type="number" min="1"></label>
           </div>
+          <div style="padding: 10px 0;font-weight: 500;font-size: 14px;"><?php 
+        echo  __( "If left empty, the customer will be able to enter any amount.", "payment-page" ) ;
+        ?></div>
+          <?php 
+        ?>
           <div>
             <?php 
         $control_uid_currency = $this->get_control_uid( 'currency' );
@@ -120,6 +125,12 @@ class PricingControl extends Elementor_Control_Base_Multiple
           </div>
           <?php 
         ?>
+            <div style="padding: 10px 0;font-weight: 500;font-size: 14px;"><?php 
+        echo  payment_page_admin_upgrade_text_subscription() ;
+        ?></div>
+          <?php 
+        ?>
+
           <p style="display: none;width: 100%;"><i class="eicon-close remove-price-row" aria-hidden="true" style="cursor:pointer;"></i></p>
         </div>
       </div>

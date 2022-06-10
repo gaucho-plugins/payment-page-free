@@ -289,7 +289,7 @@ class PaymentGateway {
 
   public static function connect_callback( WP_REST_Request $request ) {
     if( $request->has_param( 'cancel' ) ) {
-      payment_page_redirect( admin_url( PAYMENT_PAGE_DEFAULT_URL_PATH ) );
+      payment_page_redirect( admin_url( PAYMENT_PAGE_DEFAULT_URL_PATH ) . '#payment-gateways' );
       exit;
     }
 
@@ -324,7 +324,7 @@ class PaymentGateway {
           ]
         );
 
-    payment_page_redirect( admin_url( PAYMENT_PAGE_DEFAULT_URL_PATH ) );
+    payment_page_redirect( admin_url( PAYMENT_PAGE_DEFAULT_URL_PATH ) . '#payment-gateways'  );
     exit;
   }
 

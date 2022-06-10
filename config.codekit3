@@ -739,6 +739,17 @@
 		"sC": 3,
 		"tS": 0
 		},
+	"/interface/app/component/payment-form/controller/paymentGateway/skeleton.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/interface/app/component/payment-form/controller/paymentGateway/skeleton-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
 	"/interface/app/component/payment-form/controller/paymentGateway/stripe.js": {
 		"bF": 0,
 		"ft": 64,

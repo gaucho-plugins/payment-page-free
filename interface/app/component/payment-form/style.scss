@@ -537,6 +537,15 @@
           margin : 10px 0 0 0;
         }
       }
+
+      > [data-payment-page-notification] {
+        margin : 20px 0;
+
+        > a {
+          color: var( --payment-page-primary-color );
+          text-decoration: underline;
+        }
+      }
     }
 
     > [data-payment-page-component-payment-form-container="alternative_submit"] {

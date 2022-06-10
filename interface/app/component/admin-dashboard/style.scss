@@ -357,6 +357,10 @@
           color     : var(--payment-page-text-color-primary);
           font-size : 16px;
 
+          [data-payment-page-component-admin-dashboard-trigger="upgrade"] {
+            font-weight : 600;
+          }
+
           > [data-payment-page-component-admin-dashboard-section="payment_gateway_webhook_settings_container"] {
             margin         : 15px 0 0 0;
             display        : flex;
@@ -474,6 +478,10 @@
                     }
 
                     margin : 0 0 0 4px;
+                  }
+
+                  [data-payment-page-component-admin-dashboard-trigger="upgrade"] {
+                    font-weight : 600;
                   }
                 }
 
@@ -601,31 +609,57 @@
         }
       }
 
-      &[data-payment-page-has-payment-methods="1"] {
-        > [data-payment-page-component-admin-dashboard-section="header"] {
-          > h2 {
-            cursor : pointer;
+      > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_expand"],
+      > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_hide"] {
+        padding : 10px;
+        display : flex;
+        flex-direction : row;
+        cursor  : pointer;
+        border-top  : 1px solid #DAE4F1;
+        border-left  : 1px solid #DAE4F1;
+        border-right  : 1px solid #DAE4F1;
 
-            &:before {
-              font-family : "Dashicons";
-              content     : "\f345";
-              margin      : 0 5px 0 0;
-            }
+        > span {
+          margin : 0 auto;
+          font-size : 16px;
+          line-height : 24px;
+          color : var(--payment-page-text-default-color);
+          border : 1px solid #DAE4F1;
+          @include border-radius( 3px );
+          display : flex;
+          flex-direction : row;
+          padding: 5px 10px;
+
+          &:after {
+            font-family : "Dashicons";
+            content: "\f140";
+            font-size: 26px;
+            line-height: 22px;
           }
         }
       }
 
-      &[data-payment-page-has-payment-methods-visible="1"] {
-        > [data-payment-page-component-admin-dashboard-section="header"] {
-          > h2 {
-            &:before {
-              content: "\f347";
-            }
-          }
-        }
+      > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_hide"] > span:after {
+        content: "\f142";
+      }
 
+      &[data-payment-page-has-payment-methods-visible="1"] {
         > [data-payment-page-component-admin-dashboard-section="description_container"] {
           padding-bottom : 15px;
+        }
+
+        > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_expand"] {
+          display : none;
+        }
+      }
+
+      &[data-payment-page-has-payment-methods-visible="0"] {
+        > [data-payment-page-component-admin-dashboard-section="payment_methods_container"] {
+          display : none;
+        }
+
+        > [data-payment-page-component-admin-dashboard-trigger="payment_gateway_hide"] {
+          display : none;
         }
       }
     }

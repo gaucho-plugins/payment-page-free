@@ -13,31 +13,20 @@ class PaymentGateways extends Skeleton {
 
   public function attach_controls(){
     $dashboard = PP_PaymentGateway::get_administration_dashboard();
-    $total_available = 0;
-    foreach( $dashboard as $current_item ) {
-      foreach( $current_item[ 'payment_methods' ] as $payment_method ) {
-        if( isset( $payment_method[ 'is_available' ] ) && !$payment_method[ 'is_available' ] )
-          continue;
-
-        $total_available++;
-      }
-    }
 
     $this->elementorWidgetInstance->start_controls_section('section_payment_gateways', [
       'label' => __('Payment Methods', 'payment-page')
     ]);
 
-    if( $total_available > 1 ) {
-      $this->elementorWidgetInstance->add_control(
-        'payment_method_title',
-        [
-          'label'       => __( 'Section Title', 'payment-page' ),
-          'type'        => \Elementor\Controls_Manager::TEXT,
-          'default'     => __( 'Payment Method', 'payment-page' ),
-          'placeholder' => __( 'Type your section title', 'payment-page' ),
-        ]
-      );
-    }
+    $this->elementorWidgetInstance->add_control(
+      'payment_method_title',
+      [
+        'label'       => __( 'Section Title', 'payment-page' ),
+        'type'        => \Elementor\Controls_Manager::TEXT,
+        'default'     => __( 'Payment Method', 'payment-page' ),
+        'placeholder' => __( 'Type your section title', 'payment-page' ),
+      ]
+    );
 
     foreach( $dashboard as $current_item ) {
       $this->elementorWidgetInstance->add_control('section_' . $this->control_alias . '_' . $current_item[ 'alias' ], [
@@ -45,6 +34,22 @@ class PaymentGateways extends Skeleton {
         'type'      => Controls_Manager::HEADING,
         'separator' => 'before'
       ]);
+
+      if( !$current_item[ 'mode_live_configured' ] && !$current_item[ 'mode_test_configured' ] ) {
+        $this->elementorWidgetInstance->add_control(
+          'section_payment_gateway_connection_' . $current_item[ 'alias' ],
+          [
+            'type'   => \Elementor\Controls_Manager::RAW_HTML,
+            'raw'    => '<a style="color:#F44336;" 
+                            target="_blank"
+                            href="' . esc_url( admin_url( 'admin.php?page=' . PAYMENT_PAGE_MENU_SLUG ) ) . '#payment-gateways">' .
+                          sprintf( __( 'Connect %s >', 'payment-page' ), $current_item[ 'name' ] ) .
+                        '</a>'
+          ]
+        );
+
+        continue;
+      }
 
       foreach( $current_item[ 'payment_methods' ] as $payment_method ) {
         if( isset( $payment_method[ 'is_available' ] ) && !$payment_method[ 'is_available' ] ) {

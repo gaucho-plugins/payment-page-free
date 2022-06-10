@@ -135,6 +135,9 @@ class Skeleton {
       if( !property_exists( $this, $k ) )
         continue;
 
+      if( is_null( $v ) )
+        continue;
+
       if( isset( static::$fields[ $k ] ) ) {
         if( static::$fields[ $k ] === 'int' ) {
           $v = intval( $v );

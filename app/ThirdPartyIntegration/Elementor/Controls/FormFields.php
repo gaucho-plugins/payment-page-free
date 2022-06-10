@@ -99,6 +99,7 @@ class FormFields extends Elementor_Control_Base_Multiple
                 'type'        => 'payment_method_card',
                 'size'        => 2,
                 'size_mobile' => 0,
+                'is_hidden'   => 0,
                 'order'       => 7,
             ],
             ];
@@ -126,7 +127,22 @@ class FormFields extends Elementor_Control_Base_Multiple
     public function get_value( $control, $settings )
     {
         $core_fields = $this->get_core_fields();
-        return ($settings[$control['name']] ?? []) + $core_fields;
+        $response = $settings[$control['name']] ?? [];
+        foreach ( $core_fields as $core_field_key => $core_field ) {
+            
+            if ( !isset( $response[$core_field_key] ) ) {
+                $response[$core_field_key] = $core_field;
+                continue;
+            }
+            
+            foreach ( $core_field as $core_field_inner_key => $core_field_inner ) {
+                if ( isset( $response[$core_field_key][$core_field_inner_key] ) ) {
+                    continue;
+                }
+                $response[$core_field_key][$core_field_inner_key] = $core_field_inner;
+            }
+        }
+        return $response;
     }
     
     public function content_template()
@@ -158,6 +174,11 @@ class FormFields extends Elementor_Control_Base_Multiple
               <label><span><?php 
         echo  __( "Is Required", "payment-page" ) ;
         ?></span> <input data-setting="is_required" class="field" type="checkbox"></label>
+            </div>
+            <div data-setting-container="is_hidden">
+              <label><span><?php 
+        echo  __( "Hide on checkout", "payment-page" ) ;
+        ?></span> <input data-setting="is_hidden" class="field" type="checkbox"></label>
             </div>
             <div data-setting-container="size">
               <label>

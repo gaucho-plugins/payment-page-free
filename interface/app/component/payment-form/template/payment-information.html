@@ -39,3 +39,7 @@
     <div id="mandate-acceptance">{{ data.payment_method_disclaimer }}</div>
   <# } #>
 </div>
+
+<# if( typeof data.payment_gateway_warning !== 'undefined' && data.payment_gateway_warning !== '' ) { #>
+  {{{ data.payment_gateway_warning }}}
+<# } #>

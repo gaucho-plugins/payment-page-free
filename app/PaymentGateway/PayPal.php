@@ -157,7 +157,17 @@ class PayPal extends Skeleton {
   }
 
   public function get_description() :string {
-    return __( "PayPal is the faster, safer way to send money, make an online payment, receive money or set up a merchant account.", "payment-page" );
+    $response = __( "PayPal is one of the most global-reaching payment gateways to accept one-time and recurring payments, with multiple payment methods and currencies.", "payment-page" );
+
+    if( payment_page_fs()->is_free_plan() ) {
+      $response .= ' ' . __( "Note: There are no additional fees from Payment Page when accepting payments through PayPal.", "payment-page" );
+      $response .= ' ' . sprintf(
+        __( "To get access to useful tools like recurring subscription payments, alternative PayPal payment methods, and automations, please %s", "payment-page" ),
+        '<a target="_blank" data-payment-page-component-admin-dashboard-trigger="upgrade" href="' . payment_page_fs()->get_upgrade_url().'">Upgrade ></a>'
+      );
+    }
+
+    return $response;
   }
 
   public function get_account_name() :string {

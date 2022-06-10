@@ -5,8 +5,8 @@ Plugin URI: https://payment.page/
 Donate link: https://payment.page/pricing/
 Tags: payment form, stripe, paypal, subscriptions, recurring payments, Elementor, payments, WooCommerce, payment page, page builder, form builder, templates, multi-currency, SEPA Direct Debit, WeChat Pay, Alipay, Google Pay, Apple Pay, Microsoft Pay, Przelewy24, ACH, Direct Debit, Plaid, Venmo, Bancontact, BLIK, eps,  giropay, iDEAL, Mercado Pago, MyBank, PRzelewy24, and SOFORT
 Requires at least: 5.1
-Tested up to: 5.9
-Stable tag: 1.1.3
+Tested up to: 6.0
+Stable tag: 1.2.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://opensource.org/licenses/GPL-3.0
@@ -15,13 +15,13 @@ Payment Page is the easiest way to accept online payments. Connect your payment 
 
 == Description ==
 
-**[Payment Page](https://payment.page/)** is the easiest way to accept online payments. Get started by connecting your payment gateway, choosing a fully-customizable template, and within minutes you'll be accepting payments.
+**[Payment Page](https://payment.page "Visit the Payment Page website")** is the easiest way to accept online payments. Get started by connecting your payment gateway, choosing a fully-customizable template, and within minutes you'll be accepting payments.
 
 ## 💳 SIMPLE ONLINE PAYMENTS
-* Connect Stripe or PayPal to start accepting one-time or recurring subscription payments. Import a template and start selling in less than 60 seconds. 
+* Connect Stripe or PayPal to start accepting one-time or recurring subscription payments. Import a template and start selling in less than 60 seconds.
 
 ## 🎨 BEAUTIFUL TEMPLATES
-* Easily import any of our beautifully designed payment page templates and customize them to fit your brand, messaging, and style. 
+* Easily import any of our [beautifully designed payment page templates](https://payment.page/templates "See our beautifully designed Payment Page templates") and customize them to fit your brand, messaging, and style. 
 
 ### How to Set up Payment Page in Less than 60 seconds
 [youtube https://www.youtube.com/watch?v=abDAUe2O0qc]
@@ -33,7 +33,7 @@ Payment Page is the easiest way to accept online payments. Connect your payment 
 * Put the power of online payments in your hands and make your end-user experience a breeze so you can maximize sales and conversions. 
 
 ## 🛠️ FULLY CUSTOMIZABLE VIA ELEMENTOR WIDGET
-* Customize every design detail of your payment page with supported page builders and our payment form widget. [ELEMENTOR SUPPORTED - MORE COMING SOON!]
+* Customize every design detail of your payment page with our powerful [Elementor widget](https://payment.page/integrations/elementor/). More page builders coming soon! 
 
 ## 🔒 SECURE & RELIABLE UX
 * Implement the best security practices to protect your customers along with the most reliable way to use a payment form. The form is 100% 3D Secure SCA compatible. 
@@ -42,7 +42,7 @@ Payment Page is the easiest way to accept online payments. Connect your payment 
 * Perfect for any size company, including Enterprise, SaaS/Software, mid-size companies, and freelancers or independent contractors looking to accept payments online for their services. 
 
 ## 🆘 TOP-NOTCH SUPPORT
-* Get red-carpet support from the [Gaucho Plugins](https://gauchoplugins.com/) team for both free and paid versions - you can even book a call with us. Don't hesitate to [get in touch](https://payment.page/support/).
+* Get red-carpet support from the [Gaucho Plugins](https://gauchoplugins.com/) team for both free and paid versions - you can even book a call with us. Don't hesitate to [get in touch](https://payment.page/support "Visit the Payment Page Help Center").
 
 ## 🌐 MULTI-CURRENCY & SUBSCRIPTION FILTERS
 * Offer any currency or subscription frequency with filters that allow your customers to choose the perfect plan for their needs. (Personal Plan)
@@ -56,12 +56,15 @@ Payment Page is the easiest way to accept online payments. Connect your payment 
 ## 🔗 SEND DATA TO EXTERNAL URL
 * Using simple POST requests, you can send form data to any external URL to automate your payment flow with a SaaS, mobile app, and more. (PRO Plan)
 
+## ⛏ DEVELOPER FRIENDLY
+* Initiate any custom action you’d like with developer-friendly triggers. (PRO Plan)
+
 Find out more:
 
-* **[View Plans & Pricing](https://payment.page/pricing/)**
+* **[View Plans & Pricing](https://payment.page/pricing "View Payment Page Pricing and Plans")**
 * **[Visit the Payment Page website](https://payment.page "Visit the Payment Page website")**
-* **[View the Payment Page Live Demo](https://payment.page/demo "View the Live Demo Site")**
-* **[Book a Live Demo with our Team](https://calendly.com/gauchoplugins/support "Book a demo with our team")**
+* **[View the Payment Page Live Demo](https://payment.page/demo "View the Payment Page Live Demo Site")**
+* **[Book a Live Demo with our Team](https://calendly.com/gauchoplugins/support "Book a demo with the Payment Page team")**
 
 ## USE-CASES
 Here's a few examples of how Payment Page can be used:
@@ -84,17 +87,17 @@ Here's a few examples of how Payment Page can be used:
 === SUPPORTED PAYMENT METHODS ===
 
 ## 🔀 STRIPE SUPPORTED PAYMENT METHODS
-Stripe payments are fully enabled, including all the payment methods below:
+[Stripe payments](https://payment.page/integrations/stripe "Learn about the Payment Page and Stripe integration") are fully enabled, including all the payment methods below:
 Free Plan: 
 * Credit & Debit Cards
-Personal Plan:  
-* ACH via Plaid
 * SEPA Direct Debit
 * Google Pay
 * Apple Pay
 * Microsoft Pay
 * Alipay
 * WeChat Pay
+Personal Plan:
+* ACH via Plaid
 
 ## 🔀 PAYPAL SUPPORTED PAYMENT METHODS
 PayPal one-time payments are fully enabled, including all the payment methods below depending on your buyer’s country:
@@ -118,35 +121,36 @@ Personal Plan:
 
 ### FREE FEATURES
 * **One-time Payments** - Accept one-time payments for products, services, or donations. 
+* **Custom Payment Amounts** - Let customers choose how much to pay. 
 * **3 Customizable Templates** - 3 fully customizable templates to get you started. As we add more page builder support, the variations will be included. Elementor is supported now.
 * **Multi-Currency Support** - Accept payments in any currency of your choice.
 * **All Supported Payment Gateways** - Stripe and PayPal are currently supported with more coming soon.
 * **Payment Confirmation** - Display a message or redirect users for payment confirmation.
+* **All Stripe Supported Payment Methods** - Cards, SEPA Direct Debit, Google Pay, Apple Pay, Microsoft Pay, WeChat Pay, and Alipay. More coming soon based on demand. 
 
 ### PERSONAL PLAN FEATURES
 * **Subscription Payments** - Accept subscription payments for daily, weekly, monthly, annual, or custom payment frequencies. 
-* **Custom Payment Amounts** - Let customers choose how much to pay. 
 * **Full Access to All Templates** - Choose from any of our current and upcoming Payment Page templates. 
 * **Currency & Subscription Filters** - Allow customers to filter between various currency and subscription frequency options. 
 * **Custom Fields** - Unlimited custom fields to capture additional data.
 * **Email notifications** - Send customizable email notifications to customers and website admins for each payment. [IN BETA]
-* **All Stripe Supported Payment Methods** - Cards, ACH via Plaid, SEPA Direct Debit, Google Pay, Apple Pay, Microsoft Pay, WeChat Pay, and Alipay. More coming soon based on demand. 
 * **All PayPal Supported Payment Methods** - PayPal Standard Checkout flow. More coming soon, based on demand.
+* **ACH via Plaid** - Take advantage of the Stripe + Plaid integration. 
 
 ### PRO PLAN FEATURES
-* **Prefill Form Fields Automatically** - Prefill form fields with [query strings in the URL](https://docs.payment.page/features/prefill-form-fields-query-strings). 
-* **Automation via HTTP Requests** - Automate your payments by [sending payment data to any webhook URL](https://docs.payment.page/features/how-can-i-sign-up-for-beta-versions/http-requests), like Zapier Webhooks or any custom webhook you build.  
+* **Prefill Form Fields Automatically** - Prefill form fields with [query strings in the URL](https://docs.payment.page/features/prefill-form-fields-query-strings "Read more about prefilling form fields in our documentation"). 
+* **Automation via HTTP Requests** - Automate your payments by [sending payment data to any webhook URL](https://docs.payment.page/features/how-can-i-sign-up-for-beta-versions/http-requests "Read more about automation via HTTP requests in our documentation"), like Zapier Webhooks or any custom webhook you build.  
 
 === 💙 About the Payment Page Team ===
 
-Payment Page is part of [Gaucho Plugins](https://gauchoplugins.com), a leading plugin development brand. Our payment plugin uses the latest best practices in the payment ecosystem, with security and ease of use at the forefront of our approach. The Gaucho Plugins team includes developers, designers, support reps, and marketing professionals dedicated to serving people in the WordPress space since 2011. Use Payment Page knowing you can trust the plugin and the team behind the plugin. 
+Payment Page is part of [Gaucho Plugins](https://gauchoplugins.com "Visit the Gaucho Plugins website"), a leading plugin development brand. Our payment plugin uses the latest best practices in the payment ecosystem, with security and ease of use at the forefront of our approach. The Gaucho Plugins team includes developers, designers, support reps, and marketing professionals dedicated to serving people in the WordPress space since 2011. Use Payment Page knowing you can trust the plugin and the team behind the plugin. 
 
 === 🤝 Get Involved ===
 
-* **[Join the Payment Page Facebook Community](https://www.facebook.com/groups/235880000975827)**
-* **[Vote on our Roadmap](https://roadmap.payment.page/)**
-* **[Subscribe to our Blog](https://payment.page/blog/)**
-* **[Join our Affiliate Program](https://payment.page/become-an-affiliate/)**
+* **[Join the Payment Page Facebook Community](https://www.facebook.com/groups/235880000975827 "Visit the Payment Page Facebook Community")**
+* **[Vote on our Roadmap](https://roadmap.payment.page "Vote on the Payment Page Roadmap")**
+* **[Subscribe to our Blog](https://payment.page/blog "Visit the Payment Page Blog")**
+* **[Join our Affiliate Program](https://payment.page/become-an-affiliate "Become a Payment Page affiliate")**
 
 === 💻 Contribute to Payment Page ===
 
@@ -156,7 +160,7 @@ Here’s a few ways you can contribute to Payment Page:
 
 * Take a look at the [Payment Page GitHub repository](https://github.com/gaucho-plugins/payment-page-free "Visit the Payment Page GitHub Repo") to learn more about what issues we're tackling and how the project is developing. If you've never worked with Github before, learn about [pull requests here](https://help.github.com/articles/about-pull-requests/) and submit one for Payment Page, we'd love to give you our feedback.
 
-* Translate Payment Page into your native language. The best place to do that is by [creating an account](https://login.wordpress.org/register?locale=en_US) on wordpress.org and [choosing any of our translation projects](https://translate.wordpress.org/locale/sq/default/wp-plugins/payment-page/). When you've submitted at least 95% of Payment Page’s strings, the language moderators will review and approve your translations, and then they will be available to all WordPress users in your native language. If you are interested in translating for our paid plugin, [contact us](https://payment.page/contact), and we’d be happy to consider chatting about that. 
+* Translate Payment Page into your native language. The best place to do that is by [creating an account](https://login.wordpress.org/register?locale=en_US) on wordpress.org and [choosing any of our translation projects](https://translate.wordpress.org/locale/sq/default/wp-plugins/payment-page/). When you've submitted at least 95% of Payment Page’s strings, the language moderators will review and approve your translations, and then they will be available to all WordPress users in your native language. If you are interested in translating for our paid plugin, [contact us](https://payment.page/contact "Visit the Payment Page Help Center"), and we’d be happy to consider chatting about that. 
 
 == Installation ==
 
@@ -180,7 +184,7 @@ Then, you’ll be redirected to the Quick Setup Process to begin connecting your
 
 = Manual installation =
 
-The manual installation method involves downloading the plugin and uploading it to your server via your favorite FTP application. The WordPress codex contains [instructions on how to do this here](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+The manual installation method involves downloading the plugin and uploading it to your server via your favorite FTP application. The WordPress codex contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/).
 
 = Updating =
 
@@ -232,7 +236,7 @@ You can accept recurring subscription payments and one-time payments in any curr
 
 = Can I receive custom payment amounts for invoices or other one-off payments? =
 
-Yes. In the Personal Plan, a custom amount field is automatically displayed when any of your pricing plans don’t have a price entered into them. This allows the customer to enter the amount they want to pay on the frontend of the form. 
+Yes. In the Free Plan, a custom amount field is automatically displayed when any of your pricing plans don’t have a price entered into them. This allows the customer to enter the amount they want to pay on the frontend of the form. 
 
 Read about Custom Payment Amounts in our [Documentation](https://docs.payment.page/pricing-options/custom-payment-amounts).
 
@@ -270,7 +274,9 @@ Currently, HTTP requests are only supported for Stripe payment methods, as the v
 
 = Does Payment Page charge any additional fees on my payments through Stripe or PayPal? =
 
-No. We don’t charge any fees on Stripe or PayPal payments. Please refer to their fee structures for more information about the fees associated with your individual payments. The only cost to use Payment Page is the monthly or annual subscription found on our [pricing page](https://payment.page/pricing/). 
+The Free version of Payment Page charges a small 2% fee on Stripe payments, and no fees on PayPal payments.The purpose of this fee is to help us continue providing great features and updates for the plugin to the community. 
+
+To remove the fee and get access to tons of other great features, like recurring subscription payments, automations, and more, please see our [upgrade options](https://payment.page/pricing/). 
 
 = Where can I get support or submit bug reports? =
 
@@ -289,6 +295,25 @@ Here are links to our [Privacy Policy](https://payment.page/privacy-policy/) and
 5. Import Templates
 
 == Changelog ==
+
+= 1.2.3 = 
+* Updates to custom actions on payment completion, which now includes the currently logged in user in the request. 
+
+= 1.2.2 = 
+* Added the option to have a different first payment amount in a subscription. 
+* Updates to the custom actions on payment completion. 
+
+= 1.2.1 = 
+* Zip code field is now optional. 
+* Added support for custom actions on payment completion. 
+
+= 1.2.0 = 
+* Updated Quick Setup to be optional.
+* Switched order of Templates and Gateways tabs to make Templates more readily available.
+* Enabled Demo mode on the payment form to display without any gateways connected.
+* Made Custom Payment Amounts available in the free version. 
+* Made all Stripe payment methods available in the free version, except ACH via Plaid. 
+* Added Stripe platform fee in free version. 
 
 = 1.1.3 = 
 * Fix to German translation of SEPA mandate.
@@ -366,4 +391,6 @@ Here are links to our [Privacy Policy](https://payment.page/privacy-policy/) and
 * Our first version! Woo-hoo! 
 
 == Upgrade Notice ==
+
+
 

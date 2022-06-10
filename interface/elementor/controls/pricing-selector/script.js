@@ -21,8 +21,7 @@
           priceCheckbox : 'input[data-setting="display_price"]',
           currencyCheckbox : 'input[data-setting="display_currency"]',
           frequencyCheckbox : 'input[data-setting="display_frequency"]',
-
-
+          setupPriceCheckbox : 'input[data-setting="display_setup_price"]',
         };
       },
       initFieldsData: function initFieldsData(data){
@@ -44,7 +43,6 @@
           switch(fieldId){
             case 'select_field_plan_name':
               element = {id: fieldId, label:'Plan name'}
-
             break;
             case 'select_field_plan_price_currency':
               element = {id: fieldId, label:'Currency'}
@@ -55,14 +53,21 @@
               jQuery(self.ui.priceCheckbox).prop('checked', true)
             break;
             case 'select_field_frequency':
-              element = {id: fieldId, label:'Frequency'}
-              jQuery(self.ui.frequencyCheckbox).prop('checked', true)
+              element = {id: fieldId, label:'Frequency'};
+              jQuery(self.ui.frequencyCheckbox).prop('checked', true);
             break;
+            case 'select_field_setup_price':
+              element = {id: fieldId, label:'First payment amount'};
+              jQuery(self.ui.setupPriceCheckbox).prop('checked', true);
+              break
             case 'select_field_custom_text':
               element = {id: fieldId, label:'Custom text'}
             break;
+            case 'select_field_custom_text_3':
+              element = {id: fieldId, label:'Custom text 3'}
+              break;
             case 'select_field_separator_text':
-              element = {id: fieldId, label:'Separator text'}
+              element = {id: fieldId, label:'Custom text 2'}
             break;
           }
           self.addElement(element)
@@ -95,7 +100,7 @@
         if( customText.length <= 0 ){
           this.deleteElement({id:'select_field_separator_text'})
         }else{
-          this.addElement({id:'select_field_separator_text', label:'Separator text'})
+          this.addElement({id:'select_field_separator_text', label:'Custom Text 2'})
         }
       
         // Update sorted field by refresh

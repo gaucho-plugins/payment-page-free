@@ -59,6 +59,11 @@ class Stripe extends Skeleton
         return $this->_public_key;
     }
     
+    public function get_secret_key()
+    {
+        return $this->_secret_key;
+    }
+    
     public function is_live()
     {
         return $this->_is_live;
@@ -148,7 +153,14 @@ class Stripe extends Skeleton
     
     public function get_description() : string
     {
-        return __( "Stripe’s Payments platform lets you accept credit cards, debit cards, and mobile wallets around the world. Stripe also supports international cards, currency conversion, support for dozens of payment methods including ACH, 3D secure authentication, and instant payouts for an additional fee. ", "payment-page" );
+        $response = __( "Stripe is one of the best payment gateways to accept one-time and recurring payments, with multiple payment methods and currencies.", "payment-page" );
+        
+        if ( payment_page_fs()->is_free_plan() ) {
+            $response .= ' ' . __( "Note: The free version of Payment Page charges a small 2% fee on Stripe transactions in order to help us continue providing great features to the community.", "payment-page" );
+            $response .= ' ' . sprintf( __( "To remove the fee and get access to useful tools like recurring subscription payments, automations, and more, please %s", "payment-page" ), '<a target="_blank" data-payment-page-component-admin-dashboard-trigger="upgrade" href="' . payment_page_fs()->get_upgrade_url() . '">Upgrade ></a>' );
+        }
+        
+        return $response;
     }
     
     public function get_account_name() : string
@@ -195,19 +207,61 @@ class Stripe extends Skeleton
     public function get_payment_methods_administration() : array
     {
         $apple_pay_description = '<p>' . '<span>' . __( "Apple Pay", 'payment-page' ) . '</span>' . '<img alt="apple pay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-apple-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Apple Pay enables frictionless card payments and eliminates the need to manually type card or shipping details.", 'payment-page' ) . '</p>';
+        $verified_domains = get_transient( PAYMENT_PAGE_ALIAS . '_stripe_apple_pay_domain' );
+        $current_domain = payment_page_domain_name();
+        
+        if ( $verified_domains === false ) {
+            $verified_domains = [
+                'live' => 0,
+                'test' => 0,
+            ];
+            $stripeLive = new self();
+            $stripeTest = new self();
+            $stripeLive->attach_settings_credentials( 1 );
+            $stripeTest->attach_settings_credentials( 0 );
+            
+            if ( !empty($stripeLive->get_account_id()) ) {
+                $liveAppleDomains = $stripeLive->stripeClient()->applePayDomains->all();
+                foreach ( $liveAppleDomains['data'] as $current_live_apple_domain ) {
+                    if ( $current_live_apple_domain['domain_name'] === $current_domain ) {
+                        $verified_domains['live'] = 1;
+                    }
+                }
+            }
+            
+            
+            if ( !empty($stripeTest->get_account_id()) ) {
+                $testAppleDomains = $stripeTest->stripeClient()->applePayDomains->all();
+                foreach ( $testAppleDomains['data'] as $current_test_apple_domain ) {
+                    if ( $current_test_apple_domain['domain_name'] === $current_domain ) {
+                        $verified_domains['test'] = 1;
+                    }
+                }
+            }
+            
+            set_transient( PAYMENT_PAGE_ALIAS . '_stripe_apple_pay_domain', $verified_domains, DAY_IN_SECONDS );
+        }
+        
+        if ( $verified_domains['live'] || $verified_domains['test'] ) {
+            $apple_pay_description .= '<p>' . sprintf( __( "Apple Domain Verified for %s", "payment-page" ), implode( ',', ( $verified_domains['live'] && $verified_domains['test'] ? [ '<span data-payment-page-mode="live">Live</span>', '<span data-payment-page-mode="test">Test</span>' ] : (( $verified_domains['live'] ? [ '<span data-payment-page-mode="live">Live</span>' ] : [ '<span data-payment-page-mode="test">Test</span>' ] )) ) ) ) . '</p>';
+        }
+        $apple_pay_description .= '<p><a href="https://dashboard.stripe.com/settings/payments/apple_pay" target="_blank">' . __( "Manage in Stripe", "payment-page" ) . '</a></p>';
         $response = [
             'ccard'            => [
-            'name'         => __( "Credit Cards", 'payment-page' ),
-            'alias'        => 'ccard',
-            'is_available' => 1,
-            'description'  => '<p>' . '<span>' . __( "Credit Cards", 'payment-page' ) . '</span>' . '<img alt="visa" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-visa.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="mastercard" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-mastercard.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="american express" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-american-express.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="diners club" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-diners-club.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="jcb" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-jcb.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Accept Visa, Mastercard, American Express, Discover, Diners Club, and JCB payments from customers worldwide.", 'payment-page' ) . '</p>',
+            'name'                     => __( "Credit Cards", 'payment-page' ),
+            'alias'                    => 'ccard',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => ( payment_page_fs()->is_free_plan() ? 1 : 0 ),
+            'description'              => '<p>' . '<span>' . __( "Credit Cards", 'payment-page' ) . '</span>' . '<img alt="visa" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-visa.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="mastercard" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-mastercard.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="american express" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-american-express.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="diners club" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-diners-club.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '<img alt="jcb" src="' . plugins_url( 'interface/img/payment-gateway/logo-method-jcb.png', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Accept Visa, Mastercard, American Express, Discover, Diners Club, and JCB payments from customers worldwide.", 'payment-page' ) . '</p>',
         ],
             'ach_direct_debit' => [
-            'name'         => __( "ACH Direct Debit", 'payment-page' ),
-            'alias'        => 'ach_direct_debit',
-            'is_available' => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'description'  => '<p>' . '<span>' . __( "ACH Direct Debit", 'payment-page' ) . '</span>' . '<img alt="ach direct debit" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-ach-direct-debit.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Plaid provides the quickest way to collect and verify your customer’s banking information. Using the Stripe + Plaid integration, you can instantly receive a verified bank account, which allows for immediate charging.", 'payment-page' ) . '</p>',
-            'settings'     => [
+            'name'                     => __( "ACH Direct Debit", 'payment-page' ),
+            'upgrade_name'             => __( "ACH payments with the Stripe + Plaid integration", "payment-page" ),
+            'alias'                    => 'ach_direct_debit',
+            'is_available'             => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
+            'is_upgradeable_recurring' => ( payment_page_fs()->is_free_plan() ? 1 : 0 ),
+            'description'              => '<p>' . '<span>' . __( "ACH Direct Debit", 'payment-page' ) . '</span>' . '<img alt="ach direct debit" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-ach-direct-debit.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Plaid provides the quickest way to collect and verify your customer’s banking information. Using the Stripe + Plaid integration, you can instantly receive a verified bank account, which allows for immediate charging.", 'payment-page' ) . '</p>',
+            'settings'                 => [
             'plaid' => [
             'title'                   => __( "Plaid Settings %s", "payment-page" ),
             'test_configured'         => ( payment_page_setting_get( 'stripe_test_plaid_client_id' ) !== '' && payment_page_setting_get( 'stripe_test_plaid_secret' ) !== '' ? 1 : 0 ),
@@ -262,43 +316,49 @@ class Stripe extends Skeleton
         ],
         ],
             'sepa'             => [
-            'name'         => __( "SEPA Direct Debit", 'payment-page' ),
-            'alias'        => 'sepa',
-            'is_available' => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'description'  => '<p>' . '<span>' . __( "SEPA Direct Debit", 'payment-page' ) . '</span>' . '<img alt="sepa" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-sepa.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "SEPA Direct Debit enables customers in the Single Euro Payments Area (SEPA) to pay by providing their bank account details. Customers must accept a mandate authorising you to debit their account.", 'payment-page' ) . '</p>',
+            'name'                     => __( "SEPA Direct Debit", 'payment-page' ),
+            'alias'                    => 'sepa',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => ( payment_page_fs()->is_free_plan() ? 1 : 0 ),
+            'description'              => '<p>' . '<span>' . __( "SEPA Direct Debit", 'payment-page' ) . '</span>' . '<img alt="sepa" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-sepa.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "SEPA Direct Debit enables customers in the Single Euro Payments Area (SEPA) to pay by providing their bank account details. Customers must accept a mandate authorising you to debit their account.", 'payment-page' ) . '</p>',
         ],
             'apple_pay'        => [
-            'name'           => __( "Apple Pay", 'payment-page' ),
-            'alias'          => 'apple_pay',
-            'is_available'   => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'requires_https' => 1,
-            'description'    => $apple_pay_description,
+            'name'                     => __( "Apple Pay", 'payment-page' ),
+            'alias'                    => 'apple_pay',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => ( payment_page_fs()->is_free_plan() ? 1 : 0 ),
+            'requires_https'           => 1,
+            'description'              => $apple_pay_description,
         ],
             'google_pay'       => [
-            'name'           => __( "Google Pay", 'payment-page' ),
-            'alias'          => 'google_pay',
-            'is_available'   => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'requires_https' => 1,
-            'description'    => '<p>' . '<span>' . __( "Google Pay", 'payment-page' ) . '</span>' . '<img alt="google pay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-google-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Google Pay allows customers to make payments in your app or website using any credit or debit card saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android device.", 'payment-page' ) . '</p>',
+            'name'                     => __( "Google Pay", 'payment-page' ),
+            'alias'                    => 'google_pay',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => ( payment_page_fs()->is_free_plan() ? 1 : 0 ),
+            'requires_https'           => 1,
+            'description'              => '<p>' . '<span>' . __( "Google Pay", 'payment-page' ) . '</span>' . '<img alt="google pay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-google-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Google Pay allows customers to make payments in your app or website using any credit or debit card saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android device.", 'payment-page' ) . '</p>',
         ],
             'microsoft_pay'    => [
-            'name'           => __( "Microsoft Pay", 'payment-page' ),
-            'alias'          => 'microsoft_pay',
-            'is_available'   => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'requires_https' => 1,
-            'description'    => '<p>' . '<span>' . __( "Microsoft Pay", 'payment-page' ) . '</span>' . '<img alt="microsoft pay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-microsoft-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Microsoft Pay (previously Microsoft Wallet) is a mobile payment and digital wallet service by Microsoft that lets users make payments and store loyalty cards on certain devices. Making payments is currently supported on the Microsoft Edge browser.", 'payment-page' ) . '</p>',
+            'name'                     => __( "Microsoft Pay", 'payment-page' ),
+            'alias'                    => 'microsoft_pay',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => ( payment_page_fs()->is_free_plan() ? 1 : 0 ),
+            'requires_https'           => 1,
+            'description'              => '<p>' . '<span>' . __( "Microsoft Pay", 'payment-page' ) . '</span>' . '<img alt="microsoft pay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-microsoft-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Microsoft Pay (previously Microsoft Wallet) is a mobile payment and digital wallet service by Microsoft that lets users make payments and store loyalty cards on certain devices. Making payments is currently supported on the Microsoft Edge browser.", 'payment-page' ) . '</p>',
         ],
             'alipay'           => [
-            'name'         => __( "Alipay", 'payment-page' ),
-            'alias'        => 'alipay',
-            'is_available' => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'description'  => '<p>' . '<span>' . __( "Alipay", 'payment-page' ) . '</span>' . '<img alt="alipay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-alipay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Alipay enables Chinese consumers to pay directly via online transfer from their bank account. Customers are redirected to Alipay's payment page to log in and approve payments.", 'payment-page' ) . '</p>',
+            'name'                     => __( "Alipay", 'payment-page' ),
+            'alias'                    => 'alipay',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => 0,
+            'description'              => '<p>' . '<span>' . __( "Alipay", 'payment-page' ) . '</span>' . '<img alt="alipay" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-alipay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "Alipay enables Chinese consumers to pay directly via online transfer from their bank account. Customers are redirected to Alipay's payment page to log in and approve payments.", 'payment-page' ) . '</p>',
         ],
             'wechat'           => [
-            'name'         => __( "WeChat Pay", 'payment-page' ),
-            'alias'        => 'wechat',
-            'is_available' => ( payment_page_fs()->is_free_plan() ? 0 : 1 ),
-            'description'  => '<p>' . '<span>' . __( "WeChat Pay", 'payment-page' ) . '</span>' . '<img alt="wechat" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-wechat-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "WeChat Pay enables Chinese consumers to pay directly via online transfer from their account. Customers are given a QR Code to scan using their WeChat mobile application to approve payments.", 'payment-page' ) . '</p>',
+            'name'                     => __( "WeChat Pay", 'payment-page' ),
+            'alias'                    => 'wechat',
+            'is_available'             => 1,
+            'is_upgradeable_recurring' => 0,
+            'description'              => '<p>' . '<span>' . __( "WeChat Pay", 'payment-page' ) . '</span>' . '<img alt="wechat" src="' . plugins_url( 'interface/img/payment-gateway/payment-method-wechat-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ) . '"/>' . '</p>' . '<p>' . __( "WeChat Pay enables Chinese consumers to pay directly via online transfer from their account. Customers are given a QR Code to scan using their WeChat mobile application to approve payments.", 'payment-page' ) . '</p>',
         ],
         ];
         return apply_filters( 'payment_page_stripe_payment_methods_administration', $response );
@@ -312,8 +372,67 @@ class Stripe extends Skeleton
                 'id'                    => 'ccard',
                 'name'                  => __( "Credit Card", "payment-page" ),
                 'payment_method'        => 'ccard',
-                'has_recurring_support' => 1,
+                'has_recurring_support' => ( !payment_page_fs()->is_free_plan() ? 1 : 0 ),
                 'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-credit-card.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
+            ];
+        }
+        
+        if ( in_array( 'sepa', $active_payment_methods ) ) {
+            $disclaimer_text = __( 'By providing your payment information and confirming this payment, you authorise (A) %s and Stripe, our payment service provider and/or PPRO, its local service provider, to send instructions to your bank to debit your account and (B) your bank to debit your account in accordance with those instructions. As part of your rights, you are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited. Your rights are explained in a statement that you can obtain from your bank. You agree to receive notifications for future debits up to 2 days before they occur.', 'payment-page' );
+            $response[] = [
+                'id'                    => 'sepa',
+                'name'                  => __( "SEPA Direct Debit", "payment-page" ),
+                'payment_method'        => 'sepa',
+                'has_recurring_support' => ( !payment_page_fs()->is_free_plan() ? 1 : 0 ),
+                'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-sepa.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
+                'disclaimer'            => sprintf( $disclaimer_text, $this->get_business_name() ),
+                'currencies'            => [ 'eur' ],
+            ];
+        }
+        
+        if ( in_array( 'apple_pay', $active_payment_methods ) ) {
+            $response[] = [
+                'id'                    => 'apple_pay',
+                'name'                  => __( "Apple Pay", 'payment-page' ),
+                'payment_method'        => 'apple_pay',
+                'has_recurring_support' => ( !payment_page_fs()->is_free_plan() ? 1 : 0 ),
+                'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-apple-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
+            ];
+        }
+        if ( in_array( 'google_pay', $active_payment_methods ) ) {
+            $response[] = [
+                'id'                    => 'google_pay',
+                'name'                  => __( "Google Pay", 'payment-page' ),
+                'payment_method'        => 'google_pay',
+                'has_recurring_support' => ( !payment_page_fs()->is_free_plan() ? 1 : 0 ),
+                'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-google-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
+            ];
+        }
+        if ( in_array( 'microsoft_pay', $active_payment_methods ) ) {
+            $response[] = [
+                'id'                    => 'microsoft_pay',
+                'name'                  => __( "Microsoft Pay", 'payment-page' ),
+                'payment_method'        => 'microsoft_pay',
+                'has_recurring_support' => ( !payment_page_fs()->is_free_plan() ? 1 : 0 ),
+                'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-microsoft-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
+            ];
+        }
+        if ( in_array( 'alipay', $active_payment_methods ) ) {
+            $response[] = [
+                'id'                    => 'alipay',
+                'name'                  => __( "Alipay", "payment-page" ),
+                'payment_method'        => 'alipay',
+                'has_recurring_support' => 0,
+                'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-alipay.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
+            ];
+        }
+        if ( in_array( 'wechat', $active_payment_methods ) ) {
+            $response[] = [
+                'id'                    => 'wechat',
+                'name'                  => __( "WeChat Pay", "payment-page" ),
+                'payment_method'        => 'wechat',
+                'has_recurring_support' => 0,
+                'image'                 => plugins_url( 'interface/img/payment-gateway/payment-method-wechat-pay.svg', PAYMENT_PAGE_BASE_FILE_PATH ),
             ];
         }
         return apply_filters( 'payment_page_stripe_payment_methods_frontend', $response, $active_payment_methods );

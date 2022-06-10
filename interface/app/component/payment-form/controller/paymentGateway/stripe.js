@@ -430,7 +430,7 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
           currency: checkout_information.currency,
           total: {
             label  : checkout_information.title,
-            amount : parseFloat( checkout_information.price ) * 100,
+            amount : parseFloat( ( typeof checkout_information.price_setup !== "undefined" ? checkout_information.price_setup : checkout_information.price ) ) * 100,
           },
           requestPayerName: false,
           requestPayerEmail: false,
@@ -454,18 +454,22 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
   },
 
   __createPaymentMethodCreditCard : function() {
-    let objectInstance = this;
+    let objectInstance = this,
+        payment_method_args = {
+          type : "card",
+          card : this.cardElement,
+          billing_details: {
+            name: this.controllerInstance.container.find( '[name="first_name"]' ).val() + ' ' + this.controllerInstance.container.find( '[name="last_name"]' ).val()
+          },
+        };
 
-    const stripePaymentMethod = this._stripeSDK.createPaymentMethod({
-      type : "card",
-      card : this.cardElement,
-      billing_details: {
-        name: this.controllerInstance.container.find( '[name="first_name"]' ).val() + ' ' + this.controllerInstance.container.find( '[name="last_name"]' ).val(),
-        address : {
-          postal_code : this.controllerInstance.container.find( '[name="card_zip_code"]' ).val()
-        }
-      },
-    }).then( function( response ) {
+    if( this.controllerInstance.container.find( '[name="card_zip_code"]' ).length > 0 ) {
+      payment_method_args.billing_details.address = {
+        postal_code : this.controllerInstance.container.find( '[name="card_zip_code"]' ).val()
+      };
+    }
+
+    const stripePaymentMethod = this._stripeSDK.createPaymentMethod( payment_method_args).then( function( response ) {
       if( response.error ) {
         objectInstance.controllerInstance.afterPaymentFailed( response.error.message );
 
@@ -551,6 +555,7 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
           price_frequency       : productInformation.frequency,
           price_currency        : productInformation.currency,
           price_amount          : productInformation.price,
+          setup_price_amount    : ( typeof productInformation.price_setup !== "undefined" ? productInformation.price_setup : null ),
           custom_fields         : objectInstance.controllerInstance.getCustomFieldsData(),
           plaid_public_token    : public_token,
           plaid_bank_account_id : metadata.accounts[0].id
@@ -583,11 +588,12 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         productInformation = this.controllerInstance.getCheckoutInformation(),
         handler = this._getCurrentPaymentMethodHandlerString(),
         request_data = this.controllerInstance.attachRestRequestCustomerDetails({
-          post_id           : this.controllerInstance.configuration.post_id,
-          product_title     : productInformation.title,
-          price_frequency   : productInformation.frequency,
-          price_currency    : productInformation.currency,
-          price_amount      : productInformation.price,
+          post_id            : this.controllerInstance.configuration.post_id,
+          product_title      : productInformation.title,
+          price_frequency    : productInformation.frequency,
+          price_currency     : productInformation.currency,
+          price_amount       : productInformation.price,
+          setup_price_amount : ( typeof productInformation.price_setup !== "undefined" ? productInformation.price_setup : null ),
           stripe_payment_method_id : payment_method_id,
           payment_method    : handler,
           custom_fields     : this.controllerInstance.getCustomFieldsData()
@@ -743,6 +749,7 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
           price_frequency          : productInformation.frequency,
           price_currency           : productInformation.currency,
           price_amount             : productInformation.price,
+          setup_price_amount       : ( typeof productInformation.price_setup !== "undefined" ? productInformation.price_setup : null ),
           stripe_payment_method_id : payment_method_id,
           stripe_payment_intent_or_setup_id : stripe_payment_intent_or_setup_id,
           custom_fields            : this.controllerInstance.getCustomFieldsData()

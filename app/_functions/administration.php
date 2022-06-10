@@ -61,7 +61,7 @@ function _payment_page_stripe_payment_methods_background_setup( $payment_methods
 }
 
 function payment_page_admin_upgrade_format( $text ) {
-  return '<p style="font-style: normal;font-size: 13px;color: #fff;">' . $text . '</p>';
+  return '<p style="font-style: normal;font-size: 14px;color: #fff;font-weight:500;">' . $text . '</p>';
 }
 
 function payment_page_admin_upgrade_custom_fields() {
@@ -82,8 +82,4 @@ function payment_page_admin_upgrade_currency_filter() {
 
 function payment_page_admin_upgrade_subscription_frequency_filter() {
   return 'To allow customers to filter by billing frequency (for recurring payments), please <a target="_blank" href="' . payment_page_fs()->get_upgrade_url().'">Upgrade ></a>';
-}
-
-function payment_page_admin_upgrade_text_custom_payment_amount() {
-  return 'To allow the customer to enter how much they want to pay (Custom Payment Amounts), please <a target="_blank" href="' . payment_page_fs()->get_upgrade_url().'">Upgrade ></a>';
 }

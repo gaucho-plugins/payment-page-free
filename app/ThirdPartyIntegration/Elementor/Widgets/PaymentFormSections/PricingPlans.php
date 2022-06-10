@@ -35,15 +35,9 @@ class PricingPlans extends Skeleton {
         'label_block' => true
     ]);
 
-    $prices_description = payment_page_fs()->is_free_plan()
-      ? ( payment_page_admin_upgrade_format( payment_page_admin_upgrade_text_subscription() ) . '<br/>' .
-          payment_page_admin_upgrade_format( payment_page_admin_upgrade_text_custom_payment_amount() ) )
-      : "If left empty, the customer will be able to enter any amount.";
-
     $repeater->add_control('prices', [
       'type' => 'pricingplans',
-      'label_block' => true,
-      'description' => $prices_description
+      'label_block' => true
     ]);
 
     $this->elementorWidgetInstance->add_control('plans', [
@@ -66,17 +60,15 @@ class PricingPlans extends Skeleton {
       'type' => 'pricing_selector_data'
     ]);
 
-    if( !payment_page_fs()->is_free_plan() ){
-      $this->elementorWidgetInstance->add_control(
-        'custom_pricing_input_section_label',
-        [
-          'label'       => __( 'Custom Amount Title', 'payment-page' ),
-          'type'        => \Elementor\Controls_Manager::TEXT,
-          'default'     => __( 'ENTER YOUR AMOUNT', 'payment-page' ),
-          'placeholder' => __( 'Type your custom amount title', 'payment-page' ),
-        ]
-      );
-    }
+    $this->elementorWidgetInstance->add_control(
+      'custom_pricing_input_section_label',
+      [
+        'label'       => __( 'Custom Amount Title', 'payment-page' ),
+        'type'        => \Elementor\Controls_Manager::TEXT,
+        'default'     => __( 'ENTER YOUR AMOUNT', 'payment-page' ),
+        'placeholder' => __( 'Type your custom amount title', 'payment-page' ),
+      ]
+    );
 
     $this->elementorWidgetInstance->end_controls_section();
 
@@ -115,41 +107,37 @@ class PricingPlans extends Skeleton {
 
     // Start custom amount section title
 
-    if( !payment_page_fs()->is_free_plan() ){
+    // Section title
+    $this->elementorWidgetInstance->add_control('section_pricing_plan_custom_amount_styles_title', [
+      'label' => __('Custom Amount Title', 'payment-page'),
+      'type' => Controls_Manager::HEADING,
+      'separator' => 'before'
+    ]);
 
-      // Section title
-      $this->elementorWidgetInstance->add_control('section_pricing_plan_custom_amount_styles_title', [
-        'label' => __('Custom Amount Title', 'payment-page'),
-        'type' => Controls_Manager::HEADING,
-        'separator' => 'before'
-      ]);
-
-      $this->elementorWidgetInstance->add_control('pricing_plan_custom_amount_color', [
-        'label' => __('Title Color', 'payment-page'),
-        'type' => Controls_Manager::COLOR,
-        'default' => '#2676f1',
-        'scheme' => [
-          'type' => Schemes\Color::get_type(),
-          'value' => Schemes\Color::COLOR_1
-        ]
-      ]);
+    $this->elementorWidgetInstance->add_control('pricing_plan_custom_amount_color', [
+      'label' => __('Title Color', 'payment-page'),
+      'type' => Controls_Manager::COLOR,
+      'default' => '#2676f1',
+      'scheme' => [
+        'type' => Schemes\Color::get_type(),
+        'value' => Schemes\Color::COLOR_1
+      ]
+    ]);
 
 
-      $defaults = array(
-        'font_family'=> PAYMENT_PAGE_STYLE_DEFAULT_FONT_FAMILY,
-        'font_size'=> array(
-          'unit' => 'px',
-          'size' => 12
-        ),
-        'font_weight'=> PAYMENT_PAGE_STYLE_DEFAULT_FONT_WEIGHT,
-        'font_transform'=> 'none',
-      );
+    $defaults = array(
+      'font_family'=> PAYMENT_PAGE_STYLE_DEFAULT_FONT_FAMILY,
+      'font_size'=> array(
+        'unit' => 'px',
+        'size' => 12
+      ),
+      'font_weight'=> PAYMENT_PAGE_STYLE_DEFAULT_FONT_WEIGHT,
+      'font_transform'=> 'none',
+    );
 
-      payment_page_elementor_builder_attach_popover_typography($this->elementorWidgetInstance, $this->control_alias , 'custom_amount',  $defaults);
-    }
+    payment_page_elementor_builder_attach_popover_typography($this->elementorWidgetInstance, $this->control_alias , 'custom_amount',  $defaults);
 
     // End custom amount section title
-
 
     $this->elementorWidgetInstance->add_control('section_pricing_plan_styles_heading', [
       'label' => __('Border', 'payment-page'),

@@ -24,10 +24,10 @@
   </div>
 <# } else { #>
   <div data-payment-page-component-admin-dashboard-section="menu_container">
-    <a href="#payment-gateways" data-payment-page-component-admin-dashboard-trigger="hashtag_navigation" data-payment-page-interaction-state="{{ data.current_page === 'payment-gateways' ? 'active' : 'inactive' }}"
-      >{{ data.lang.menu_name_payment_gateways }}</a>
     <a href="#templates" data-payment-page-component-admin-dashboard-trigger="hashtag_navigation" data-payment-page-interaction-state="{{ data.current_page === 'templates' ? 'active' : 'inactive' }}"
       >{{ data.lang.menu_name_templates }}</a>
+    <a href="#payment-gateways" data-payment-page-component-admin-dashboard-trigger="hashtag_navigation" data-payment-page-interaction-state="{{ data.current_page === 'payment-gateways' ? 'active' : 'inactive' }}"
+      >{{ data.lang.menu_name_payment_gateways }}</a>
 
     <# if( data.quick_setup_index !== false ) { #>
       <span data-payment-page-component-admin-dashboard-trigger="quick-setup">{{ data.lang.quick_setup_resume }}</span>

@@ -17,13 +17,13 @@ class Settings {
   }
 
   public $defaultOptions = [
-    'skipped_quick_setup'       => 0,
+    'skipped_quick_setup'       => 1,
 
     'primary_template_page_id'  => 0,
     'primary_template_import_id'=> 0,
 
     'stripe_is_live'            => 0,
-    'stripe_payment_methods'    => [ 'ccard' ],
+    'stripe_payment_methods'    => [ 'ccard', 'sepa', 'apple_pay', 'google_pay', 'microsoft_pay', 'alipay', 'wechat' ],
 
     'stripe_live_account_id'    => '',
     'stripe_live_public_key'    => '',

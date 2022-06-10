@@ -149,7 +149,7 @@ class PricingSelectorControl extends Elementor_Control_Base_Multiple
 							<label class="elementor-control-title block"
 					for="<?php 
         echo  $separator_text_id ;
-        ?>">Separator text</label>
+        ?>">Custom Text 2</label>
 				<div
 					class="elementor-control-input-wrapper elementor-control-unit-5 elementor-control-dynamic-switcher-wrapper">
 					<input class="tooltip-target elementor-control-tag-area"

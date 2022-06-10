@@ -26,9 +26,6 @@ class PaymentForm
         $uniqid = uniqid();
         $stripeIntegration = PaymentGateway::get_integration_from_settings( 'stripe' );
         $paypalIntegration = PaymentGateway::get_integration_from_settings( 'paypal' );
-        if ( !$stripeIntegration->is_configured() && !$paypalIntegration->is_configured() ) {
-            return '<div data-payment-page-notification="danger">' . __( "No Payment Gateway connected", "payment-page" ) . '</div>';
-        }
         $payment_methods_map = [
             'stripe' => Settings::instance()->get( 'stripe_payment_methods' ),
             'paypal' => Settings::instance()->get( 'paypal_payment_methods' ),
@@ -41,8 +38,16 @@ class PaymentForm
             }
             $payment_methods_map[$_gateway] = array_values( $payment_methods );
         }
-        if ( empty($payment_methods_map['stripe']) && empty($payment_methods_map['paypal']) ) {
-            return '<div data-payment-page-notification="danger">' . __( "No Payment Method available", "payment-page" ) . '</div>';
+        foreach ( $settings['form_fields_map'] as $field_key => $field ) {
+            if ( isset( $field['is_hidden'] ) ) {
+                
+                if ( intval( $field['is_hidden'] ) ) {
+                    unset( $settings['form_fields_map'][$field_key] );
+                } else {
+                    unset( $settings['form_fields_map'][$field_key]['is_hidden'] );
+                }
+            
+            }
         }
         $component_args = [
             'uniqid'                      => $uniqid,
@@ -87,8 +92,14 @@ class PaymentForm
             'payment_method_wallet_incompatible'   => __( "This Wallet is not compatible with your browser.", "payment-page" ),
             'payment_method_one_time_only_tooltip' => __( "Only supports one-time payments", "payment-page" ),
         ],
-            'payment_gateways'            => (( $stripeIntegration->is_configured() ? [
+            'payment_gateways'            => (( empty($payment_methods_map['stripe']) && empty($payment_methods_map['paypal']) ? [
+            'skeleton' => [
+            'warning'         => ( current_user_can( PAYMENT_PAGE_ADMIN_CAP ) ? '<div data-payment-page-notification="danger" style="text-align:center !important;">' . __( "No payment gateway connected.", "payment-page" ) . '<br/>' . '<a href="' . esc_url( admin_url( 'admin.php?page=' . PAYMENT_PAGE_MENU_SLUG ) ) . '#payment-gateways" target="_blank">' . __( "Connect a payment gateway >", "payment-page" ) . '</a>' . '</div>' : '<div data-payment-page-notification="danger">' . __( "No payment gateway connected.", "payment-page" ) . '</div>' ),
+            'payment_methods' => [ 'skeleton' ],
+        ],
+        ] : [] )) + (( $stripeIntegration->is_configured() ? [
             'stripe' => [
+            'warning'         => ( $stripeIntegration->is_live() ? '' : '<div data-payment-page-notification="warning">' . sprintf( __( "When in TEST mode, use %s 4242 4242 4242 4242 with any exp date and CVV.", "payment-page" ), '<a href="https://stripe.com/docs/testing" target="_blank">' . __( "Stripe card testing details >", "payment-page" ) . '</a>' ) . '</div>' ),
             'publishable_key' => $stripeIntegration->get_public_key(),
             'payment_methods' => $stripeIntegration->get_payment_methods_frontend( $payment_methods_map['stripe'] ),
             'country_code'    => $stripeIntegration->get_account_country_code(),
