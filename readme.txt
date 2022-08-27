@@ -5,8 +5,8 @@ Plugin URI: https://payment.page/
 Donate link: https://payment.page/pricing/
 Tags: payment form, stripe, paypal, subscriptions, recurring payments, Elementor, payments, WooCommerce, payment page, page builder, form builder, templates, multi-currency, SEPA Direct Debit, WeChat Pay, Alipay, Google Pay, Apple Pay, Microsoft Pay, Przelewy24, ACH, Direct Debit, Plaid, Venmo, Bancontact, BLIK, eps,  giropay, iDEAL, Mercado Pago, MyBank, PRzelewy24, and SOFORT
 Requires at least: 5.1
-Tested up to: 6.0
-Stable tag: 1.2.3
+Tested up to: 6.1
+Stable tag: 1.2.7
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: https://opensource.org/licenses/GPL-3.0
@@ -296,6 +296,23 @@ Here are links to our [Privacy Policy](https://payment.page/privacy-policy/) and
 
 == Changelog ==
 
+= 1.2.7 =
+* Fix to auto-enable submit button when pre filling form fields. 
+* Updated Freemius SDK to v2.4.5. 
+
+= 1.2.6 =
+* Added Payment Description field to show up properly in Stripe receipts (matches pricing name). 
+* Ensured submit button automatically activates when all fields are automatically pre-filled. 
+
+= 1.2.5 =
+* Added polyfill function to properly handle webhooks. 
+* Fix for database migration issues. 
+
+= 1.2.4 =
+* Implemented confirmation emails for Admin and Payer. 
+* Implemented PayPal Webhooks to verify payments for Form Actions on Submit. 
+* Updated Freemius SDK to v2.4.4. 
+
 = 1.2.3 = 
 * Updates to custom actions on payment completion, which now includes the currently logged in user in the request. 
 
@@ -391,6 +408,8 @@ Here are links to our [Privacy Policy](https://payment.page/privacy-policy/) and
 * Our first version! Woo-hoo! 
 
 == Upgrade Notice ==
+
+
 
 
 

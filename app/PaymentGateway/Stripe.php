@@ -77,8 +77,15 @@ class Stripe extends Skeleton
         if ( !class_exists( '\\Stripe\\StripeClient' ) ) {
             require_once PAYMENT_PAGE_BASE_PATH . "/lib/stripe/init.php";
         }
-        Stripe_Library::setAppInfo( 'Payment Page WordPress Plugin', PAYMENT_PAGE_VERSION, 'https://payment.page' );
-        $this->_stripeClient = new StripeClient( $this->_secret_key );
+        try {
+            Stripe_Library::setAppInfo( 'Payment Page WordPress Plugin', PAYMENT_PAGE_VERSION, 'https://payment.page' );
+            $this->_stripeClient = new StripeClient( $this->_secret_key );
+        } catch ( \Exception $e ) {
+            $this->_secret_key = null;
+            $this->_public_key = null;
+            $this->_stripeClient = null;
+            return null;
+        }
         return $this->_stripeClient;
     }
     
@@ -168,14 +175,18 @@ class Stripe extends Skeleton
         if ( empty($this->get_account_id()) ) {
             return '';
         }
-        $account_name = get_transient( PAYMENT_PAGE_ALIAS . '_stripe_account_name_' . $this->get_account_id() );
+        try {
+            $account_name = get_transient( PAYMENT_PAGE_ALIAS . '_stripe_account_name_' . $this->get_account_id() );
+            
+            if ( empty($account_name) ) {
+                $account_information = $this->stripeClient()->accounts->retrieve( $this->get_account_id() );
+                $account_name = sanitize_text_field( $account_information->settings->dashboard->display_name );
+                set_transient( PAYMENT_PAGE_ALIAS . '_stripe_account_name_' . $this->get_account_id(), $account_name, DAY_IN_SECONDS );
+            }
         
-        if ( empty($account_name) ) {
-            $account_information = $this->stripeClient()->accounts->retrieve( $this->get_account_id() );
-            $account_name = sanitize_text_field( $account_information->settings->dashboard->display_name );
-            set_transient( PAYMENT_PAGE_ALIAS . '_stripe_account_name_' . $this->get_account_id(), $account_name, DAY_IN_SECONDS );
+        } catch ( \Exception $e ) {
+            return '';
         }
-        
         return $account_name;
     }
     
@@ -215,31 +226,34 @@ class Stripe extends Skeleton
                 'live' => 0,
                 'test' => 0,
             ];
-            $stripeLive = new self();
-            $stripeTest = new self();
-            $stripeLive->attach_settings_credentials( 1 );
-            $stripeTest->attach_settings_credentials( 0 );
-            
-            if ( !empty($stripeLive->get_account_id()) ) {
-                $liveAppleDomains = $stripeLive->stripeClient()->applePayDomains->all();
-                foreach ( $liveAppleDomains['data'] as $current_live_apple_domain ) {
-                    if ( $current_live_apple_domain['domain_name'] === $current_domain ) {
-                        $verified_domains['live'] = 1;
+            try {
+                $stripeLive = new self();
+                $stripeTest = new self();
+                $stripeLive->attach_settings_credentials( 1 );
+                $stripeTest->attach_settings_credentials( 0 );
+                
+                if ( !empty($stripeLive->get_account_id()) ) {
+                    $liveAppleDomains = $stripeLive->stripeClient()->applePayDomains->all();
+                    foreach ( $liveAppleDomains['data'] as $current_live_apple_domain ) {
+                        if ( $current_live_apple_domain['domain_name'] === $current_domain ) {
+                            $verified_domains['live'] = 1;
+                        }
                     }
                 }
-            }
-            
-            
-            if ( !empty($stripeTest->get_account_id()) ) {
-                $testAppleDomains = $stripeTest->stripeClient()->applePayDomains->all();
-                foreach ( $testAppleDomains['data'] as $current_test_apple_domain ) {
-                    if ( $current_test_apple_domain['domain_name'] === $current_domain ) {
-                        $verified_domains['test'] = 1;
+                
+                
+                if ( !empty($stripeTest->get_account_id()) ) {
+                    $testAppleDomains = $stripeTest->stripeClient()->applePayDomains->all();
+                    foreach ( $testAppleDomains['data'] as $current_test_apple_domain ) {
+                        if ( $current_test_apple_domain['domain_name'] === $current_domain ) {
+                            $verified_domains['test'] = 1;
+                        }
                     }
                 }
+                
+                set_transient( PAYMENT_PAGE_ALIAS . '_stripe_apple_pay_domain', $verified_domains, DAY_IN_SECONDS );
+            } catch ( \Exception $e ) {
             }
-            
-            set_transient( PAYMENT_PAGE_ALIAS . '_stripe_apple_pay_domain', $verified_domains, DAY_IN_SECONDS );
         }
         
         if ( $verified_domains['live'] || $verified_domains['test'] ) {
@@ -440,13 +454,13 @@ class Stripe extends Skeleton
     
     public function get_webhook_settings_administration() : array
     {
-        $live_fields_description = sprintf( __( "Create a webhook in the %s, events to send : %s", "payment-page" ), '<a href="https://dashboard.stripe.com/webhooks" target="_blank">' . __( "Stripe Webhooks Settings", "payment-page" ) . '</a>', '<strong>payment_intent.succeeded</strong> & <strong>setup_intent.succeeded</strong>' . '<p>' . sprintf( __( "Our %s covers how to configure Webhooks properly.", "payment-page" ), '<a href="https://docs.payment.page/" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>' ) . '</p>' );
+        $live_fields_description = sprintf( __( "Create a webhook in the %s, events to send : %s", "payment-page" ), '<a href="https://dashboard.stripe.com/webhooks" target="_blank">' . __( "Stripe Webhooks Settings", "payment-page" ) . '</a>', '<strong>payment_intent.succeeded</strong> & <strong>setup_intent.succeeded</strong>' . '<p>' . sprintf( __( "Our %s covers how to configure Webhooks properly.", "payment-page" ), '<a href="https://docs.payment.page/payment-gateways/stripe/stripe-webhook-configuration" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>' ) . '</p>' );
         return [
             'title'                   => __( "Webhook Settings (Recommended)", "payment-page" ),
             'title_popup'             => __( "Webhook Settings", "payment-page" ),
             'test_configured'         => ( payment_page_setting_get( 'stripe_test_webhook_secret' ) !== '' ? 1 : 0 ),
             'test_available'          => payment_page_setting_get( 'stripe_test_public_key' ) !== '',
-            'test_fields_description' => '<p>' . sprintf( __( "Create an Endpoint in the %s, to send the events : %s", "payment-page" ), '<a href="https://dashboard.stripe.com/test/webhooks" target="_blank">' . __( "Stripe Webhooks Settings", "payment-page" ) . '</a>', '<strong>payment_intent.succeeded</strong> & <strong>setup_intent.succeeded</strong>' ) . '</p>' . '<p>' . sprintf( __( "Our %s covers how to configure Webhooks properly.", "payment-page" ), '<a href="https://docs.payment.page/" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>' ) . '</p>',
+            'test_fields_description' => '<p>' . sprintf( __( "Create an Endpoint in the %s, to send the events : %s", "payment-page" ), '<a href="https://dashboard.stripe.com/test/webhooks" target="_blank">' . __( "Stripe Webhooks Settings", "payment-page" ) . '</a>', '<strong>payment_intent.succeeded</strong> & <strong>setup_intent.succeeded</strong>' ) . '</p>' . '<p>' . sprintf( __( "Our %s covers how to configure Webhooks properly.", "payment-page" ), '<a href="https://docs.payment.page/payment-gateways/stripe/stripe-webhook-configuration" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>' ) . '</p>',
             'test_fields'             => [
             'stripe_test_webhook_url'    => [
             'label' => __( "Webhook URL", "payment-page" ),

@@ -341,7 +341,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
       jQuery(this).attr( "disabled", "disabled" );
       PaymentPage.setLoadingContent( jQuery(this), '', 'mini' );
 
-      objectInstance.__createPaymentIntentOrSetup( '' );
+      objectInstance.controllerInstance.syncPaymentAPI( function() {
+        objectInstance.__createPaymentIntentOrSetup( '' );
+      });
     });
 
     this.controllerInstance.paymentTriggerObject.show();
@@ -366,7 +368,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
       jQuery(this).attr( "disabled", "disabled" );
       PaymentPage.setLoadingContent( jQuery(this), '', 'mini' );
 
-      objectInstance.__createPaymentIntentOrSetup( '' );
+      objectInstance.controllerInstance.syncPaymentAPI( function() {
+        objectInstance.__createPaymentIntentOrSetup( '' );
+      });
     });
 
     this.controllerInstance.paymentTriggerObject.show();
@@ -437,7 +441,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         });
 
         this.paymentRequestObject.on('paymentmethod', function(ev) {
-          objectInstance.__createPaymentIntentOrSetup( ev.paymentMethod.id, ev );
+          objectInstance.controllerInstance.syncPaymentAPI( function() {
+            objectInstance.__createPaymentIntentOrSetup( ev.paymentMethod.id, ev );
+          });
         });
       } catch( e ) {
         this.paymentRequestObject = false;
@@ -476,7 +482,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         return;
       }
 
-      objectInstance.__createPaymentIntentOrSetup( response.paymentMethod.id );
+      objectInstance.controllerInstance.syncPaymentAPI( function() {
+        objectInstance.__createPaymentIntentOrSetup( response.paymentMethod.id );
+      });
     });
   },
 
@@ -497,7 +505,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         return;
       }
 
-      objectInstance.__createPaymentIntentOrSetup( response.paymentMethod.id );
+      objectInstance.controllerInstance.syncPaymentAPI( function() {
+        objectInstance.__createPaymentIntentOrSetup( response.paymentMethod.id );
+      });
     });
   },
 
@@ -516,7 +526,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         return;
       }
 
-      objectInstance.__createPaymentMethodACHDirectDebitPlaidLoaded( response );
+      objectInstance.controllerInstance.syncPaymentAPI( function() {
+        objectInstance.__createPaymentMethodACHDirectDebitPlaidLoaded( response );
+      });
     } );
   },
 
@@ -550,6 +562,7 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         let productInformation = objectInstance.controllerInstance.getCheckoutInformation();
 
         PaymentPage.API.post('payment-page/v1/stripe/plaid-link-confirm', objectInstance.controllerInstance.attachRestRequestCustomerDetails( {
+          payment_id            : objectInstance.controllerInstance._syncCurrentPaymentID,
           post_id               : objectInstance.controllerInstance.configuration.post_id,
           product_title         : productInformation.title,
           price_frequency       : productInformation.frequency,
@@ -588,6 +601,7 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.stripe = {
         productInformation = this.controllerInstance.getCheckoutInformation(),
         handler = this._getCurrentPaymentMethodHandlerString(),
         request_data = this.controllerInstance.attachRestRequestCustomerDetails({
+          payment_id         : this.controllerInstance._syncCurrentPaymentID,
           post_id            : this.controllerInstance.configuration.post_id,
           product_title      : productInformation.title,
           price_frequency    : productInformation.frequency,

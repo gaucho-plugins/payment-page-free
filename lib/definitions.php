@@ -20,6 +20,7 @@ define( "PAYMENT_PAGE_FREEMIUS_PUBLIC_KEY", "pk_8cf4a66a0e5efcb9c6c2f3972679d" )
 define( "PAYMENT_PAGE_TABLE_STRIPE_CUSTOMERS", 'payment_page_stripe_customers' );
 define( "PAYMENT_PAGE_TABLE_STRIPE_PRODUCTS", 'payment_page_stripe_products' );
 define( "PAYMENT_PAGE_TABLE_STRIPE_PRICES", 'payment_page_stripe_prices' );
+define( "PAYMENT_PAGE_TABLE_PAYMENTS", 'payment_page_payments' );
 define( "PAYMENT_PAGE_TABLE_LOG", 'payment_page_log' );
 
 define( "PAYMENT_PAGE_STRIPE_APPLE_PAY_VERIFICATION_TYPE_NONE", 'none' );

@@ -152,99 +152,43 @@ class ActionsForm extends Skeleton
         ],
         ] );
         $this->elementorWidgetInstance->add_control( 'email_to', [
-            'label'       => __( 'To', 'elementor-pro' ),
+            'label'       => __( 'To', 'payment-page' ),
             'type'        => Controls_Manager::TEXT,
             'default'     => get_option( 'admin_email' ),
             'placeholder' => get_option( 'admin_email' ),
             'label_block' => true,
-            'title'       => __( 'Separate emails with commas', 'elementor-pro' ),
+            'title'       => __( 'Separate emails with commas', 'payment-page' ),
             'render_type' => 'none',
         ] );
-        /* translators: %s: Site title. */
-        $default_message = sprintf( __( 'New message from "%s"', 'elementor-pro' ), get_option( 'blogname' ) );
-        $this->elementorWidgetInstance->add_control( 'email_subject', [
-            'label'       => __( 'Subject', 'elementor-pro' ),
+        $default_message_admin = sprintf( __( 'New Payment from "%s"', 'payment-page' ), get_option( 'blogname' ) );
+        $default_message_payer = sprintf( __( 'Payment Details from "%s"', 'payment-page' ), get_option( 'blogname' ) );
+        $this->elementorWidgetInstance->add_control( 'email_subject_admin', [
+            'label'       => __( 'Subject Admin', 'payment-page' ),
             'type'        => Controls_Manager::TEXT,
-            'default'     => $default_message,
-            'placeholder' => $default_message,
+            'default'     => $default_message_admin,
+            'placeholder' => $default_message_admin,
             'label_block' => true,
             'render_type' => 'none',
         ] );
-        $this->elementorWidgetInstance->add_control( 'email_content', [
-            'label'       => __( 'Message', 'elementor-pro' ),
-            'type'        => Controls_Manager::TEXTAREA,
-            'default'     => '[all-fields]',
-            'placeholder' => '[all-fields]',
-            'description' => sprintf( __( 'By default, all form fields are sent via %s shortcode. To customize sent fields, copy the shortcode that appears inside each field and paste it above.', 'elementor-pro' ), '<code>[all-fields]</code>' ),
+        $this->elementorWidgetInstance->add_control( 'email_subject_payer', [
+            'label'       => __( 'Subject Payer', 'payment-page' ),
+            'type'        => Controls_Manager::TEXT,
+            'default'     => $default_message_payer,
+            'placeholder' => $default_message_payer,
+            'label_block' => true,
             'render_type' => 'none',
         ] );
         $this->elementorWidgetInstance->add_control( 'email_from', [
-            'label'       => __( 'From email', 'elementor-pro' ),
+            'label'       => __( 'From email', 'payment-page' ),
             'type'        => Controls_Manager::TEXT,
-            'default'     => 'email@domain.com',
+            'default'     => '',
             'render_type' => 'none',
         ] );
         $this->elementorWidgetInstance->add_control( 'email_from_name', [
-            'label'       => __( 'From name', 'elementor-pro' ),
-            'type'        => Controls_Manager::TEXT,
-            'default'     => get_bloginfo( 'name' ),
-            'render_type' => 'none',
-        ] );
-        $this->elementorWidgetInstance->add_control( 'email_reply_to', [
-            'label'       => __( 'Reply-To', 'elementor-pro' ),
-            'type'        => Controls_Manager::SELECT,
-            'options'     => [
-            '' => '',
-        ],
-            'render_type' => 'none',
-        ] );
-        $this->elementorWidgetInstance->add_control( 'email_to_cc', [
-            'label'       => __( 'Cc', 'elementor-pro' ),
+            'label'       => __( 'From name', 'payment-page' ),
             'type'        => Controls_Manager::TEXT,
             'default'     => '',
-            'title'       => __( 'Separate emails with commas', 'elementor-pro' ),
             'render_type' => 'none',
-        ] );
-        $this->elementorWidgetInstance->add_control( 'email_to_bcc', [
-            'label'       => __( 'Bcc', 'elementor-pro' ),
-            'type'        => Controls_Manager::TEXT,
-            'default'     => '',
-            'title'       => __( 'Separate emails with commas', 'elementor-pro' ),
-            'render_type' => 'none',
-        ] );
-        $this->elementorWidgetInstance->add_control( 'form_metadata', [
-            'label'       => __( 'Meta data', 'elementor-pro' ),
-            'type'        => Controls_Manager::SELECT2,
-            'multiple'    => true,
-            'label_block' => true,
-            'separator'   => 'before',
-            'default'     => [
-            'date',
-            'time',
-            'page_url',
-            'user_agent',
-            'remote_ip',
-            'credit'
-        ],
-            'options'     => [
-            'date'       => __( 'Date', 'elementor-pro' ),
-            'time'       => __( 'Time', 'elementor-pro' ),
-            'page_url'   => __( 'Page URL', 'elementor-pro' ),
-            'user_agent' => __( 'User Agent', 'elementor-pro' ),
-            'remote_ip'  => __( 'Remote IP', 'elementor-pro' ),
-            'credit'     => __( 'Credit', 'elementor-pro' ),
-        ],
-            'render_type' => 'none',
-        ] );
-        $this->elementorWidgetInstance->add_control( 'email_content_type', [
-            'label'       => __( 'Send as', 'elementor-pro' ),
-            'type'        => Controls_Manager::SELECT,
-            'default'     => 'html',
-            'render_type' => 'none',
-            'options'     => [
-            'html'  => __( 'HTML', 'elementor-pro' ),
-            'plain' => __( 'Plain', 'elementor-pro' ),
-        ],
         ] );
         $this->elementorWidgetInstance->end_controls_section();
     }

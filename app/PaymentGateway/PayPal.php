@@ -10,14 +10,22 @@ class PayPal extends Skeleton {
   public static function setup_start_connection( $options ) :array {
     $settings_prefix = 'paypal_' . ( intval( $options[ 'is_live' ] ) ? 'live' : 'test' );
 
+    $description = '<p>' . sprintf(
+                __( "Create a %s app, which can be done in %s in the PayPal account area. Then, enter the credentials below.", "payment-page" ),
+                ( intval( $options[ 'is_live' ] ) ? 'Live' : 'Sandbox' ),
+                    '<a href="https://developer.paypal.com/developer/applications" target="_blank">' . __( "My Apps & Credentials", "payment-page" ) . '</a>'
+                  ) .
+              '</p>';
+
+    $description .= '<p>' . sprintf(
+        __( 'To configure PayPal, please read our %s.', 'payment-page' ),
+          '<a href="https://docs.payment.page/payment-gateways/paypal/paypal-setup" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>'
+        ) . '</p>';
+
     return [
       'status'      => 'ok',
       'type'        => 'settings',
-      'description' => sprintf(
-        __( "Create a %s app, which can be done in %s in the PayPal account area. Then, enter the credentials below.", "payment-page" ),
-        ( intval( $options[ 'is_live' ] ) ? 'Live' : 'Sandbox' ),
-        '<a href="https://developer.paypal.com/developer/applications" target="_blank">' . __( "My Apps & Credentials", "payment-page" ) . '</a>'
-      ),
+      'description' => $description,
       'fields'      => [
         'email_address' => [
           'label'       => __( "Email Address", "payment-page" ),
@@ -205,6 +213,69 @@ class PayPal extends Skeleton {
     }
 
     return apply_filters( 'payment_page_paypal_payment_methods_frontend', $response, $active_payment_methods );
+  }
+
+  public function get_webhook_settings_administration() :array {
+    $live_fields_description = sprintf(
+      __( "Create an Endpoint in the %s, to send the event : %s", "payment-page" ),
+      '<a href="https://developer.paypal.com/developer/applications" target="_blank">' . __( "PayPal My Apps & Credentials", "payment-page" ) . '</a>',
+      '<strong>Payment capture completed</strong>' .
+      '<p>' . sprintf(
+        __( "Our %s covers how to configure Webhooks properly.", "payment-page" ),
+        '<a href="https://docs.payment.page/payment-gateways/paypal/paypal-webhook-configuration" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>'
+      ) . '</p>'
+    );
+
+    return [
+      'title'           => __( "Webhook Settings (Recommended)", "payment-page" ),
+      'title_popup'     => __( "Webhook Settings", "payment-page" ),
+      'test_configured' => intval( payment_page_setting_get( 'paypal_test_webhook_id' ) !== '' ),
+      'test_available'  => ( payment_page_setting_get( 'paypal_test_email_address' ) !== '' ? 1 : 0 ),
+      'test_fields_description' => '<p>' . sprintf(
+          __( "Create an Endpoint in the %s, to send the event : %s", "payment-page" ),
+          '<a href="https://developer.paypal.com/developer/applications" target="_blank">' . __( "PayPal My Apps & Credentials", "payment-page" ) . '</a>',
+          '<strong>Payment capture completed</strong>'
+        ) . '</p>' .
+        '<p>' . sprintf(
+          __( "Our %s covers how to configure Webhooks properly.", "payment-page" ),
+          '<a href="https://docs.payment.page/payment-gateways/paypal/paypal-webhook-configuration" target="_blank">' . __( "Documentation", "payment-page" ) . '</a>'
+        ) . '</p>',
+      'test_fields'     => [
+        'paypal_test_webhook_url'    => [
+          'label'       => __( "Webhook URL", "payment-page" ),
+          'type'        => 'textarea_disabled',
+          'name'        => 'stripe_test_webhook_url',
+          'order'       => 1,
+          'value'       => rest_url() . PAYMENT_PAGE_REST_API_PREFIX . '/v1/webhook/paypal-callback/test'
+        ],
+        'paypal_test_webhook_id'    => [
+          'label'   => __( "Webhook ID", "payment-page" ),
+          'type'    => 'text',
+          'name'    => 'paypal_test_webhook_id',
+          'order'   => 2,
+          'value'   => payment_page_setting_get( 'paypal_test_webhook_id' ),
+        ],
+      ],
+      'live_configured' => intval( payment_page_setting_get( 'paypal_live_webhook_id' ) !== '' ),
+      'live_available'  => ( payment_page_setting_get( 'paypal_live_email_address' ) !== '' ? 1 : 0 ),
+      'live_fields_description' => $live_fields_description,
+      'live_fields'     => [
+        'paypal_live_webhook_url'        => [
+          'label'  => __( "Webhook URL", "payment-page" ),
+          'type'   => 'textarea_disabled',
+          'name'   => 'paypal_live_webhook_url',
+          'order'  => 1,
+          'value'  => rest_url() . PAYMENT_PAGE_REST_API_PREFIX . '/v1/webhook/paypal-callback/live'
+        ],
+        'paypal_live_webhook_id'    => [
+          'label'   => __( "Webhook ID", "payment-page" ),
+          'type'    => 'text',
+          'name'    => 'paypal_live_webhook_id',
+          'order'   => 2,
+          'value'   => payment_page_setting_get( 'paypal_live_webhook_id' ),
+        ],
+      ]
+    ];
   }
 
 }

@@ -12,6 +12,7 @@ PaymentPage.Component[ 'payment-form' ] = {
     subscription_selector : 0,
     currency_selector     : 0,
     post_id               : '',
+    domain_name           : '',
     pricing_plans         : [],
     field_map             : {},
     submit_actions        : [],
@@ -83,6 +84,12 @@ PaymentPage.Component[ 'payment-form' ] = {
   paymentMethodsMap     : {
 
   },
+
+  _syncCurrentPaymentID : false,
+  _syncCurrentPaymentSecret : false,
+  _syncCurrentPaymentJSON : {},
+  _syncCurrentPaymentXHR : false,
+  _syncCurrentPaymentCallback : false,
 
   _hiddenFields : {},
 
@@ -408,6 +415,7 @@ PaymentPage.Component[ 'payment-form' ] = {
       objectInstance._bindFormFields();
       objectInstance._bindPaymentMethods();
       objectInstance.__refreshPaymentMethodRestrictions();
+      objectInstance._maybeEnablePaymentTrigger();
 
       objectInstance.paymentGateway[ objectInstance.currentPaymentGateway ].mountPaymentMethod(
         objectInstance.currentPaymentMethod,
@@ -526,6 +534,7 @@ PaymentPage.Component[ 'payment-form' ] = {
     this.container.find( '[name="pp_pricing_options"]' ).html( pricing_options_html ).trigger( "change" );
 
     this.__refreshFilteringRestrictions();
+    this.syncPaymentAPI();
   },
 
   __refreshPaymentTriggerText : function() {
@@ -555,6 +564,7 @@ PaymentPage.Component[ 'payment-form' ] = {
 
   _onPaymentTermsChange : function() {
     this.__refreshPaymentTriggerText();
+    this.syncPaymentAPI();
 
     if( typeof this.paymentGateway[ this.currentPaymentGateway ].onPaymentTermsChange === 'function' )
       this.paymentGateway[ this.currentPaymentGateway ].onPaymentTermsChange( this.currentPaymentMethod );
@@ -666,7 +676,7 @@ PaymentPage.Component[ 'payment-form' ] = {
       objectInstance._maybeEnablePaymentTrigger();
     });
 
-    this.container.find( '[name="email_address"]' ).off( "keyup.payment_page change.payment_page" ).on( "keyup.payment_page change.payment_page", function() {
+    this.container.find( '[name="email_address"]' ).off( "keyup.payment_page change.payment_page" ).on( "keyup.payment_page change.payment_page", function( event ) {
       let labelObject = objectInstance.container.find('[for="' + jQuery(this).attr("id") + '"]');
 
       if( jQuery(this).val() === '' ) {
@@ -678,6 +688,9 @@ PaymentPage.Component[ 'payment-form' ] = {
       }
 
       objectInstance._maybeEnablePaymentTrigger();
+      
+      if( event.type === 'change' )
+        objectInstance.syncPaymentAPI();
     });
   },
 
@@ -1005,6 +1018,58 @@ PaymentPage.Component[ 'payment-form' ] = {
     data.email_address = this.container.find( '[name="email_address"]' ).val();
 
     return data;
+  },
+
+  syncPaymentAPI : function( callback ) {
+    let syncJSON = payment_page_parse_args( {
+      post_id         : this.configuration.post_id,
+      payment_gateway : this.currentPaymentGateway,
+      payment_method  : this.currentPaymentMethod,
+      custom_fields   : this.getCustomFieldsData()
+    }, this.getCheckoutInformation() );
+
+    delete syncJSON.frequency_formatted;
+    delete syncJSON.price_formatted;
+    delete syncJSON.title;
+
+    syncJSON = this.attachRestRequestCustomerDetails( syncJSON );
+
+    this._syncCurrentPaymentCallback = callback;
+
+    if( JSON.stringify( syncJSON ) === JSON.stringify( this._syncCurrentPaymentJSON ) )
+      return;
+
+    if( this._syncCurrentPaymentXHR !== false ) {
+      if( this._syncCurrentPaymentID !== false ) {
+        this._syncCurrentPaymentXHR.abort();
+      } else {
+        // Chance it might not sync latest information, but, with the current flow, it's low, requests should take > 10 seconds for it to be a problem, even then, might not be.
+        return;
+      }
+    }
+
+    this._syncCurrentPaymentJSON = syncJSON;
+    this._syncCurrentPaymentXHR = callback;
+
+    if( this._syncCurrentPaymentID !== false )
+      syncJSON._current_id = this._syncCurrentPaymentID;
+
+    if( this._syncCurrentPaymentSecret !== false )
+      syncJSON._current_secret = this._syncCurrentPaymentSecret;
+
+    let objectInstance = this;
+
+    this._syncCurrentPaymentXHR = PaymentPage.API.post('payment-page/v1/payment/sync-details', syncJSON, function( response ) {
+      objectInstance._syncCurrentPaymentID = response.id;
+      objectInstance._syncCurrentPaymentSecret = response.secret;
+
+      if( typeof objectInstance._syncCurrentPaymentCallback === 'function' ) {
+        objectInstance._syncCurrentPaymentCallback();
+        objectInstance._syncCurrentPaymentCallback = false;
+      }
+
+      objectInstance._syncCurrentPaymentXHR = false;
+    } );
   }
 
 };

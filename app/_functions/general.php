@@ -26,6 +26,30 @@ function payment_page_domain_name() {
   return str_replace( [ 'https://www.', 'https://', 'http://www.', 'http://' ], '', rtrim( get_site_url(), '/' ) );
 }
 
+function _payment_page_payment_identification_fields( $post_id, $payment_id ) {
+  return [
+    'payment_page_payment_id' => intval( $payment_id ),
+    'payment_page_url'        => get_the_permalink( intval( $post_id ) ),
+    'payment_page_id'         => intval( $post_id ),
+    'domain_name'             => payment_page_domain_name()
+  ];
+}
+
+function _payment_page_rest_api_custom_fields( \WP_REST_Request $request, $key = 'custom_fields' ) {
+  $response = [];
+
+  if( $request->has_param( $key ) ) {
+    $custom_fields = $request->get_param( $key );
+
+    if( is_array( $custom_fields ) && !empty( $custom_fields ) ) {
+      foreach( $custom_fields as $custom_field_key => $custom_field_value )
+        $response[ payment_page_label_to_alias( sanitize_text_field( $custom_field_key ) ) ] = sanitize_text_field( $custom_field_value );
+    }
+  }
+
+  return $response;
+}
+
 /**
  * @return wpdb
  */

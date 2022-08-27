@@ -22,10 +22,10 @@ class Migration {
   }
 
   public $current_version = '0.0.0';
-  public $current_version_available = '1.1.4';
+  public $current_version_available = '1.2.0';
   public $version_file_folder = PAYMENT_PAGE_BASE_PATH . '/lib/migrations/';
   public $version_map = [
-    '1.1.4'  => 'version-1.1.4.php'
+    '1.2.0'  => 'version-1.2.0.php'
   ];
 
   public $option_alias_version  = 'payment_page_migration_version';
@@ -46,6 +46,7 @@ class Migration {
     $charset_collate = payment_page_wpdb()->get_charset_collate();
 
     $log              = payment_page_wpdb()->prefix . PAYMENT_PAGE_TABLE_LOG;
+    $payments         = payment_page_wpdb()->prefix . PAYMENT_PAGE_TABLE_PAYMENTS;
     $stripe_customers = payment_page_wpdb()->prefix . PAYMENT_PAGE_TABLE_STRIPE_CUSTOMERS;
     $stripe_products  = payment_page_wpdb()->prefix . PAYMENT_PAGE_TABLE_STRIPE_PRODUCTS;
     $stripe_prices    = payment_page_wpdb()->prefix . PAYMENT_PAGE_TABLE_STRIPE_PRICES;
@@ -62,6 +63,28 @@ class Migration {
                                 PRIMARY KEY (id),
                                 KEY ' . $log . '_post_id (post_id)
                               ) ' . $charset_collate;
+
+    $response[ $payments ] = 'CREATE TABLE `' . $payments . '` (
+                            `id`             bigint(20) NOT NULL AUTO_INCREMENT,
+                            `post_id`        bigint(20) NOT NULL DEFAULT 0,
+                            `user_id`        bigint(20) NOT NULL DEFAULT 0,
+                            `email_address`   VARCHAR(500) NOT NULL DEFAULT "",
+                            `first_name`      VARCHAR(500) NOT NULL DEFAULT "",
+                            `last_name`       VARCHAR(500) NOT NULL DEFAULT "",
+                            `payment_gateway` VARCHAR(200) NOT NULL DEFAULT "",
+                            `payment_method`  VARCHAR(200) NOT NULL DEFAULT "",
+                            `metadata_json`   LONGTEXT NOT NULL,
+                            `amount`          int(11) NOT NULL DEFAULT 0,
+                            `amount_received` int(11) NOT NULL DEFAULT 0,
+                            `currency`        VARCHAR(100) NOT NULL DEFAULT "",
+                            `is_paid`         int(1) NOT NULL DEFAULT 0,
+                            `is_live`         int(1) NOT NULL DEFAULT 0,
+                            `created_at`      int(11) NOT NULL,
+                            `updated_at`      int(11) NOT NULL,
+                            PRIMARY KEY (id),
+                            KEY ' . $payments . '_post_id (post_id),
+                            KEY ' . $payments . '_user_id (user_id)
+                          ) ' . $charset_collate;
 
     $response[ $stripe_customers ] = 'CREATE TABLE `' . $stripe_customers . '` (
                                 `id`                    bigint(20) NOT NULL AUTO_INCREMENT,

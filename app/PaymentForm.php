@@ -23,6 +23,15 @@ class PaymentForm
     
     public function get_from_elementor_settings( $settings, $post_id )
     {
+        try {
+            return $this->_get_from_elementor_settings( $settings, $post_id );
+        } catch ( \Exception $e ) {
+            return '';
+        }
+    }
+    
+    private function _get_from_elementor_settings( $settings, $post_id )
+    {
         $uniqid = uniqid();
         $stripeIntegration = PaymentGateway::get_integration_from_settings( 'stripe' );
         $paypalIntegration = PaymentGateway::get_integration_from_settings( 'paypal' );
@@ -56,6 +65,7 @@ class PaymentForm
             'subscription_selector'       => ( payment_page_fs()->is_free_plan() ? 0 : (( isset( $settings['subscription_selector'] ) && $settings['subscription_selector'] === 'yes' ? 1 : 0 )) ),
             'currency_selector'           => ( payment_page_fs()->is_free_plan() ? 0 : (( isset( $settings['currency_selector'] ) && $settings['currency_selector'] === 'yes' ? 1 : 0 )) ),
             'post_id'                     => $post_id,
+            'domain_name'                 => payment_page_domain_name(),
             'pricing_plans'               => [],
             'field_map'                   => $settings['form_fields_map'],
             'submit_actions'              => $settings['submit_actions'],

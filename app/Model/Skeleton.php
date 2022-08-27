@@ -226,7 +226,7 @@ class Skeleton {
     if( false !== payment_page_wpdb()->insert( payment_page_wpdb()->prefix . static::$table, $insert_data ) )
       $this->id = payment_page_wpdb()->insert_id;
     else
-      throw new Exception( sprintf( __( "Failed to insert %s.", "payment-page" ), static::$table ) );
+      throw new Exception( sprintf( __( "Failed to insert %s - %s.", "payment-page" ), static::$table, payment_page_wpdb()->last_error ) );
 
     return $this;
   }
@@ -261,7 +261,7 @@ class Skeleton {
       }
 
       if( static::$fields[ $k ] === 'json' ) {
-        $test_db_data   = is_array( $v ) ? $v : json_decode( $v, true );
+        $test_db_data   = is_array( $this->_db_data[ $k ] ) ? $this->_db_data[ $k ] : json_decode( $this->_db_data[ $k ], true );
         $test_save_data = is_array( $v ) ? $v : json_decode( $v, true );
 
         foreach( $test_save_data as $save_data_key => $save_data_value ) {
@@ -291,9 +291,7 @@ class Skeleton {
     if( in_array( 'updated_at', static::$timestamps ) )
       $update_data[ 'updated_at' ] = time();
 
-    if( false !== payment_page_wpdb()->update( payment_page_wpdb()->prefix . static::$table, $update_data, [ 'id' => $this->id ] ) )
-      $this->id = payment_page_wpdb()->insert_id;
-    else
+    if( false === payment_page_wpdb()->update( payment_page_wpdb()->prefix . static::$table, $update_data, [ 'id' => $this->id ] ) )
       throw new Exception( sprintf( __( "Failed to update %s for id %s.", "payment-page" ), static::$table, $this->id ) );
 
     return $this;

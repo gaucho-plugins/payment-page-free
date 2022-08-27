@@ -21,6 +21,7 @@ class RestAPI {
 
   public function setup() {
     RestAPI\Administration::register_routes();
+    RestAPI\Payment::register_routes();
     RestAPI\PaymentGateway::register_routes();
     RestAPI\Plugin::register_routes();
     RestAPI\Stripe::register_routes();

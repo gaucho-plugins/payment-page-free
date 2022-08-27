@@ -51,13 +51,15 @@ class Settings {
     'paypal_is_live'            => 0,
     'paypal_payment_methods'    => [ 'standard_checkout' ],
 
-    'paypal_live_email_address' => '',
-    'paypal_live_client_id'     => '',
-    'paypal_live_secret'        => '',
+    'paypal_live_email_address'       => '',
+    'paypal_live_client_id'           => '',
+    'paypal_live_secret'              => '',
+    'paypal_live_webhook_id'          => '',
 
-    'paypal_test_email_address' => '',
-    'paypal_test_client_id'     => '',
-    'paypal_test_secret'        => '',
+    'paypal_test_email_address'      => '',
+    'paypal_test_client_id'          => '',
+    'paypal_test_secret'             => '',
+    'paypal_test_webhook_id'         => '',
 
     'configuration-setup-rules-flushed'  => 0
   ];

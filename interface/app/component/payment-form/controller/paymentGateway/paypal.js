@@ -148,6 +148,9 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.paypal = {
         onError : function() {
           objectInstance.__displayFormFields();
         },
+        onClick: function()  {
+          objectInstance.controllerInstance.syncPaymentAPI();
+        },
         style: {
           layout: 'vertical',
           label:  'paypal'
@@ -161,15 +164,16 @@ PaymentPage.Component[ 'payment-form' ].paymentGateway.paypal = {
           let productInformation = objectInstance.controllerInstance.getCheckoutInformation();
 
           return actions.order.create( {
-            payer       : {
-              name  : {
+            payer     : {
+              name    : {
                 given_name : objectInstance.controllerInstance.container.find( '[name="first_name"]' ).val(),
                 surname    : objectInstance.controllerInstance.container.find( '[name="last_name"]' ).val(),
               },
               email_address : objectInstance.controllerInstance.container.find( '[name="email_address"]' ).val()
             },
             purchase_units : [ {
-              description : productInformation.title,
+              description : objectInstance.controllerInstance.configuration.domain_name + ':' + objectInstance.controllerInstance._syncCurrentPaymentID, // productInformation.title,
+              // custom      : objectInstance.controllerInstance.configuration.domain_name + ':' + objectInstance.controllerInstance._syncCurrentPaymentID,
               amount      : {
                 currency_code : productInformation.currency.toUpperCase(),
                 value : productInformation.price

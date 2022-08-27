@@ -64,6 +64,8 @@ class Stripe
             'amount'       => $stripePrice->unit_amount,
             'currency'     => $stripePrice->currency,
         ],
+            'price_description'           => self::_getDescription( $request ),
+            'price_statement'             => self::_getStatementDescriptor( $request ),
             'is_live'                     => intval( PaymentGateway::get_integration_from_settings( 'stripe' )->is_live() ),
             'meta_data'                   => self::_getGeneralMetaData( $request ),
             'mandate_customer_acceptance' => [
@@ -225,27 +227,28 @@ class Stripe
         return $price;
     }
     
+    private static function _getStatementDescriptor( WP_REST_Request $request, $stripePrice = null )
+    {
+        return substr( self::_getDescription( $request ), 0, 21 );
+    }
+    
+    private static function _getDescription( WP_REST_Request $request, $stripePrice = null )
+    {
+        if ( $request->has_param( 'product_title' ) ) {
+            return sanitize_text_field( $request->get_param( 'product_title' ) );
+        }
+        return PaymentGateway::get_integration_from_settings( 'stripe' )->get_business_name();
+    }
+    
     /**
      * @param WP_REST_Request $request
      * @return array
      */
     private static function _getGeneralMetaData( WP_REST_Request $request ) : array
     {
-        $response = [];
-        
-        if ( $request->has_param( 'custom_fields' ) ) {
-            $custom_fields = $request->get_param( 'custom_fields' );
-            if ( is_array( $custom_fields ) && !empty($custom_fields) ) {
-                foreach ( $custom_fields as $custom_field_key => $custom_field_value ) {
-                    $response[payment_page_label_to_alias( sanitize_text_field( $custom_field_key ) )] = sanitize_text_field( $custom_field_value );
-                }
-            }
-        }
-        
+        $response = _payment_page_rest_api_custom_fields( $request );
+        $response = _payment_page_payment_identification_fields( $request->get_param( 'post_id' ), $request->get_param( 'payment_id' ) ) + $response;
         $response['frequency'] = ( $request->has_param( 'price_frequency' ) ? $request->get_param( 'price_frequency' ) : 'one-time' );
-        $response['payment_page_url'] = get_the_permalink( $request->get_param( 'post_id' ) );
-        $response['payment_page_id'] = intval( $request->get_param( 'post_id' ) );
-        $response['domain_name'] = payment_page_domain_name();
         $response['user_id'] = intval( get_current_user_id() );
         return $response;
     }
@@ -278,6 +281,7 @@ class Stripe
         ] );
         return self::_subscriptionCreateHelper(
             [
+            'description'            => self::_getDescription( $request ),
             'default_payment_method' => $payment_method->id,
             'customer'               => $stripe_customer_id,
             'items'                  => [ [
@@ -401,12 +405,13 @@ class Stripe
                 );
             } else {
                 $paymentGatewayStripe->stripeClient()->charges->create( [
-                    'amount'   => $stripePrice->unit_amount,
-                    'currency' => strtoupper( $stripePrice->currency ),
-                    'customer' => $stripeCustomer->id,
-                    'source'   => $payment_source_id,
-                    'metadata' => self::_getGeneralMetaData( $request ),
-                    'capture'  => true,
+                    'amount'      => $stripePrice->unit_amount,
+                    'currency'    => strtoupper( $stripePrice->currency ),
+                    'customer'    => $stripeCustomer->id,
+                    'source'      => $payment_source_id,
+                    'metadata'    => self::_getGeneralMetaData( $request ),
+                    'capture'     => true,
+                    'description' => self::_getDescription( $request, $stripePrice ),
                 ] );
             }
         
